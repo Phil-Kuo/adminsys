@@ -1,6 +1,23 @@
 -- ----------------------------
 -- Table structure for staffs
 -- ----------------------------
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `id` int(4) NOT NULL AUTO_INCREMENT,
+  `username` varchar(20) NOT NULL,
+  `pwd` varchar(20) NOT NULL,
+  PRIMARY KEY(`id`)
+);
+
+-- ----------------------------
+-- Records of users
+-- ----------------------------
+INSERT INTO `users` VALUES ('1', 'bingo','bingo1998');
+
+
+-- ----------------------------
+-- Table structure for staffs
+-- ----------------------------
 DROP TABLE IF EXISTS `staffs`;
 CREATE TABLE `staffs` (
   `id` int(4) NOT NULL AUTO_INCREMENT,
