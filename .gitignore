@@ -1,2 +1,6 @@
 .idea/
 ./admin/log.txt
+.idea
+composer.lock
+*.log
+thinkphp
