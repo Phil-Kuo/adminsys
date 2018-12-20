@@ -4,25 +4,25 @@
   <meta charset="UTF-8">
   <title>行政管理系统 | 登录</title>
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:600'>
-  <link rel="stylesheet" href="/static/css/login.css">
+  <link rel="stylesheet" href="/static/admin/css/login.css">
 </head>
 <body>
   <div class="login-wrap">
 	<div class="login-html">
 		<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">登 录</label>
 		<input id="tab-2" type="radio" name="tab" class="find-pwd"><label for="tab-2" class="tab">忘记密码</label>
-		<form class="login-form" action="" method="post">
-			<div class="sign-in-htm">
+		<div class="login-form">
+			<form class="sign-in-htm" action="{:url('admin/login/login')}" method="post">
 				<div class="group">
 					<label for="username" class="label">账户</label>
-					<input id="username" type="text" class="input">
+					<input id="username" type="text" class="input" name="username">
 				</div>
 				<div class="group">
 					<label for="pwd" class="label">密码</label>
-					<input id="pwd" type="password" class="input" data-type="password">
+					<input id="pwd" type="password" class="input" name="pwd" data-type="password">
 				</div>
 				<div class="group">
-					<input id="check" type="checkbox" class="check" checked>
+					<input id="check" type="checkbox" class="check" name="remember" checked>
 					<label for="check" class="label"><span class="icon"></span> 记住我</label>
 				</div>
 				<div class="group">
@@ -32,7 +32,7 @@
 				<div class="foot-lnk">
 					<label for="tab-2">忘记密码？</label>
 				</div>
-			</div>
+			</form>
 			<div class="find-pwd-htm">
 				<div class="group">
 					<label for="user" class="label">账户</label>
@@ -46,7 +46,7 @@
                     <label for="tab-1">已有账号？</label>
 				</div>
 			</div>
-		</form>
+		</div>
 	</div>
 </div>
 </body>
