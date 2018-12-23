@@ -9,6 +9,7 @@
 namespace app\admin\controller;
 
 use think\Controller;
+use think\Session;
 
 class Index extends Controller
 {
@@ -16,6 +17,9 @@ class Index extends Controller
      * 后台首页
      * */
     public function index(){
+        if( !Session::has('userinfo', 'admin') ) {
+            $this->redirect('admin/Login/index');
+        }
         return view();
     }
 
