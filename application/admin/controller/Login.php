@@ -28,10 +28,10 @@ class Login extends Controller
 
         $condition['username'] = $_POST['username'];
         $condition['pwd'] = $_POST['pwd'];
-        $remember = isset($_POST['remember']) ? $_POST['remember'] : 0;
+        $remember = isset($_POST['remember']) ? $_POST['remember'] : 0; //尚未实现记住功能
         if (!empty($condition['username']) && !empty($condition['pwd']))
         {
-//            $condition['pwd'] = md5($_POST['pwd']); //密码加密
+//            $condition['pwd'] = md5($_POST['pwd']); // 密码加密
             $result = Db::table('users')->where($condition)->find(); // 查找密码是否存在
             dump($result);
             if (is_array($result)){
@@ -43,7 +43,6 @@ class Login extends Controller
         }else{
             return $this->error('登录失败，请重试！','index'); // 请填写账号密码
         }
-
     }
 
     /**
@@ -60,7 +59,4 @@ class Login extends Controller
     public function log(){
 
     }
-
-
-
 }
