@@ -8,10 +8,7 @@
 
 namespace app\admin\controller;
 
-use think\Controller;
-use think\Session;
-
-class Index extends Controller
+class Index extends Base
 {
     /**
      * 后台首页

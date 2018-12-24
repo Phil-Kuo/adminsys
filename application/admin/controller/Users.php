@@ -8,13 +8,10 @@
 
 namespace app\admin\controller;
 
-use app\common;
-
-use think\Controller;
 /**
  * 用户管理
-*/
-class Users extends common
+ */
+class Users extends Base
 {
     /**
      * 用户列表
@@ -25,8 +22,6 @@ class Users extends common
 
     /**
      * 异步获取列表数据
-     *
-     * @author chengbin
      * @return mixed
      */
     public function getList()
@@ -44,8 +39,8 @@ class Users extends common
      * 添加用户
      * */
     public function add(){
-        $roleData = model('role')->getKvData();
-        $this->assign('roleData', $roleData);
+//        $roleData = model('role')->getKvData();
+//        $this->assign('roleData', $roleData);
         return $this->fetch('edit');
     }
 
@@ -61,8 +56,8 @@ class Users extends common
             //报错
             return info(lang('Edit without authorization'), 0);
         }
-        $roleData = model('Role')->getKvData();
-        $this->assign('roleData', $roleData);
+//        $roleData = model('Role')->getKvData();
+//        $this->assign('roleData', $roleData);
         $data = model('Users')->get(['id' =>$id]);
         $this->assign('data',$data);
         return $this->fetch();
@@ -92,7 +87,7 @@ class Users extends common
         if (intval($id == 1)) {
 //            return info(lang('Delete without authorization'), 0);
 //        }
-        return Loader::model('Users')->deleteById($id);
+            return Loader::model('Users')->deleteById($id);
+        }
     }
-}
 }

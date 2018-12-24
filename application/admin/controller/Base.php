@@ -15,7 +15,7 @@ use think\Session;
 use think\Request;
 use think\Url;
 
-class Base
+class Base extends Controller
 {
 
     //执行该动作必须验证权限，否则抛出异常

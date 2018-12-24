@@ -13,7 +13,7 @@ class Users extends Validate
 {
     protected $rule =   [
         'username'              => 'require',
-        'pwd'              => 'length:6,106',
+        'pwd'              => 'length:6,16',
         'role_id' => 'require',
     ];
 
