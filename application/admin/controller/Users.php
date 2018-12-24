@@ -14,7 +14,7 @@ use think\Controller;
 /**
  * 用户管理
 */
-class User extends common
+class Users extends common
 {
     /**
      * 用户列表
@@ -44,7 +44,7 @@ class User extends common
         }
         $roleData = model('Role')->getKvData();
         $this->assign('roleData', $roleData);
-        $data = model('User')->get(['id' =>$id]);
+        $data = model('Users')->get(['id' =>$id]);
         $this->assign('data',$data);
         return $this->fetch();
     }
@@ -68,4 +68,5 @@ class User extends common
 //        }
         return Loader::model('User')->deleteById($id);
     }
+}
 }
