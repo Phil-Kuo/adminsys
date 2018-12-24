@@ -1,0 +1,99 @@
+<!-- jQuery -->
+{js src="/static/jquery/jquery.min.js" /}
+<!-- jQuery UI 1.11.4 -->
+{js src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" /}
+<!-- Bootstrap 4 -->
+{js src="__PLUGINS__/bootstrap/js/bootstrap.bundle.min.js" /}
+<!-- DataTables -->
+{js src="__PLUGINS__/datatables/jquery.dataTables.js" /}
+{js src="__PLUGINS__/datatables/dataTables.bootstrap4.js" /}
+<!-- Morris.js charts -->
+{js src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js" /}
+{js src="__PLUGINS__/morris/morris.min.js" /}
+<!-- jvectormap -->
+{js src="__PLUGINS__/jvectormap/jquery-jvectormap-1.2.2.min.js" /}
+{js src="__PLUGINS__/jvectormap/jquery-jvectormap-world-mill-en.js" /}
+<!-- jQuery Knob Chart -->
+{js src="__PLUGINS__/knob/jquery.knob.js" /}
+<!-- daterangepicker -->
+{js src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js" /}
+{js src="__PLUGINS__/daterangepicker/daterangepicker.js" /}
+<!-- datepicker -->
+{js src="__PLUGINS__/datepicker/bootstrap-datepicker.js" /}
+<!-- Bootstrap WYSIHTML5 -->
+{js src="__PLUGINS__/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" /}
+<!-- Slimscroll -->
+{js src="__PLUGINS__/slimScroll/jquery.slimscroll.min.js" /}
+<!-- FastClick -->
+{js src="__PLUGINS__/fastclick/fastclick.js" /}
+<!-- AdminLTE App -->
+{js src="__JS__/adminlte.js" /}
+<!-- ECharts -->
+{js src="__PLUGINS__/eCharts/echarts.min.js" /}
+<script>
+    // 初始化echarts实例
+    var barChart = echarts.init(document.getElementById('bar-chart'));
+    var option = {
+        tooltip : {
+            trigger: 'axis'
+        },
+        legend: {
+            data:['类型1','类型2'],
+            right: 5,
+            orient: 'vertical',
+        },
+        toolbox: {
+            show : false,
+            feature : {
+                dataView : {show: true, readOnly: false},
+                magicType : {show: true, type: ['line', 'bar']},
+                saveAsImage : {show: true}
+            }
+        },
+        calculable : true,
+        xAxis : [
+            {
+                type : 'category',
+                data : ['Total','清澜','龙楼','不在位']
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value',
+                name: '人数',
+                nameTextStyle:{fontSize: 16, fontWeight: 900,},
+                axisLabel:{show:false,fontSize: 12, fontFamily: 'Arial',},
+                axisTick: {show:false,},
+                axisLine: {show:false,},
+            }
+        ],
+        series : [
+            {
+                name:'类型1',
+                type:'bar',
+                data:[15, 2.0, 4.9, 7.0],
+
+            },
+            {
+                name:'类型2',
+                type:'bar',
+                data:[20,2.6, 5.9, 9.0],
+
+            }
+        ],
+        color:['#007bff', '#ced4da'],
+    };
+    barChart.setOption(option);
+</script>
+
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+    $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- page script -->
+<script>
+    $(function () {
+        $('#train-plan').DataTable({});
+        $('#technical-data').DataTable({});
+    });
+</script>

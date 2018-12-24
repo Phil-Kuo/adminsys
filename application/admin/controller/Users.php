@@ -73,7 +73,7 @@ class Users extends Base
 //        }
 
         $data = input('post.');
-        var_dump($data);die;
+//        var_dump($data);die;
         return model('Users')->saveData( $data );
     }
 

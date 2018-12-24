@@ -8,6 +8,8 @@
 
 namespace app\admin\controller;
 
+use think\Session;
+
 class Index extends Base
 {
     /**

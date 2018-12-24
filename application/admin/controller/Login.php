@@ -8,6 +8,8 @@
 
 namespace app\admin\controller;
 
+use think\Session;
+
 class Login extends Base
 {
     public function index(){
