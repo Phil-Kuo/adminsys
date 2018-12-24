@@ -9,7 +9,6 @@
 namespace app\admin\controller;
 
 use think\Controller;
-use think\Db;
 use think\Session;
 
 class Login extends Controller
@@ -31,13 +30,11 @@ class Login extends Controller
         $remember = isset($_POST['remember']) ? $_POST['remember'] : 0; //尚未实现记住功能
         if (!empty($condition['username']) && !empty($condition['pwd']))
         {
-//            $condition['pwd'] = md5($_POST['pwd']); // 密码加密
-            $result = Db::table('users')->where($condition)->find(); // 查找密码是否存在
-            dump($result);
-            if (is_array($result)){
-                session_start();
-                session('id', $result['id']); //将管理员ID存入缓存
-                Session::set('userinfo',$result['username'],'admin');
+            $result = model('Users')->login($condition); // 查找密码是否存在
+//            dump($result);
+            if ($result['code']==1){
+                unset($result['data']['password']);
+                Session::set('userinfo',$result['data'],'admin');
                 return $this->redirect('index/index');
             }
         }else{

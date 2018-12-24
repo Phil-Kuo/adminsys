@@ -24,10 +24,29 @@ class Users extends common
     }
 
     /**
+     * 异步获取列表数据
+     *
+     * @author chengbin
+     * @return mixed
+     */
+    public function getList()
+    {
+//        if(!request()->isAjax()) {
+//            $this->error(lang('Request type error'), 4001);
+//        }
+
+        $request = request()->param();
+        $data = model('Users')->getList( $request );
+        return $data;
+    }
+
+    /**
      * 添加用户
      * */
     public function add(){
-
+        $roleData = model('role')->getKvData();
+        $this->assign('roleData', $roleData);
+        return $this->fetch('edit');
     }
 
     /**
@@ -53,7 +72,14 @@ class Users extends common
      * 保存
      * */
     public function saveData(){
+//        $this->mustCheckRule( 'admin/users/edit' );
+//        if(!request()->isAjax()) {
+//            return info(lang('Request type error'));
+//        }
 
+        $data = input('post.');
+        var_dump($data);die;
+        return model('Users')->saveData( $data );
     }
 
     /**
@@ -66,7 +92,7 @@ class Users extends common
         if (intval($id == 1)) {
 //            return info(lang('Delete without authorization'), 0);
 //        }
-        return Loader::model('User')->deleteById($id);
+        return Loader::model('Users')->deleteById($id);
     }
 }
 }

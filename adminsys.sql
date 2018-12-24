@@ -18,7 +18,7 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` (`id`, `username`, `pwd`, `status`) VALUES ('1', 'bingo','bingo1998','1');
+INSERT INTO `users` (`id`, `username`, `pwd`, `status`) VALUES ('1', 'bingo','068791f7d510a59c65b68feff1c8c6e1','1');
 
 
 -- ----------------------------
