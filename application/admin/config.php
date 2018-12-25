@@ -20,10 +20,6 @@ return [
         'view_path'    => '../application/admin/view/',
         'layout_on' => true,
         'layout_name' => 'layout',
-        // 模板后缀
-        // 'view_suffix'  => 'html',
-//        'taglib_pre_load' => 'think\template\taglib\Cx,app\admin\taglib\Tool',
-//        'taglib_build_in' => 'think\template\taglib\Cx,app\admin\taglib\Tool',
     ],
 
     // 视图输出字符串内容替换

@@ -17,7 +17,7 @@ class Users extends Base
      * 用户列表
      */
     public function index(){
-        return;
+        return view();
     }
 
     /**
