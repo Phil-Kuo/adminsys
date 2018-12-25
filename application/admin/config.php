@@ -16,7 +16,9 @@ return [
 
     //模板布局
     'template' => [
-        'layout_on' => false,
+        // 模板路径
+        'view_path'    => '../application/admin/view/',
+        'layout_on' => true,
         'layout_name' => 'layout',
         // 模板后缀
         // 'view_suffix'  => 'html',
@@ -28,7 +30,7 @@ return [
     'view_replace_str' => [
         '__CSS__' => STATIC_PATH . 'admin/css',
         '__JS__' => STATIC_PATH . 'admin/js',
-        '__IMG__' => STATIC_PATH . 'images',
+        '__IMG__' => STATIC_PATH . 'img',
         '__PLUGINS__' => STATIC_PATH . 'admin/plugins',
     ],
 ];
