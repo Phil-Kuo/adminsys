@@ -64,14 +64,14 @@ class Base extends Controller
     {
         $userRow = Session::get('userinfo', 'admin');
         if( $userRow['administrator'] == 1 ) {
-            return true;  //??此处为何是return true，效果是什么
+            return true;
         }
         if( empty($rule_val) ) {
             $request = Request::instance();
             $rule_val = $request->module().'/'.$request->controller().'/'.$request->action();
         }
 
-        if(!model('AuthRule')->isCheck($rule_val)) { // 判断是否需要检查节点
+        if(!model('AuthRule')->isCheck($rule_val)) { // 不存在节点数据
             $this->error(lang('This action must be rule'));
         }
     }

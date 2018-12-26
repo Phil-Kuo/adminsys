@@ -49,7 +49,7 @@ class AuthRule extends Base
      * 保存数据
      * */
     public function saveData(){
-        $this->mustCheckRule('admin/authrule/edit');
+        $this->mustCheckRule('admin/authrule/edit'); // 检查权限
         if(!request()->isAjax()) {
             return info(lang('Request type error'));
         }
