@@ -67,10 +67,10 @@ class Users extends Base
      * 保存
      * */
     public function saveData(){
-//        $this->mustCheckRule( 'admin/users/edit' );
-//        if(!request()->isAjax()) {
-//            return info(lang('Request type error'));
-//        }
+        $this->mustCheckRule( 'admin/users/edit' );
+        if(!request()->isAjax()) {
+            return info(lang('Request type error'));
+        }
 
         $data = input('post.');
 //        var_dump($data);die;

@@ -111,6 +111,7 @@ INSERT INTO `edu_notes` VALUES ('1', '2007-12-04', '900#', '张三', '办公自�
 
 -- ----------------------------
 -- Table structure for auth_rule
+-- 定义权限规则
 -- ----------------------------
 DROP TABLE IF EXISTS `auth_rule`;
 
@@ -134,6 +135,7 @@ VALUES
 
 -- ----------------------------
 -- Table structure for role
+-- 角色
 -- ----------------------------
 DROP TABLE IF EXISTS `role`;
 
@@ -159,6 +161,7 @@ VALUES
   (2,'测试角色',NULL,0,'测试角色',1482389092,0);
 -- ----------------------------
 -- Table structure for auth_access
+-- 定义用户所属的角色
 -- ----------------------------
 DROP TABLE IF EXISTS `auth_access`;
 
