@@ -31,7 +31,7 @@ class AuthRule extends Base
     public function setAuth(){
         $levelData = model('AuthRule')->getLevelData();
         $this->assign('data', $levelData);
-        $ids = model('AuthAccess')->getIds($this->uid); // getIds
+        $ids = model('AuthAccess')->getIds($this->uid);
         $this->assign('rule_ids', $ids);
         return view();
     }
