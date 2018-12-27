@@ -11,7 +11,7 @@ namespace app\admin\controller;
 /**
  * 用户管理
  */
-class Users extends Base
+class AuthUsers extends Base
 {
     /**
      * 用户列表

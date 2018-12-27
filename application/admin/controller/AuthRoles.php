@@ -11,13 +11,13 @@ namespace app\admin\controller;
 
 use think\Loader;
 
-class Role extends Base
+class AuthRoles extends Base
 {
     private $role;
     function _initialize()
     {
         parent::_initialize();
-        $this->role = Loader::model('Role');
+        $this->role = Loader::model('AuthRoles');
     }
 
 
@@ -35,7 +35,7 @@ class Role extends Base
         }
 
         $request = request()->param();
-        $data = model('Role')->getList( $request );
+        $data = model('AuthRoles')->getList( $request );
         return $data;
     }
 
@@ -51,7 +51,7 @@ class Role extends Base
      */
     public function edit($id = 0){
         $id =input('id','','intval');
-        $data = model('Role')->get(['id'=>$id]);
+        $data = model('AuthRoles')->get(['id'=>$id]);
         $this->assign('data',$data);
         return view();
     }
@@ -75,6 +75,6 @@ class Role extends Base
         if(empty($id)){
             return info(lang('Data ID exception'), 0);
         }
-        return model('Role')->deleteById($id);
+        return model('AuthRoles')->deleteById($id);
     }
 }

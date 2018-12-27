@@ -9,7 +9,7 @@ namespace app\admin\model;
 
 use traits\model\SoftDelete;
 
-class Users extends Base
+class AuthUsers extends Base
 {
     use SoftDelete;
     protected $deleteTime = 'delete_time';
@@ -92,7 +92,7 @@ class Users extends Base
         if(!$userValidate->scene('add')->check($data)) {
             return info(lang($userValidate->getError()), 4001);
         }
-        $user = Users::get(['username' => $data['username']]);
+        $user = AuthUsers::get(['username' => $data['username']]);
         if (!empty($user)) {
             return info(lang('Username already exists'), 0);
         }
@@ -140,7 +140,7 @@ class Users extends Base
      */
     public function deleteById($id)
     {
-        $result = Users::destroy($id); // 返回成功删除的记录条数；
+        $result = AuthUsers::destroy($id); // 返回成功删除的记录条数；
         if ($result > 0) {
             return info(lang('Delete succeed'), 1);
         }

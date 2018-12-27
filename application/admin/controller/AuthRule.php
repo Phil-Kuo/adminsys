@@ -31,8 +31,8 @@ class AuthRule extends Base
     public function setAuth(){
         $levelData = model('AuthRule')->getLevelData();
         $this->assign('data', $levelData);
-        $ids = model('AuthAccess')->getIds($this->uid);
-        $this->assign('rule_ids', $ids);
+        $ruler_ids = model('UserAccess')->getRulerIds($this->uid);
+        $this->assign('rule_ids', $ruler_ids);
         return view();
     }
 
@@ -79,7 +79,7 @@ class AuthRule extends Base
         }
         $post_data = input('post.');
         $data = isset($post_data['authrule'])?$post_data['authrule']:[];
-        $res = model('AuthAccess')->saveData($this->role_id, $data);
+        $res = model('UserAccess')->saveData($this->role_id, $data);
         if ($res['code'] == 1) {
             return $this->success();
         }

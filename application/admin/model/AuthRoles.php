@@ -9,15 +9,8 @@
 namespace app\admin\model;
 
 
-class Role extends Base
+class AuthRoles extends Base
 {
-    /**
-     * 根据uid返回角色
-     * */
-    public function getRoleInfo( $uid )
-    {
-
-    }
     public function getKvData()
     {
         return $this->where('status',1)->column('name','id');
@@ -62,7 +55,7 @@ class Role extends Base
 
     public function deleteById($id)
     {
-        $result = Role::destroy($id);
+        $result = AuthRoles::destroy($id);
         if ($result > 0) {
             return info(lang('Delete succeed'), 1);
         }

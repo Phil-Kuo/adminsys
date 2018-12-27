@@ -8,9 +8,10 @@
 
 namespace app\admin\controller;
 
+use think\Controller;
 use think\Session;
 
-class Login extends Base
+class Login extends Controller
 {
     public function index(){
         if( Session::has('userinfo', 'admin') ) {
@@ -29,7 +30,7 @@ class Login extends Base
         $remember = isset($_POST['remember']) ? $_POST['remember'] : 0; //尚未实现记住功能
         if (!empty($condition['username']) && !empty($condition['pwd']))
         {
-            $result = model('Users')->login($condition); // 查找密码是否存在
+            $result = model('AuthUsers')->login($condition); // 查找密码是否存在
 //            dump($result);
             if ($result['code']==1){
                 unset($result['data']['password']);

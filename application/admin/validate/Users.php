@@ -14,7 +14,6 @@ class Users extends Validate
     protected $rule =   [
         'username'              => 'require',
         'pwd'              => 'length:6,16',
-        'role_id' => 'require',
     ];
 
     protected $message  =   [
@@ -23,8 +22,8 @@ class Users extends Validate
     ];
 
     protected $scene = [
-        'add' => ['username','pwd', 'role_id'],
+        'add' => ['username','pwd'],
         'login' =>  ['username','pwd'],
-        'edit' => ['username', 'pwd', 'role_id']
+        'edit' => ['username', 'pwd']
     ];
 }

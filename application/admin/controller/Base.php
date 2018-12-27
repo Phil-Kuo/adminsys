@@ -8,7 +8,6 @@
 
 namespace app\admin\controller;
 
-use app\common;
 use think\Controller;
 use think\Loader;
 use think\Session;
@@ -38,7 +37,7 @@ class Base extends Controller
         $request = Request::instance();
         $rule_val = $request->module().'/'.$request->controller().'/'.$request->action();
         $this->uid = $userRow['id'];
-        $this->role_id = $userRow['role_id'];
+//        $this->role_id = $userRow['role_id'];
         if ($userRow['administrator']!=1 && !$this->checkRule($this->uid,$rule_val)){
             $this->error(lang('Without permissions page.'));
         }
@@ -49,11 +48,11 @@ class Base extends Controller
      * */
     public function checkRule($uid, $rule_val){
         $authRule = Loader::model('AuthRule');
-        if (!$authRule->isCheck($rule_val)){
+        if (!$authRule->isCheck($rule_val)){// 判定是否需要检查节点
             return true;
         }
-        $authAccess = Loader::model('AuthAccess');
-        if (in_array($rule_val, $authAccess->getRuleVals($uid))){
+        $authAccess = Loader::model('UserAccess');
+        if (in_array($rule_val, $authAccess->getAccess($uid))){
             return true;
         }
         return false;

@@ -1,25 +1,119 @@
 -- ----------------------------
--- Table structure for users
+-- Table structure for auth_users
+-- 定义用户表
 -- ----------------------------
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users` (
+DROP TABLE IF EXISTS `auth_users`;
+CREATE TABLE `auth_users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(16) DEFAULT NULL COMMENT '账号',
   `pwd` varchar(32) DEFAULT NULL COMMENT '密码',
   `status` int(11) DEFAULT '0' COMMENT '状态 （0禁止 1可用）',
   `create_time` int(11) DEFAULT NULL COMMENT '帐号创建时间',
   `administrator` int(1) DEFAULT '0' COMMENT '是否超级管理员，1是 0否',
-  `role_id` int(11) unsigned NOT NULL DEFAULT '0',
   `update_time` int(11) DEFAULT NULL COMMENT '账户最后更新时间',
   `delete_time` int(11) DEFAULT NULL COMMENT '软删除',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
--- Records of users
+-- Records of auth_users
 -- ----------------------------
-INSERT INTO `users` (`id`, `username`, `pwd`, `status`) VALUES ('1', 'bingo','068791f7d510a59c65b68feff1c8c6e1','1');
+INSERT INTO `auth_users` (`id`, `username`, `pwd`, `status`,`administrator`) VALUES ('1', 'bingo','068791f7d510a59c65b68feff1c8c6e1','1','1');
 
+-- ----------------------------
+-- Table structure for auth_roles
+-- 定义角色表
+-- ----------------------------
+DROP TABLE IF EXISTS `auth_roles`;
+
+CREATE TABLE `auth_roles` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL COMMENT '角色名称',
+  `pid` smallint(6) DEFAULT NULL COMMENT '父角色ID',
+  `status` tinyint(1) unsigned DEFAULT NULL COMMENT '状态',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  KEY `parentId` (`pid`),
+  KEY `status` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色表';
+
+-- ----------------------------
+-- Records of auth_roles
+-- ----------------------------
+INSERT INTO `auth_roles` (`id`, `name`, `pid`, `status`, `remark`, `create_time`, `update_time`)
+VALUES
+  (1,'超级管理员1',0,1,'网站最高管理员权限！',1329633709,1329633709),
+  (2,'测试角色',NULL,0,'测试角色',1482389092,0);
+
+-- ----------------------------
+-- Table structure for auth_rule
+-- 定义权限规则
+-- ----------------------------
+DROP TABLE IF EXISTS `auth_rule`;
+
+CREATE TABLE `auth_rule` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '规则id,自增主键',
+  `title` varchar(20) NOT NULL DEFAULT '' COMMENT '规则中文描述',
+  `rule_val` varchar(255) NOT NULL DEFAULT '' COMMENT '规则唯一英文标识,全小写',
+  `pid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '父类ID',
+  `update_time` int(11) DEFAULT NULL COMMENT '账户最后更新时间',
+  `delete_time` int(11) DEFAULT NULL COMMENT '软删除',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限规则表';
+
+-- ----------------------------
+-- Records of auth_rule
+-- ----------------------------
+INSERT INTO `auth_rule` (`id`, `title`, `rule_val`, `pid`, `update_time`, `delete_time`)
+VALUES
+  (1,'内容管理','admin/index/index',0,1484209924,NULL),
+  (2,'用户管理','admin/user/index',0,1484145913,NULL);
+
+-- ----------------------------
+-- Table structure for user_role
+-- 定义用户角色表
+-- ----------------------------
+DROP TABLE IF EXISTS `user_role`;
+
+CREATE TABLE `user_role`(
+  `uid` SMALLINT unsigned NOT NULL COMMENT 'user id',
+  `role_id` SMALLINT unsigned NOT NULL COMMENT 'role id',
+  KEY `user_id` (`uid`),
+  KEY `role_id` (`role_id`)
+);
+
+-- ----------------------------
+-- Records of user_role
+-- ----------------------------
+INSERT INTO `user_role` (`uid`, `role_id`)
+VALUES
+  (1,1);
+
+-- ----------------------------
+-- Table structure for role_access
+-- 定义角色权限表
+-- ----------------------------
+DROP TABLE IF EXISTS `role_access`;
+
+CREATE TABLE `role_access` (
+  `role_id` mediumint(8) unsigned NOT NULL COMMENT '角色',
+  `rule_id` mediumint(8) unsigned NOT NULL COMMENT '规则唯一英文标识,全小写',
+  KEY `role_id` (`role_id`),
+  KEY `rule_name` (`rule_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限授权表';
+-- ----------------------------
+-- Records of role_access
+-- ----------------------------
+INSERT INTO `role_access` (`role_id`, `rule_id`)
+VALUES
+  (2,3),
+  (2,1),
+  (3,2),
+  (1,1),
+  (1,2),
+  (1,3);
 
 -- ----------------------------
 -- Table structure for staffs
@@ -42,7 +136,7 @@ CREATE TABLE `staffs` (
   `depart` varchar(20) NOT NULL,
   `is_on` int(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of staffs
@@ -74,7 +168,7 @@ CREATE TABLE `plan` (
   `act_par` int(4) NOT NULL,
   `pers_in_char` varchar(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of plan
@@ -102,81 +196,10 @@ CREATE TABLE `edu_notes`(
   `title` varchar(200) NOT NULL,
   `content` mediumtext NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of edu_notes
 -- ----------------------------
 INSERT INTO `edu_notes` VALUES ('1', '2007-12-04', '900#', '张三', '办公自动化管理系统的开发', '办公自动化管理系统的开发办公自动化管理系统的开发办公自动化管理系统的开发办公自动化管理系统的开发办公自动化管理系统的开发办公自动化管理系统的开发');
 
--- ----------------------------
--- Table structure for auth_rule
--- 定义权限规则
--- ----------------------------
-DROP TABLE IF EXISTS `auth_rule`;
-
-CREATE TABLE `auth_rule` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '规则id,自增主键',
-  `title` varchar(20) NOT NULL DEFAULT '' COMMENT '规则中文描述',
-  `rule_val` varchar(255) NOT NULL DEFAULT '' COMMENT '规则唯一英文标识,全小写',
-  `pid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '父类ID',
-  `update_time` int(11) DEFAULT NULL COMMENT '账户最后更新时间',
-  `delete_time` int(11) DEFAULT NULL COMMENT '软删除',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='权限规则表';
-
--- ----------------------------
--- Records of auth_rule
--- ----------------------------
-INSERT INTO `auth_rule` (`id`, `title`, `rule_val`, `pid`, `update_time`, `delete_time`)
-VALUES
-  (1,'内容管理','admin/index/index',0,1484209924,NULL),
-  (2,'用户管理','admin/user/index',0,1484145913,NULL);
-
--- ----------------------------
--- Table structure for role
--- 角色
--- ----------------------------
-DROP TABLE IF EXISTS `role`;
-
-CREATE TABLE `role` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) NOT NULL COMMENT '角色名称',
-  `pid` smallint(6) DEFAULT NULL COMMENT '父角色ID',
-  `status` tinyint(1) unsigned DEFAULT NULL COMMENT '状态',
-  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
-  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  PRIMARY KEY (`id`),
-  KEY `parentId` (`pid`),
-  KEY `status` (`status`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='角色表';
-
--- ----------------------------
--- Records of role
--- ----------------------------
-INSERT INTO `role` (`id`, `name`, `pid`, `status`, `remark`, `create_time`, `update_time`)
-VALUES
-  (1,'超级管理员1',0,1,'网站最高管理员权限！',1329633709,1329633709),
-  (2,'测试角色',NULL,0,'测试角色',1482389092,0);
--- ----------------------------
--- Table structure for auth_access
--- 定义用户所属的角色
--- ----------------------------
-DROP TABLE IF EXISTS `auth_access`;
-
-CREATE TABLE `auth_access` (
-  `role_id` mediumint(8) unsigned NOT NULL COMMENT '角色',
-  `rule_id` mediumint(8) unsigned NOT NULL COMMENT '规则唯一英文标识,全小写',
-  KEY `role_id` (`role_id`),
-  KEY `rule_name` (`rule_id`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='权限授权表';
--- ----------------------------
--- Records of auth_access
--- ----------------------------
-INSERT INTO `auth_access` (`role_id`, `rule_id`)
-VALUES
-  (2,3),
-  (1,2),
-  (2,1),
-  (3,2);
