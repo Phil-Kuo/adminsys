@@ -41,13 +41,13 @@ class AuthUsers extends Base
      */
     public function edit($id = 0){
         if (intval($id) < 0){
-            // 报错
             return info(lang("Data ID excepetion"),0);
         }
+/*        //检查权限
         if (intval($id == 1)){
             //报错
             return info(lang('Edit without authorization'), 0);
-        }
+        }*/
         $roleData = model('AuthRoles')->getKvData();
         $this->assign('roleData', $roleData);
         $data = model('AuthUsers')->get(['id' =>$id]);

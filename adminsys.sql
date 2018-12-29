@@ -44,8 +44,8 @@ CREATE TABLE `auth_roles` (
 -- ----------------------------
 INSERT INTO `auth_roles` (`id`, `name`, `pid`, `status`, `remark`, `create_time`, `update_time`)
 VALUES
-  (1,'超级管理员1',0,1,'网站最高管理员权限！',1329633709,1329633709),
-  (2,'测试角色',NULL,0,'测试角色',1482389092,0);
+  (1,'Super',0,1,'网站最高管理员权限！',1329633709,1329633709),
+  (2,'admin',1,1,'管理员',1482389092,0);
 
 -- ----------------------------
 -- Table structure for auth_rule

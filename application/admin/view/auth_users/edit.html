@@ -31,9 +31,10 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <!-- username -->
+
                                 <div class="form-group">
                                     <label for="username">Username</label>
-                                    <input type="text" class="form-control" id="username" placeholder="Enter Username">
+                                    <input type="text" class="form-control" id="username" placeholder="Enter Username" value="{$data.username}">
                                 </div>
                                 <!-- password -->
                                 <div class="form-group">
@@ -45,9 +46,9 @@
                                 <div class="form-group">
                                     <label>Role</label>
                                     <select class="form-control">
-                                        <option>Administrator</option>
-                                        <option>Ordinary</option>
-                                        <option>Anonymity</option>
+                                        {volist name="roleData" key="key" id="role"}
+                                        <option value="{$key}">{$role}</option>
+                                        {/volist}
                                     </select>
                                 </div>
                                 <!-- Status -->
