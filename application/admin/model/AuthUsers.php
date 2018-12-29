@@ -7,6 +7,7 @@
  */
 namespace app\admin\model;
 
+use function PHPSTORM_META\type;
 use traits\model\SoftDelete;
 
 class AuthUsers extends Base
@@ -51,23 +52,20 @@ class AuthUsers extends Base
         if(empty($data) && is_array($data)) {
             return $data;
         }
-
         foreach ($data as $key => $value) {
-            $data[$key]['create_time'] = date('Y-m-d H:i:s',$value['create_time']);
-            $data[$key]['status'] = $value['status'] == 1 ? lang('Start') : lang('Off');
+            $data[$key]['status'] = $value['status'] == 1 ? lang('Enable') : lang('Disable');
         }
-
         return $data;
     }
 
     /**
      * 用户列表
      * */
-    public function getList( $request )
+    public function getList()
     {
-        $request = $this->fmtRequest( $request );
-        $data = $this->order('create_time desc')->where( $request['map'] )->limit($request['offset'], $request['limit'])->select();
-        return $this->_fmtData( $data );
+        $data =$this->order('create_time desc')->select(); // 返回结果为二维数组
+        $data = $this->_fmtData( $data );
+        return $data;
     }
 
     /**

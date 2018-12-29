@@ -13,33 +13,25 @@ namespace app\admin\controller;
  */
 class AuthUsers extends Base
 {
+    function _initialize()
+    {
+        parent::_initialize();
+    }
+
     /**
      * 用户列表
      */
     public function index(){
+        $data = model('AuthUsers')->getList();
+        $this->assign('data',$data);
         return view();
-    }
-
-    /**
-     * 异步获取列表数据
-     * @return mixed
-     */
-    public function getList()
-    {
-//        if(!request()->isAjax()) {
-//            $this->error(lang('Request type error'), 4001);
-//        }
-
-        $request = request()->param();
-        $data = model('Users')->getList( $request );
-        return $data;
     }
 
     /**
      * 添加用户
      * */
     public function add(){
-//        $roleData = model('role')->getKvData();
+//        $roleData = model('AuthRole')->getKvData();
 //        $this->assign('roleData', $roleData);
         return $this->fetch('edit');
     }
@@ -56,9 +48,9 @@ class AuthUsers extends Base
             //报错
             return info(lang('Edit without authorization'), 0);
         }
-//        $roleData = model('Role')->getKvData();
-//        $this->assign('roleData', $roleData);
-        $data = model('Users')->get(['id' =>$id]);
+        $roleData = model('AuthRoles')->getKvData();
+        $this->assign('roleData', $roleData);
+        $data = model('AuthUsers')->get(['id' =>$id]);
         $this->assign('data',$data);
         return $this->fetch();
     }
@@ -74,7 +66,7 @@ class AuthUsers extends Base
 
         $data = input('post.');
 //        var_dump($data);die;
-        return model('Users')->saveData( $data );
+        return model('AuthUsers')->saveData( $data );
     }
 
     /**
@@ -87,7 +79,7 @@ class AuthUsers extends Base
         if (intval($id == 1)) {
 //            return info(lang('Delete without authorization'), 0);
 //        }
-            return Loader::model('Users')->deleteById($id);
+            return Loader::model('AuthUsers')->deleteById($id);
         }
     }
 }

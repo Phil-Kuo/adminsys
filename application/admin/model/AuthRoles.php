@@ -15,10 +15,25 @@ class AuthRoles extends Base
     {
         return $this->where('status',1)->column('name','id');
     }
-    public function getList( $request )
+
+    /**
+     * 格式化数据
+     * */
+    private function _fmtData( $data )
     {
-        $request = $this->fmtRequest( $request );
-        return $this->order('create_time desc')->where( $request['map'] )->limit($request['offset'], $request['limit'])->select();
+        if(empty($data) && is_array($data)) {
+            return $data;
+        }
+        foreach ($data as $key => $value) {
+            $data[$key]['status'] = $value['status'] == 1 ? lang('Enable') : lang('Disable');
+        }
+        return $data;
+    }
+
+    public function getList()
+    {
+        $data = $this->order('create_time desc')->select();
+        return $this->_fmtData($data);
     }
     public function saveData( $data )
     {

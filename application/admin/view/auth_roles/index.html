@@ -9,7 +9,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">System Settings</a></li>
-                        <li class="breadcrumb-item active">Users Lists</li>
+                        <li class="breadcrumb-item active">Roles Lists</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -23,7 +23,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">账号列表</h3>
+                            <h3 class="card-title">角色列表</h3>
 
                             <div class="card-tools">
                                 <div class="input-group input-group-sm" style="width: 150px;">
@@ -40,23 +40,21 @@
                             <table class="table table-hover table-valign-middle">
                                 <tr>
                                     <th></th>
-                                    <th>User</th>
-                                    <th>Status</th>
                                     <th>Role</th>
+                                    <th>Status</th>
                                     <th>Create time</th>
                                     <th>Remarks</th>
                                     <th>Options</th>
                                 </tr>
 
-                                {volist name='data' id='user'}
+                                {volist name='data' id='role'}
                                 <tr>
                                     <td><img src="/static/img/default-150x150.png" alt="Product 1" class="img-circle img-size-32 mr-2"></td>
-                                    <td>{$user.username}</td>
-                                    <td>{$user.status}</td>
-                                    <td><span class="tag tag-success">Administrator</span></td>
-                                    <td>{$user.create_time}</td>
-                                    <td>拥有所有权限</td>
-                                    <td><a href="{:url('admin/AuthUsers/edit')}" class="mr-3"><i class="fa fa-edit"></i></a><a href=""><i class="fa fa-trash"></i></a></td>
+                                    <td>{$role.name}</td>
+                                    <td>{$role.status}</td>
+                                    <td>{$role.create_time}</td>
+                                    <td></td>
+                                    <td><a href="{:url('admin/AuthRoles/edit')}" class="mr-3"><i class="fa fa-edit"></i></a><a href=""><i class="fa fa-trash"></i></a></td>
                                 </tr>
                                 {/volist}
 

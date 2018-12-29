@@ -25,18 +25,9 @@ class AuthRoles extends Base
      * 角色列表
      */
     public function index(){
+        $data = model('AuthRoles')->getList();
+        $this->assign('data',$data);
         return view();
-    }
-
-    public function getList()
-    {
-        if(!request()->isAjax()) {
-            $this->error(lang('Request type error'), 4001);
-        }
-
-        $request = request()->param();
-        $data = model('AuthRoles')->getList( $request );
-        return $data;
     }
 
     /**
@@ -66,7 +57,6 @@ class AuthRoles extends Base
         $data = input('post.');
         model('AuthRule')->saveData($data);
         $this->success(lang('Save success'));
-
     }
     /**
      * 删除
