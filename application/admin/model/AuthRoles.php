@@ -14,7 +14,7 @@ class AuthRoles extends Base
     /**
      * 获取状态为启用的所有角色
      */
-    public function getKvData()
+    public function getRolesName()
     {
         return $this->where('status',1)->column('name','id');
     }

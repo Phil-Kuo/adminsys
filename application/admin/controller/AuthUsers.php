@@ -8,6 +8,7 @@
 
 namespace app\admin\controller;
 
+//use think\Loader;
 /**
  * 用户管理
  */
@@ -31,8 +32,8 @@ class AuthUsers extends Base
      * 添加用户
      * */
     public function add(){
-//        $roleData = model('AuthRole')->getKvData();
-//        $this->assign('roleData', $roleData);
+        $roleData = model('AuthRoles')->getRolesName();
+        $this->assign('roleData', $roleData);
         return $this->fetch('edit');
     }
 
@@ -48,7 +49,7 @@ class AuthUsers extends Base
             //报错
             return info(lang('Edit without authorization'), 0);
         }*/
-        $roleData = model('AuthRoles')->getKvData();
+        $roleData = model('AuthRoles')->getRolesName();
         $this->assign('roleData', $roleData);
         $data = model('AuthUsers')->get(['id' =>$id]);
         $this->assign('data',$data);
@@ -59,10 +60,7 @@ class AuthUsers extends Base
      * 保存
      * */
     public function saveData(){
-        $this->mustCheckRule( 'admin/users/edit' );
-        if(!request()->isAjax()) {
-            return info(lang('Request type error'));
-        }
+        $this->mustCheckRule( 'admin/auth_users/edit' );
 
         $data = input('post.');
 //        var_dump($data);die;
@@ -76,10 +74,9 @@ class AuthUsers extends Base
         if(empty($id)){
             return info(lang('Data ID exception'), 0);
         }
-        if (intval($id == 1)) {
+//        if (intval($id == 1)) {
 //            return info(lang('Delete without authorization'), 0);
 //        }
-            return Loader::model('AuthUsers')->deleteById($id);
-        }
+            return model('AuthUsers')->deleteById($id);
     }
 }

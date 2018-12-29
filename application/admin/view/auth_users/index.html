@@ -26,9 +26,12 @@
                             <h3 class="card-title">账号列表</h3>
 
                             <div class="card-tools">
-                                <div class="input-group input-group-sm" style="width: 150px;">
-                                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+<!--                                <div>
+                                    <a href="{:url('admin/AuthUsers/add')}"><i class="fa fa-adn"></i>新增</a>
+                                </div>-->
 
+                                <div class="input-group input-group-sm" >
+                                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
                                     <div class="input-group-append">
                                         <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                                     </div>
@@ -56,7 +59,7 @@
                                     <td><span class="tag tag-success">Administrator</span></td>
                                     <td>{$user.create_time}</td>
                                     <td>拥有所有权限</td>
-                                    <td><a href="{:url('admin/AuthUsers/edit',['id'=>$user.id])}" class="mr-3"><i class="fa fa-edit"></i></a><a href=""><i class="fa fa-trash"></i></a></td>
+                                    <td><a href="{:url('admin/AuthUsers/edit',['id'=>$user.id])}" class="mr-3"><i class="fa fa-edit"></i></a><a href="{:url('admin/AuthUsers/delete',['id'=>$user.id])}"><i class="fa fa-trash"></i></a></td>
                                 </tr>
                                 {/volist}
 

@@ -26,6 +26,9 @@
                             <h3 class="card-title">角色列表</h3>
 
                             <div class="card-tools">
+                                <!--                                <div>
+                                    <a href="{:url('admin/AuthUsers/add')}"><i class="fa fa-adn"></i>新增</a>
+                                </div>-->
                                 <div class="input-group input-group-sm" style="width: 150px;">
                                     <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
 
@@ -54,7 +57,7 @@
                                     <td>{$role.status}</td>
                                     <td>{$role.create_time}</td>
                                     <td></td>
-                                    <td><a href="{:url('admin/AuthRoles/edit')}" class="mr-3"><i class="fa fa-edit"></i></a><a href=""><i class="fa fa-trash"></i></a></td>
+                                    <td><a href="{:url('admin/AuthRoles/edit',['id'=>$role.id])}" class="mr-3"><i class="fa fa-edit"></i></a><a href="{:url('admin/AuthRoles/delete',['id'=>$role.id])}"><i class="fa fa-trash"></i></a></td>
                                 </tr>
                                 {/volist}
 

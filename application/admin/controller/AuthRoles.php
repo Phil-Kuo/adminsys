@@ -41,9 +41,8 @@ class AuthRoles extends Base
      * 编辑
      */
     public function edit($id = 0){
-        $id =input('id','','intval');
-        $data = model('AuthRoles')->get(['id'=>$id]);
-        $this->assign('data',$data);
+        $roleData = model('AuthRoles')->get(['id'=>$id]);
+        $this->assign('data',$roleData);
         return view();
     }
 
