@@ -46,7 +46,7 @@
                                     <th>User</th>
                                     <th>Status</th>
                                     <th>Role</th>
-                                    <th>Create time</th>
+                                    <th>Update time</th>
                                     <th>Remarks</th>
                                     <th>Options</th>
                                 </tr>
@@ -57,7 +57,7 @@
                                     <td>{$user.username}</td>
                                     <td>{$user.status}</td>
                                     <td><span class="tag tag-success">Administrator</span></td>
-                                    <td>{$user.create_time}</td>
+                                    <td>{$user.update_time}</td>
                                     <td>拥有所有权限</td>
                                     <td><a href="{:url('admin/AuthUsers/edit',['id'=>$user.id])}" class="mr-3"><i class="fa fa-edit"></i></a><a href="{:url('admin/AuthUsers/delete',['id'=>$user.id])}"><i class="fa fa-trash"></i></a></td>
                                 </tr>

@@ -66,10 +66,13 @@ CREATE TABLE `auth_rule` (
 -- ----------------------------
 -- Records of auth_rule
 -- ----------------------------
-INSERT INTO `auth_rule` (`id`, `title`, `rule_val`, `pid`, `update_time`, `delete_time`)
+INSERT INTO `auth_rule` (`id`, `title`, `rule_val`, `pid`, `update_time`)
 VALUES
-  (1,'内容管理','admin/index/index',0,1484209924,NULL),
-  (2,'用户管理','admin/user/index',0,1484145913,NULL);
+  (1,'内容管理','admin/index/index',0,1484209924),
+  (2,'用户管理','admin/auth_users/index',0,1484145913),
+  (3,'用户编辑','admin/auth_users/edit',0,1484145913),
+  (4,'角色管理','admin/auth_roles/index',0,1484145913),
+  (5,'角色编辑','admin/auth_roles/edit',0,1484145913);
 
 -- ----------------------------
 -- Table structure for user_role
@@ -89,7 +92,7 @@ CREATE TABLE `user_role`(
 -- ----------------------------
 INSERT INTO `user_role` (`uid`, `role_id`)
 VALUES
-  (1,1);
+  (1,2);
 
 -- ----------------------------
 -- Table structure for role_access

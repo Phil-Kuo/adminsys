@@ -7,7 +7,6 @@
  */
 namespace app\admin\model;
 
-use function PHPSTORM_META\type;
 use traits\model\SoftDelete;
 
 class AuthUsers extends Base
@@ -115,22 +114,13 @@ class AuthUsers extends Base
         if(!$userValidate->scene('edit')->check($data)) {
             return info(lang($userValidate->getError()), 4001);
         }
-        $username = $this->where(['username'=>$data['username']])->where('id','neq',$data['id'])->value('username'); // 查询是否与原始数据库内用户名重名
-        if (!empty($username)){
-            return info(lang('Username already exists'), 0);
+        $flag = false; // 是否发生更新
+        $userChange = $this->allowField(true)->save($data,['id'=>$data['id']]);
+        $roleChange = model('UserRole')->allowField(true)->save($data,['uid'=>$data['id']]);
+        if($userChange || $roleChange){ // 一旦发生修改
+            $flag = true;
         }
-        if($data['pwd2'] != $data['pwd']){
-            return info(lang('The two passwords No match!'),0);
-        }
-        $data['update_time'] = time();
-        $data['pwd'] = md5($data['pwd']); // 对密码加密
-
-        $res = $this->allowField(true)->save($data,['id'=>$data['id']]);
-        if($res == 1){
-            return info(lang('Edit succeed'), 1);
-        }else{
-            return info(lang('Edit failed'), 0);
-        }
+        return $flag;
     }
 
     /**

@@ -27,25 +27,21 @@
             <div class="row">
                 <div class="col-md-12">
                     <!-- form start -->
-                    <form role="form">
+                    <form role="form" action="{:url('admin/AuthRoles/saveData')}" method="post">
                         <div class="row">
                             <div class="col-md-6">
+                                <input type="hidden" name="id" value="{$data.id ?? ''}">
                                 <!-- rolename -->
                                 <div class="form-group">
                                     <label for="rolename">Role</label>
-                                    <input type="text" class="form-control" id="rolename" placeholder="Enter Rolename" value="{$data.name?$data.name:''}">
-                                </div>
-                                <!-- password -->
-                                <div class="form-group">
-                                    <label for="pwd">Password</label>
-                                    <input type="password" class="form-control" id="pwd" placeholder="Enter Password">
+                                    <input type="text" class="form-control" id="rolename" name = 'name' placeholder="Enter Rolename" value="{$data.name ?? ''}">
                                 </div>
                                 <!-- Status -->
                                 <div class="form-group">
                                     <label>Status</label>
-                                    <select class="form-control">
-                                        <option>Enable</option>
-                                        <option>Disable</option>
+                                    <select class="form-control" name="status">
+                                        <option value="1">Enable</option>
+                                        <option value="0">Disable</option>
                                     </select>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Submit</button>

@@ -9,6 +9,8 @@
 namespace app\admin\controller;
 
 //use think\Loader;
+use think\Request;
+
 /**
  * 用户管理
  */
@@ -60,11 +62,16 @@ class AuthUsers extends Base
      * 保存
      * */
     public function saveData(){
-        $this->mustCheckRule( 'admin/auth_users/edit' );
+//        $this->mustCheckRule( 'admin/auth_users/edit' );
 
         $data = input('post.');
-//        var_dump($data);die;
-        return model('AuthUsers')->saveData( $data );
+//        dump($data);
+        $isUpdate = model('AuthUsers')->saveData( $data );
+        if ($isUpdate){
+            return $this->success('Edit Success!','index','',2);
+        }else{
+            return $this->error('Edit Failed!','index','',2);
+        }
     }
 
     /**

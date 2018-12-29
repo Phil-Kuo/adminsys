@@ -45,18 +45,16 @@ class AuthRoles extends Base
         } else {
             $info = $this->add( $data );
         }
-
         return $info;
     }
     public function edit( $data )
     {
-        $result = $this->where(['id'=>$data['id']])->update( $data );
+        $flag = true; // 是否发生更新
+        $result = $this->allowField(true)->save($data,['uid'=>$data['id']]);
         if( false === $result) {
-            $info = info(lang('Edit failed'), 0);
-        } else {
-            $info = info(lang('Edit succeed'), 1);
+            $flag = false;
         }
-        return $info;
+        return $flag;
     }
 
     public function add( $data )

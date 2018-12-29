@@ -43,6 +43,7 @@ class AuthRoles extends Base
     public function edit($id = 0){
         $roleData = model('AuthRoles')->get(['id'=>$id]);
         $this->assign('data',$roleData);
+//        $access = model('AuthRule')-
         return view();
     }
 
@@ -50,12 +51,16 @@ class AuthRoles extends Base
      * 保存数据
      * */
     public function saveData(){
-        if(!request()->isAjax()) {
-            return info(lang('Request type error'));
-        }
+        //        $this->mustCheckRule( 'admin/auth_roles/edit' );
+
         $data = input('post.');
-        model('AuthRule')->saveData($data);
-        $this->success(lang('Save success'));
+//        dump($data);
+        $isUpdate = model('AuthRoles')->saveData( $data );
+        if ($isUpdate){
+            return $this->success('Edit Success!','index','',2);
+        }else{
+            return $this->error('Edit Failed!','index','',2);
+        }
     }
     /**
      * 删除

@@ -24,6 +24,6 @@ class Users extends Validate
     protected $scene = [
         'add' => ['username','pwd'],
         'login' =>  ['username','pwd'],
-        'edit' => ['username', 'pwd']
+        'edit' => ['username']
     ];
 }

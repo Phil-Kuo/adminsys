@@ -27,25 +27,20 @@
             <div class="row">
                 <div class="col-md-12">
                     <!-- form start -->
-                    <form role="form">
+                    <form role="form" action="{:url('admin/AuthUsers/saveData')}" method="post">
                         <div class="row">
                             <div class="col-md-6">
+                                <input type="hidden" name="id" value="{$data.id ?? ''}">
                                 <!-- username -->
                                 <div class="form-group">
                                     <label for="username">Username</label>
-                                    <input type="text" class="form-control" id="username" placeholder="Enter Username" value="{$data.username?$data.username:''}">
+                                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter Username" value="{$data.username ?? ''}">
                                 </div>
-                                <!-- password -->
-                                <div class="form-group">
-                                    <label for="pwd">Password</label>
-                                    <input type="password" class="form-control" id="pwd" placeholder="Enter Password">
-                                </div>
-
                                 <!-- Role -->
                                 <div class="form-group">
                                     <label>Role</label>
-                                    <select class="form-control">
-                                        {volist name="roleData" key="key" id="role"}
+                                    <select class="form-control" name="role_id">
+                                        {volist name="roleData" id="role"}
                                         <option value="{$key}">{$role}</option>
                                         {/volist}
                                     </select>
@@ -53,9 +48,9 @@
                                 <!-- Status -->
                                 <div class="form-group">
                                     <label>Status</label>
-                                    <select class="form-control">
-                                        <option>Enable</option>
-                                        <option>Disable</option>
+                                    <select class="form-control" name="status">
+                                        <option value="1">Enable</option>
+                                        <option value="0">Disable</option>
                                     </select>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Submit</button>
