@@ -37,38 +37,43 @@ class AuthUsers extends Base
             return info(lang('You entered the account or password is incorrect, please again'), 5001);
         }
         $md_password = md5( $data['pwd'] ); // 密码加密
-        if( $userRow['pwd'] != $md_password ) {
+        if( $userRow['pwd'] != $md_password or $userRow['status']!=1 ) {
             return info(lang('You entered the account or password is incorrect, please again'), 5001);
         }
         return info(lang('Login succeed'), $code, '', $userRow);
     }
 
     /**
-     * 格式化数据
-     * */
-    private function _fmtData( $data )
+     * 对查询结果进行格式化
+     * @param array     $data
+     * @return array    格式化后的数据
+     */
+    private function fmtData( $data )
     {
         if(empty($data) && is_array($data)) {
             return $data;
         }
         foreach ($data as $key => $value) {
-            $data[$key]['status'] = $value['status'] == 1 ? lang('Enable') : lang('Disable');
+            $data[$key]['status'] = $value['status'] == 1 ? lang('Enable') : lang('Disable'); // 解释用户状态
         }
         return $data;
     }
 
     /**
-     * 用户列表
+     * 获取所有用户列表
+     * return array     包含模型对象的二维数组（或数据集对象）
      * */
     public function getList()
     {
-        $data =$this->order('create_time desc')->select(); // 返回结果为二维数组
-        $data = $this->_fmtData( $data );
+        $data =$this->order('id')->select(); // 返回结果为二维数组
+        $data = $this->fmtData( $data );
         return $data;
     }
 
     /**
-     * 保存
+     * 提交操作
+     * @param array     $data
+     * @return bool     true|false
      */
     public function saveData( $data )
     {
@@ -82,6 +87,8 @@ class AuthUsers extends Base
 
     /**
      * 新增
+     * @param array     $data
+     * @return array    mixed
      */
     public function add(array $data = [])
     {
@@ -108,13 +115,16 @@ class AuthUsers extends Base
     }
 
     /**
-     * 编辑*/
+     * 编辑
+     * @param array     $data
+     * @return bool    true|false
+     * */
     public function edit(array $data=[]){
         $userValidate = validate('Users');
         if(!$userValidate->scene('edit')->check($data)) {
             return info(lang($userValidate->getError()), 4001);
         }
-        $flag = false; // 是否发生更新
+        $flag = false; // 是否发生更新,但是这里存在一个问题：如何实现新增UserRole记录
         $userChange = $this->allowField(true)->save($data,['id'=>$data['id']]);
         $roleChange = model('UserRole')->allowField(true)->save($data,['uid'=>$data['id']]);
         if($userChange || $roleChange){ // 一旦发生修改
@@ -125,12 +135,15 @@ class AuthUsers extends Base
 
     /**
      * 删除
+     * @param $id
+     * @return mixed
      */
     public function deleteById($id)
     {
-        $result = AuthUsers::destroy($id); // 返回成功删除的记录条数；
+        $result = AuthUsers::destroy($id); // 成功删除的记录条数；
         if ($result > 0) {
             return info(lang('Delete succeed'), 1);
         }
     }
+
 }

@@ -24,7 +24,9 @@
         "topthink/think-queue": "1.*",
         "topthink/think-mongo": "1.*",
         "topthink/think-oracle": "1.*",
-        "topthink/think-migration": "1.*"
+        "topthink/think-migration": "1.*",
+        "zouxiang0639/thinkcms-auth": "^1.1",
+        "datatables.net/editor-php": "^1.8"
     },
     "autoload": {
         "psr-4": {

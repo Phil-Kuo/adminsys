@@ -12,6 +12,9 @@ use think\Session;
 
 class Index extends Base
 {
+    function _initialize(){
+        parent::_initialize();
+    }
     /**
      * 后台首页
      * */

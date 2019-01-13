@@ -1,0 +1,88 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">请假登记</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Register & Statistic</a></li>
+                        <li class="breadcrumb-item active">请假登记</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- content -->
+    <section class="content">
+        <!-- container-fluid -->
+        <div class="container-fluid">
+            <!-- users edit -->
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- form start -->
+                    <form role="form" action="{:url('admin/Leave/saveData')}" method="post">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="hidden" name="id" value="">
+                                <!-- 请假事由 -->
+                                <div class="form-group">
+                                    <label>请假类型</label>
+                                    <select class="form-control" name="reason">
+                                        <option value="1">病假</option>
+                                        <option value="2">出差</option>
+                                        <option value="3">休假</option>
+                                        <option value="4">事假</option>
+                                    </select>
+                                </div>
+                                <!-- Date and time range -->
+                                <div class="form-group">
+                                    <label>请假区间</label>
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-clock-o"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control float-right" id="reservationtime" name="period">
+                                    </div>
+                                    <!-- /.input group -->
+                                </div>
+                                <!-- /.form group -->
+                                <!-- 地点 -->
+                                <div class="form-group">
+                                    <label for="location">地点</label>
+                                    <input type="text" class="form-control" id="location" name="location" placeholder="Enter content" value="">
+                                </div>
+
+                                <!-- 备注 -->
+                                <div class="form-group">
+                                    <label for="remark">备注</label>
+                                    <input type="text" class="form-control" id="remark" name="remark" placeholder="Enter content" value="">
+                                </div>
+
+                                <!-- 请假人 -->
+                                <div class="form-group">
+                                    <label>请假人</label>
+                                    <select class="form-control" name="user_id">
+                                        <option value="1">张三</option>
+                                        <option value="2">李四</option>
+                                    </select>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>

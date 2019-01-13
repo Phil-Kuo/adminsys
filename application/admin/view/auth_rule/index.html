@@ -1,0 +1,76 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">System Settings</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">System Settings</a></li>
+                        <li class="breadcrumb-item active">Rule Lists</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">权限列表</h3>
+
+                            <div class="card-tools">
+                                <!--                                <div>
+                                                                    <a href="{:url('admin/AuthRule/add')}"><i class="fa fa-adn"></i>新增</a>
+                                                                </div>-->
+
+                                <div class="input-group input-group-sm" >
+                                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover table-valign-middle">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>权限名称</th>
+                                    <th>Level</th>
+                                    <th>路由</th>
+                                    <th>Update Time</th>
+                                    <th>Remarks</th>
+                                    <th>Options</th>
+                                </tr>
+
+                                {volist name='rule' id='route'}
+                                <tr>
+                                    <td>{$route.id}</td>
+                                    <td><i class="mr-2 fa {$route.icon}"></i>{$route.title}</td>
+                                    <td>{$route.level}</td>
+                                    <td>{$route.rule_val}</td>
+                                    <td>{$route.update_time}</td>
+                                    <td></td>
+                                    <td><a href="{:url('admin/AuthRule/edit',['id'=>$route.id])}" class="mr-3"><i class="fa fa-edit mr-2"></i>Edit</a><a href="{:url('admin/AuthRule/delete',['id'=>$route.id])}"><i class="fa fa-trash mr-2"></i>Delete</a></td>
+                                </tr>
+                                {/volist}
+
+
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div><!-- /.row -->
+        </div>
+    </section>
+</div>

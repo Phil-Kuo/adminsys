@@ -8,9 +8,6 @@
 
 namespace app\admin\controller;
 
-//use think\Loader;
-use think\Request;
-
 /**
  * 用户管理
  */
@@ -25,8 +22,11 @@ class AuthUsers extends Base
      * 用户列表
      */
     public function index(){
-        $data = model('AuthUsers')->getList();
-        $this->assign('data',$data);
+        // 获取用户列表
+        $userData = model('AuthUsers')->getList();
+        $this->assign('userData',$userData);
+
+        // 获取用户对应的角色信息
         return view();
     }
 

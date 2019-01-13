@@ -31,15 +31,13 @@ class Login extends Controller
         if (!empty($condition['username']) && !empty($condition['pwd']))
         {
             $result = model('AuthUsers')->login($condition); // 查找密码是否存在
-//            dump($result);
             if ($result['code']==1){
-                unset($result['data']['password']);
+                unset($result['data']['pwd']);
                 Session::set('userinfo',$result['data'],'admin');
                 return $this->redirect('index/index');
             }
-        }else{
-            return $this->error('登录失败，请重试！','index'); // 请填写账号密码
         }
+        return $this->error('登录失败，请重试！','index'); // 请填写账号密码
     }
 
     /**

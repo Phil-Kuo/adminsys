@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Role Edit</h1>
+                    <h1 class="m-0 text-dark">Role {$data.id ? 'Edit': 'Add'}</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -30,11 +30,16 @@
                     <form role="form" action="{:url('admin/AuthRoles/saveData')}" method="post">
                         <div class="row">
                             <div class="col-md-6">
-                                <input type="hidden" name="id" value="{$data.id ?? ''}">
+                                <input type="hidden" name="role_id" value="{$data.id ?? ''}">
                                 <!-- rolename -->
                                 <div class="form-group">
                                     <label for="rolename">Role</label>
                                     <input type="text" class="form-control" id="rolename" name = 'name' placeholder="Enter Rolename" value="{$data.name ?? ''}">
+                                </div>
+                                <!-- remarks -->
+                                <div class="form-group">
+                                    <label for="remarks">Remarks</label>
+                                    <input type="text" class="form-control" id="remarks" name = 'remark' placeholder="Enter Remarks" value="{$data.remark ?? ''}">
                                 </div>
                                 <!-- Status -->
                                 <div class="form-group">
@@ -43,6 +48,20 @@
                                         <option value="1">Enable</option>
                                         <option value="0">Disable</option>
                                     </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rules">权限</label>
+                                    <div id="rules">
+                                        {volist name="ruleData" id="rule"}
+                                        <label>
+                                            {in name="$rule.id" value="$accessChecked"}
+                                        <input type="checkbox" name="rule_id[]"  value="{$rule.id}" checked>{$rule.title}
+                                            {else}
+                                        <input type="checkbox" name="rule_id[]"  value="{$rule.id}">{$rule.title}
+                                            {/in}
+                                        </label>
+                                        {/volist}
+                                    </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>

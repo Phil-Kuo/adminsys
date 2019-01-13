@@ -1,0 +1,70 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Record</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">登统计</a></li>
+                        <li class="breadcrumb-item active">公差勤务</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">公差列表</h3>
+
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="train-plan" class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>业务牵头科</th>
+                                    <th>事由</th>
+                                    <th>时间</th>
+                                    <th>参与人</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {volist name='data' id='list' }
+                                <tr>
+                                    <td>{$list.id}</td>
+                                    <td>{$list.depart}</td>
+                                    <td>{$list.detail}</td>
+                                    <td>{$list.start}-{$list.end}</td>
+                                    <td>{$list.participant}</td>
+                                </tr>
+                                {/volist}
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>业务牵头科</th>
+                                    <th>事由</th>
+                                    <th>时间</th>
+                                    <th>参与人</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div><!-- /.row -->
+        </div>
+    </section>
+</div>

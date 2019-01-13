@@ -14,42 +14,14 @@ namespace app\admin\model;
 class UserAccess extends Base
 {
     /**
-     * 获取用户的所有角色
-     * param $uid 用户ID
+     * 获取用户所拥有的权限
+     * return 数组
      */
-    public function getRoleIds( $uid )
-    {
-        $role_ids = model('UserRole')->where(['uid'=>$uid])->value('role_id');
-        return $role_ids;
-    }
-
-    /**
-     * 获取角色所拥有的权限规则
-     * param $role_id 角色ID
-     */
-    public function getRuleVals( $role_id )
-    {
-        $rule_ids = model('RoleAccess')->where(['role_id'=>$role_id])->column('rule_id');
-        return model('AuthRule')->where('id', 'in', $rule_ids)->column('rule_val');
-    }
-
-    /**
-     * 获取用户所拥有的权限ID
-     */
-    public function getRuleIds($uid){
-        $role_ids  = $this->getRoleIds($uid);
-        $rule_ids = model('RoleAccess')->where(['role_id'=>$role_ids])->column('rule_id');
-        return $rule_ids;
-    }
-
-    /**
-     * 获取用户所拥有的权限规则
-     */
-    public function getAccess( $uid )
-    {
-        $role_ids  = $this->getRoleIds($uid);
-        $rule_vals = $this->getRuleVals($role_ids);
-        return $rule_vals;
+    public function getRuleVals($uid){
+        $role_id  = model('UserRole')->getRoleId($uid);
+        $rule_ids = model('RoleAccess')->getRuleId($role_id);
+        $rules = model('AuthRule')->where('id', 'in', $rule_ids)->column('rule_val');
+        return $rules;
     }
 
     public function saveData( $role_id, $data )

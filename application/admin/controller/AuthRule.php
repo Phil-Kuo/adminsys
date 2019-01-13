@@ -15,6 +15,8 @@ class AuthRule extends Base
      * 规则列表
      */
     public function index(){
+        $rule = model('AuthRule')->getList();
+        $this->assign('rule',$rule);
         return view();
     }
 
@@ -31,7 +33,7 @@ class AuthRule extends Base
     public function setAuth(){
         $levelData = model('AuthRule')->getLevelData();
         $this->assign('data', $levelData);
-        $ruler_ids = model('UserAccess')->getRulerIds($this->uid);
+        $ruler_ids = model('UserAccess')->getRuleIds($this->uid);
         $this->assign('rule_ids', $ruler_ids);
         return view();
     }
@@ -39,7 +41,7 @@ class AuthRule extends Base
     /**
      * 编辑规则
      */
-    public function edit($id=''){
+    public function edit($id){
         $data = model('AuthRule')->get(['id'=>$id]);
         $this->assign('data',$data);
         return view();
@@ -49,10 +51,7 @@ class AuthRule extends Base
      * 保存数据
      * */
     public function saveData(){
-        $this->mustCheckRule('admin/authrule/edit'); // 检查权限
-        if(!request()->isAjax()) {
-            return info(lang('Request type error'));
-        }
+//        $this->mustCheckRule('admin/authrule/edit'); // 检查权限
         $data = input('post.');
         model('AuthRule')->saveData($data);
         $this->success(lang('Save success'));

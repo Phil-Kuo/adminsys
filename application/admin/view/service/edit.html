@@ -1,0 +1,78 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">新增</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Register & Statistic</a></li>
+                        <li class="breadcrumb-item active">公差勤务</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- content -->
+    <section class="content">
+        <!-- container-fluid -->
+        <div class="container-fluid">
+            <!-- users edit -->
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- form start -->
+                    <form role="form" action="{:url('admin/Service/saveData')}" method="post">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="hidden" name="id" value="">
+
+                                <!-- Date and time range -->
+                                <div class="form-group">
+                                    <label>公差时间</label>
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-clock-o"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control float-right" id="reservationtime" name="interval">
+                                    </div>
+                                    <!-- /.input group -->
+                                </div>
+                                <!-- /.form group -->
+                                <!-- detail -->
+                                <div class="form-group">
+                                    <label for="detail">事由</label>
+                                    <input type="text" class="form-control" id="detail" name="detail" placeholder="Enter content" value="">
+                                </div>
+
+                                <!-- 下派单位 -->
+                                <div class="form-group">
+                                    <label for="dispatcher">下派单位</label>
+                                    <input type="text" class="form-control" id="depart" name="depart" placeholder="Enter content" value="">
+                                </div>
+                                <!-- 参与人 -->
+                                <div class="form-group">
+                                    <label>参与人</label>
+                                    <select class="form-control select2" multiple="multiple" data-placeholder="select" name="participant[]" >
+                                        <option value="1">张三</option>
+                                        <option value="2">李四</option>
+                                        <option value="3">王五</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>

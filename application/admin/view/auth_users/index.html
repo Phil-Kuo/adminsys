@@ -51,15 +51,15 @@
                                     <th>Options</th>
                                 </tr>
 
-                                {volist name='data' id='user'}
+                                {volist name='userData' id='user' key='k'}
                                 <tr>
                                     <td><img src="/static/img/default-150x150.png" alt="Product 1" class="img-circle img-size-32 mr-2"></td>
                                     <td>{$user.username}</td>
                                     <td>{$user.status}</td>
-                                    <td><span class="tag tag-success">Administrator</span></td>
+                                    <td><span class="tag tag-success"></span></td>
                                     <td>{$user.update_time}</td>
-                                    <td>拥有所有权限</td>
-                                    <td><a href="{:url('admin/AuthUsers/edit',['id'=>$user.id])}" class="mr-3"><i class="fa fa-edit"></i></a><a href="{:url('admin/AuthUsers/delete',['id'=>$user.id])}"><i class="fa fa-trash"></i></a></td>
+                                    <td></td>
+                                    <td><a href="{:url('admin/AuthUsers/edit',['id'=>$user.id]) }" class="mr-3"><i class="fa fa-edit mr-2"></i>Edit</a><a href="{:url('admin/AuthUsers/delete',['id'=>$user.id])}"><i class="fa fa-trash mr-2"></i>Delete</a></td>
                                 </tr>
                                 {/volist}
 

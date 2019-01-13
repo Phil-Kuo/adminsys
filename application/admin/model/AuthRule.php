@@ -12,13 +12,41 @@ namespace app\admin\model;
 class AuthRule extends Base
 {
     /**
-     * 获取列表规则
+     * 获取所有列表规则
      * */
-    public function getList($request){
-        $request = $this->fmtRequest($request);
-        return $this->where($request['map'])->limit($request['offset'],$request['limit'])->select();
+    public function getList(){
+        return $this->order('level')->select();
     }
 
+    /**
+     * 取出角色的所有权限
+     */
+    public function getAccessByRoleID($role_id){
+        // 取出role_id角色的所有权限ID
+        $map = ['role_id'=>$role_id];
+        $rule_id = model('RoleAccess')->where($map)->column('rule_id');
+
+        // 根据rule_id取出所有权限字段
+        $record = [];
+        if (!empty($rule_id)){
+            $record = $this->all($rule_id);
+        }
+//        dump($record);
+        return $record;
+    }
+
+    /**
+     * 通过ID获取权限
+     * @param array 权限ID值
+     * @return array 包含模型对象的二维数组（或数据集对象）
+     */
+    public function getAccessById(array $rule_id=[]){
+        $record = [];
+        if (!empty($rule_id)){
+            $record = $this->all($rule_id);
+        }
+        return $record;
+    }
     /**
      * 保存
      */
@@ -95,7 +123,7 @@ class AuthRule extends Base
     }
 
     /**
-     *
+     * 获取分级权限数据
      */
     public function getLevelData(){
         $data = $this->order('pid asc')->select();

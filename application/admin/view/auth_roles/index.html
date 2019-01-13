@@ -46,22 +46,20 @@
                                     <th>Role</th>
                                     <th>Status</th>
                                     <th>Update time</th>
-                                    <th>Remarks</th>
+                                    <th>权限</th>
                                     <th>Options</th>
                                 </tr>
 
-                                {volist name='data' id='role'}
+                                {volist name='roleData' id='role' key='k'}
                                 <tr>
                                     <td><img src="/static/img/default-150x150.png" alt="Product 1" class="img-circle img-size-32 mr-2"></td>
                                     <td>{$role.name}</td>
                                     <td>{$role.status}</td>
                                     <td>{$role.update_time}</td>
                                     <td></td>
-                                    <td><a href="{:url('admin/AuthRoles/edit',['id'=>$role.id])}" class="mr-3"><i class="fa fa-edit"></i></a><a href="{:url('admin/AuthRoles/delete',['id'=>$role.id])}"><i class="fa fa-trash"></i></a></td>
+                                    <td><a href="{:url('admin/AuthRoles/edit',['id'=>$role.id])}" class="mr-3"><i class="fa fa-edit mr-2"></i>Edit</a><a href="{:url('admin/AuthRoles/delete',['id'=>$role.id])}"><i class="fa fa-trash mr-2"></i>Delete</a></td>
                                 </tr>
                                 {/volist}
-
-
                             </table>
                         </div>
                         <!-- /.card-body -->
