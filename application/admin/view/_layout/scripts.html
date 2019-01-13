@@ -34,17 +34,18 @@
 <!-- date-range-picker -->
 {js  href="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js" /}
 {js  href="__PLUGINS__/daterangepicker/daterangepicker.js" /}
+<!-- Editor -->
+{js  href="__PLUGINS__/datatables/extensions/Editor/js/dataTables.editor.min.js" /}
+{js  href="__PLUGINS__/datatables/extensions/Editor/js/editor.bootstrap4.js" /}
 <!-- KeyTable -->
 {js  href="__PLUGINS__/datatables/extensions/KeyTable/js/dataTables.keyTable.min.js" /}
+{js  href="__PLUGINS__/datatables/extensions/KeyTable/js/keyTable.bootstrap4.min.js" /}
 <!-- Buttons -->
 {js  href="__PLUGINS__/datatables/extensions/Buttons/js/dataTables.buttons.min.js" /}
 {js  href="__PLUGINS__/datatables/extensions/Buttons/js/buttons.bootstrap4.js" /}
 <!-- Select -->
 {js  href="__PLUGINS__/datatables/extensions/Select/js/dataTables.select.min.js" /}
 {js  href="__PLUGINS__/datatables/extensions/Select/js/select.bootstrap4.js" /}
-<!-- Editor -->
-{js  href="__PLUGINS__/datatables/extensions/Editor/js/dataTables.editor.min.js" /}
-{js  href="__PLUGINS__/datatables/extensions/Editor/js/editor.bootstrap4.js" /}
 <script>
     // 初始化echarts实例
     var barChart = echarts.init(document.getElementById('bar-chart'));
@@ -108,7 +109,7 @@
 <!-- page script -->
 <script>
     var editor;
-    $(function () {
+    $(document).ready(function() {
         $('#train-plan').DataTable({});
         $('#technical-data').DataTable({});
 
@@ -119,61 +120,101 @@
                                     // true时，点击分页页码就会每次都到后台提取数据。
         });
         editor = new $.fn.dataTable.Editor( {
-            ajax:'{:url()}',
-            table:'#plan_list',
-            field:[
-                {
-                    label:'Start_time:',
-                    name:'start_time',
-                }
-            ],
-            formOptions:{
-                inline:{
-                    onblur:'submit',
-                }
-            }
-        });
-        $('#plan_list').DataTable({
-            ajax: {
+            ajax:{
                 url: '{:url("admin/TrainPlan/getData")}',
                 type: 'POST',
             },
-            // columns: [
-            //     {
-            //         data: null,
-            //         defaultContent: '',
-            //         className: 'select-checkbox',
-            //         orderable: false
-            //     },
-            //     {data: 'start_time'},
-            //     {data: 'duration'},
-            //     {data: 'category'},
-            //     {data: 'content'},
-            //     {data: 'organization'},
-            //     {data: 'expt_par'},
-            //     {data: 'pers_in_char'},
-            //     {data: 'location'},
-            //     {data: 'remark'},
-            // ],
-            // order: [1, 'asc'],
-            // keys: {
-            //     columns: ':not(:first-child)',
-            //     keys: [9],
-            //     editor: editor,
-            //     editOnFocus: true,
-            // },
-            // select: {
-            //     style: 'os',
-            //     selector: 'td:first-child'
-            // },
-            // buttons: [
-            //     {extend: "create", editor: editor},
-            //     {extend: "edit", editor: editor},
-            //     {extend: "remove", editor: editor}
-            // ],
-            serverSide: false,      // 是否开启服务器模式
-                                    // false时，会一次性查询所有的数据，dataTables帮我们完成分页等。
-                                    // true时，点击分页页码就会每次都到后台提取数据。
+            table:'#plan_list',
+            fields:[{
+                label: 'Start time:',
+                name: 'start_time',
+                type:  'datetime',
+                format: 'hh:mm a',
+            }, {
+                label: 'End time:',
+                name:'end_time',
+                type:  'datetime',
+                format: 'hh:mm a',
+            }, {
+                label: 'Category:',
+                name:'category'
+            }, {
+                label: 'Content:',
+                name:'content'
+            }, {
+                label: 'Organization:',
+                name:'organization'
+            }, {
+                label: '应训人数',
+                name:'expt_par'
+            }, {
+                label: '负责人：',
+                name:'pers_in_char'
+            }, {
+                label: '地点：',
+                name:'location'
+            }, {
+                label: '备注：',
+                name:'remark'
+            }],
+            formOptions: {
+                inline: {
+                    onBlur: 'submit',
+                    onReturn: 'submit',
+                }
+            }
+        });
+
+        $('#plan_list').DataTable({
+            dom: 'Bfrtip',
+            ajax: {
+                url: '{:url("admin/TrainPlan/getData")}',
+            },
+            columns: [
+                {data: 'start_time'},
+                {data: 'end_time'},
+                {data: 'category'},
+                {
+                    data: 'content',
+                    orderable: false
+                },
+                {
+                    data: 'organization',
+                    orderable: false
+                },
+                {
+                    data: 'expt_par',
+                    orderable: false
+                },
+                {
+                    data: 'pers_in_char',
+                    orderable: false
+                },
+                {
+                    data: 'location',
+                    orderable: false
+                },
+                {
+                    data: 'remark',
+                    orderable: false
+                },
+            ],
+            order: [1, 'asc'],
+            select: true,
+            keys: {
+                columns: '',
+                keys:  [ "\t".charCodeAt(0) ],
+                editor: editor,
+                editOnFocus: true,
+            },
+            buttons: [
+                { extend: 'create', editor: editor },
+                { extend: 'edit',   editor: editor },
+                { extend: 'remove', editor: editor }
+            ],
+            // serverSide: false,      // 是否开启服务器模式
+            //                         // false时，会一次性查询所有的数据，dataTables帮我们完成分页等。
+            //                         // true时，点击分页页码就会每次都到后台提取数据。
         });
     });
 </script>
