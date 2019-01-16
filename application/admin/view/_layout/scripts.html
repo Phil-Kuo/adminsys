@@ -4,6 +4,7 @@
 {js href="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" /}
 <!-- Bootstrap 4 -->
 {js  href="__PLUGINS__/bootstrap/js/bootstrap.bundle.min.js" /}
+{js href="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" /}
 <!-- DataTables -->
 {js  href="__PLUGINS__/datatables/jquery.dataTables.js" /}
 {js  href="__PLUGINS__/datatables/dataTables.bootstrap4.js" /}
@@ -110,31 +111,29 @@
 <script>
     var editor;
     $(document).ready(function() {
-        $('#train-plan').DataTable({});
-        $('#technical-data').DataTable({});
-
-        $('#plan_maker').DataTable({
-            keys:true,
-            serverSide: false,      // 是否开启服务器模式
-                                    // false时，会一次性查询所有的数据，dataTables帮我们完成分页等。
-                                    // true时，点击分页页码就会每次都到后台提取数据。
-        });
+        // $('#train-plan').DataTable({});
+        // $('#technical-data').DataTable({});
+        //
+        // $('#plan_maker').DataTable({
+        //     keys:true,
+        //     serverSide: false,      // 是否开启服务器模式
+        //                             // false时，会一次性查询所有的数据，dataTables帮我们完成分页等。
+        //                             // true时，点击分页页码就会每次都到后台提取数据。
+        // });
         editor = new $.fn.dataTable.Editor( {
-            ajax:{
-                url: '{:url("admin/TrainPlan/getData")}',
-                type: 'POST',
-            },
+            ajax:'{:url("admin/TrainPlan/getData")}',
             table:'#plan_list',
+            idSrc: 'DT_RowId',
             fields:[{
                 label: 'Start time:',
                 name: 'start_time',
                 type:  'datetime',
-                format: 'hh:mm a',
+                format: 'h:mm A',
             }, {
                 label: 'End time:',
                 name:'end_time',
                 type:  'datetime',
-                format: 'hh:mm a',
+                format: 'h:mm A',
             }, {
                 label: 'Category:',
                 name:'category'
@@ -165,10 +164,12 @@
             }
         });
 
-        $('#plan_list').DataTable({
+        var table = $('#plan_list').DataTable({
             dom: 'Bfrtip',
-            ajax: {
+            rowId:'DT_RowId',
+            ajax:{
                 url: '{:url("admin/TrainPlan/getData")}',
+                type: 'POST',
             },
             columns: [
                 {data: 'start_time'},
@@ -208,14 +209,17 @@
                 editOnFocus: true,
             },
             buttons: [
-                { extend: 'create', editor: editor },
-                { extend: 'edit',   editor: editor },
-                { extend: 'remove', editor: editor }
+                { extend: "create", editor: editor },
+                { extend: "edit",   editor: editor },
+                { extend: "remove", editor: editor }
             ],
-            // serverSide: false,      // 是否开启服务器模式
+            serverSide: true,      // 是否开启服务器模式
             //                         // false时，会一次性查询所有的数据，dataTables帮我们完成分页等。
             //                         // true时，点击分页页码就会每次都到后台提取数据。
         });
+
+        table.buttons().container()
+            .appendTo( $('.col-md-6:eq(0)', table.table().container() ) );
     });
 </script>
 

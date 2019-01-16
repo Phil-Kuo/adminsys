@@ -7,6 +7,7 @@
  */
 
 namespace app\admin\controller;
+// DataTables PHP library
 
 use
     DataTables\Database,
@@ -18,8 +19,9 @@ use
     DataTables\Editor\Upload,
     DataTables\Editor\Validate,
     DataTables\Editor\ValidateOptions;
-
-use think\Db;
+include( VENDOR_PATH."autoload.php" );
+use think\Db,
+    think\Config;
 use think\Request;
 
 class TrainPlan extends Base
@@ -46,17 +48,26 @@ class TrainPlan extends Base
      * */
     public function getData(){
         // Build Editor instance and process the data coming from _POST
-        $db = new Database($this->sql_details);
+//        dump($_POST);
+        $db = new Database( $this->sql_details);
         Editor::inst( $db, 'train_plan' )
             ->fields(
                 Field::inst( 'start_time')
-                    ->validator( Validate::dateFormat( 'h:i a' ) )
-                    ->getFormatter( Format::dateSqlToFormat( 'h:i a' ) )
-                    ->setFormatter( Format::dateFormatToSql('H:i:s' ) ),
+                    ->validator( Validate::dateFormat(
+                        'g:i A',
+                        ValidateOptions::inst()
+                            ->allowEmpty( false )
+                    ) )
+                    ->getFormatter( Format::datetime( 'H:i:s', 'g:i A' ) )
+                    ->setFormatter( Format::datetime( 'g:i A', 'H:i:s' ) ),
                 Field::inst( 'end_time' )
-                    ->validator( Validate::dateFormat( 'h:i a' ) )
-                    ->getFormatter( Format::dateSqlToFormat( 'h:i a' ) )
-                    ->setFormatter( Format::dateFormatToSql('H:i:s' ) ),
+                    ->validator( Validate::dateFormat(
+                        'g:i A',
+                        ValidateOptions::inst()
+                            ->allowEmpty( false )
+                    ) )
+                    ->getFormatter( Format::datetime( 'H:i:s', 'g:i A' ) )
+                    ->setFormatter( Format::datetime( 'g:i A', 'H:i:s' ) ),
                 Field::inst( 'category' ),
                 Field::inst( 'content' ),
                 Field::inst( 'organization' ),
