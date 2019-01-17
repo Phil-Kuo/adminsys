@@ -124,38 +124,50 @@
             ajax:'{:url("admin/TrainPlan/getData")}',
             table:'#plan_list',
             idSrc: 'DT_RowId',
-            fields:[{
-                label: 'Start time:',
-                name: 'start_time',
-                type:  'datetime',
-                format: 'h:mm A',
-            }, {
-                label: 'End time:',
-                name:'end_time',
-                type:  'datetime',
-                format: 'h:mm A',
-            }, {
-                label: 'Category:',
-                name:'category'
-            }, {
-                label: 'Content:',
-                name:'content'
-            }, {
-                label: 'Organization:',
-                name:'organization'
-            }, {
-                label: '应训人数',
-                name:'expt_par'
-            }, {
-                label: '负责人：',
-                name:'pers_in_char'
-            }, {
-                label: '地点：',
-                name:'location'
-            }, {
-                label: '备注：',
-                name:'remark'
-            }],
+            fields:[
+                {
+                    label: 'Date: ',
+                    name: 'date',
+                    type:  'datetime',
+                    format: 'YYYY-MM-DD',
+                }, {
+                    label: 'Start time:',
+                    name: 'start_time',
+                    type:  'datetime',
+                    format: 'HH:mm',
+                    opts: {
+                        minutesIncrement: 5
+                    }
+                }, {
+                    label: 'End time:',
+                    name:'end_time',
+                    type:  'datetime',
+                    format: 'hh:mm',
+                    opts: {
+                        minutesIncrement: 5
+                    }
+                }, {
+                    label: 'Category:',
+                    name:'category'
+                }, {
+                    label: 'Content:',
+                    name:'content'
+                }, {
+                    label: 'Organization:',
+                    name:'organization'
+                }, {
+                    label: '应训人数',
+                    name:'expt_par'
+                }, {
+                    label: '负责人：',
+                    name:'pers_in_char'
+                }, {
+                    label: '地点：',
+                    name:'location'
+                }, {
+                    label: '备注：',
+                    name:'remark'
+                }],
             formOptions: {
                 inline: {
                     onBlur: 'submit',
@@ -172,6 +184,7 @@
                 type: 'POST',
             },
             columns: [
+                {data: 'date'},
                 {data: 'start_time'},
                 {data: 'end_time'},
                 {data: 'category'},
@@ -226,18 +239,18 @@
 <script>
     //iCheck for checkbox and radio inputs
     $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-    checkboxClass: 'icheckbox_minimal-blue',
-    radioClass   : 'iradio_minimal-blue'
+        checkboxClass: 'icheckbox_minimal-blue',
+        radioClass   : 'iradio_minimal-blue'
     })
     //Red color scheme for iCheck
     $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
-    checkboxClass: 'icheckbox_minimal-red',
-    radioClass   : 'iradio_minimal-red'
+        checkboxClass: 'icheckbox_minimal-red',
+        radioClass   : 'iradio_minimal-red'
     })
     //Flat red color scheme for iCheck
     $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-    checkboxClass: 'icheckbox_flat-green',
-    radioClass   : 'iradio_flat-green'
+        checkboxClass: 'icheckbox_flat-green',
+        radioClass   : 'iradio_flat-green'
     })
 </script>
 

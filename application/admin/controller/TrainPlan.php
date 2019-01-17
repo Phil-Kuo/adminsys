@@ -52,22 +52,36 @@ class TrainPlan extends Base
         $db = new Database( $this->sql_details);
         Editor::inst( $db, 'train_plan' )
             ->fields(
+                Field::inst( 'date' )
+                    ->validator( Validate::dateFormat(
+                        'Y-m-d',
+                        ValidateOptions::inst()
+                            ->allowEmpty( false )
+                    ) )
+                    ->getFormatter( Format::datetime(
+                        'Y-m-d',
+                        'Y-m-d'
+                    ) )
+                    ->setFormatter( Format::datetime(
+                        'Y-m-d',
+                        'Y-m-d'
+                    ) ),
                 Field::inst( 'start_time')
                     ->validator( Validate::dateFormat(
-                        'g:i A',
+                        'H:i',
                         ValidateOptions::inst()
                             ->allowEmpty( false )
                     ) )
-                    ->getFormatter( Format::datetime( 'H:i:s', 'g:i A' ) )
-                    ->setFormatter( Format::datetime( 'g:i A', 'H:i:s' ) ),
+                    ->getFormatter( Format::datetime( 'H:i:s', 'H:i ' ) )
+                    ->setFormatter( Format::datetime( 'H:i', 'H:i:s' ) ),
                 Field::inst( 'end_time' )
                     ->validator( Validate::dateFormat(
-                        'g:i A',
+                        'H:i',
                         ValidateOptions::inst()
                             ->allowEmpty( false )
                     ) )
-                    ->getFormatter( Format::datetime( 'H:i:s', 'g:i A' ) )
-                    ->setFormatter( Format::datetime( 'g:i A', 'H:i:s' ) ),
+                    ->getFormatter( Format::datetime( 'H:i:s', 'H:i' ) )
+                    ->setFormatter( Format::datetime( 'H:i', 'H:i:s' ) ),
                 Field::inst( 'category' ),
                 Field::inst( 'content' ),
                 Field::inst( 'organization' ),
