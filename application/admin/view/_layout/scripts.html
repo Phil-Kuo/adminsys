@@ -126,11 +126,6 @@
             idSrc: 'DT_RowId',
             fields:[
                 {
-                    label: 'Date: ',
-                    name: 'date',
-                    type:  'datetime',
-                    format: 'YYYY-MM-DD',
-                }, {
                     label: 'Start time:',
                     name: 'start_time',
                     type:  'datetime',
@@ -142,13 +137,28 @@
                     label: 'End time:',
                     name:'end_time',
                     type:  'datetime',
-                    format: 'hh:mm',
+                    format: 'HH:mm',
                     opts: {
                         minutesIncrement: 5
                     }
                 }, {
+                    label: 'Date: ',
+                    name: 'date',
+                    def: function () { return new Date(); },
+                    type:  'datetime',
+                    format: 'YYYY-MM-DD',
+                    opts:  {
+                        showWeekNumber: true
+                    }
+                }, {
                     label: 'Category:',
-                    name:'category'
+                    name:'category',
+                    type:  "select",
+                    options: [
+                        { label: "共同训练", value: "1" },
+                        { label: "专业技术训练", value: "2" },
+                        { label: "其他训练", value: "3" }
+                    ]
                 }, {
                     label: 'Content:',
                     name:'content'
@@ -187,7 +197,9 @@
                 {data: 'date'},
                 {data: 'start_time'},
                 {data: 'end_time'},
-                {data: 'category'},
+                {
+                    data: 'category',
+                },
                 {
                     data: 'content',
                     orderable: false
@@ -213,7 +225,7 @@
                     orderable: false
                 },
             ],
-            order: [1, 'asc'],
+            order: [0, 'asc'],
             select: true,
             keys: {
                 columns: '',
@@ -230,7 +242,9 @@
             //                         // false时，会一次性查询所有的数据，dataTables帮我们完成分页等。
             //                         // true时，点击分页页码就会每次都到后台提取数据。
         });
-
+        $('#addRow').on( 'click', function () {
+            table.row.add( ).draw(  );
+        } );
         table.buttons().container()
             .appendTo( $('.col-md-6:eq(0)', table.table().container() ) );
     });
