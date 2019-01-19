@@ -60,7 +60,7 @@ class TrainPlan extends Base
                     ) )
                     ->getFormatter( Format::datetime(
                         'Y-m-d',
-                        'Y-m-d'
+                        'm-d'
                     ) )
                     ->setFormatter( Format::datetime(
                         'Y-m-d',

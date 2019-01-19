@@ -128,6 +128,7 @@
                 {
                     label: 'Start time:',
                     name: 'start_time',
+                    def: function () { return new Date(); },
                     type:  'datetime',
                     format: 'HH:mm',
                     opts: {
@@ -136,6 +137,7 @@
                 }, {
                     label: 'End time:',
                     name:'end_time',
+                    def: function () { return new Date(); },
                     type:  'datetime',
                     format: 'HH:mm',
                     opts: {
@@ -167,7 +169,8 @@
                     name:'organization'
                 }, {
                     label: '应训人数',
-                    name:'expt_par'
+                    name:'expt_par',
+                    def: 30
                 }, {
                     label: '负责人：',
                     name:'pers_in_char'
