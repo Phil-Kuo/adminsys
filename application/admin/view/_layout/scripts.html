@@ -202,6 +202,13 @@
                 {data: 'end_time'},
                 {
                     data: 'category',
+                    render: function ( data, type, row) {
+                        switch (data){
+                            case '1': return '共同训练';
+                            case '2': return '专业技术训练';
+                            case '3': return '其他训练';
+                        }
+                    }
                 },
                 {
                     data: 'content',

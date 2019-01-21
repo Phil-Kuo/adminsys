@@ -82,14 +82,7 @@ class TrainPlan extends Base
                     ) )
                     ->getFormatter( Format::datetime( 'H:i:s', 'H:i' ) )
                     ->setFormatter( Format::datetime( 'H:i', 'H:i:s' ) ),
-                Field::inst( 'category' )
-                    ->getFormatter(function ($val, $data, $opts){
-                        switch ($val){
-                            case 1: return '共同训练';
-                            case 2: return '专业技术训练';
-                            case 3: return '其他训练';
-                        }
-                    }),
+                Field::inst( 'category' ),
                 Field::inst( 'content' ),
                 Field::inst( 'organization' ),
                 Field::inst( 'expt_par' ),
