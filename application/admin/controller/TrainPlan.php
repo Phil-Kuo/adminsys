@@ -57,14 +57,6 @@ class TrainPlan extends Base
                         'Y-m-d',
                         ValidateOptions::inst()
                             ->allowEmpty( false )
-                    ) )
-                    ->getFormatter( Format::datetime(
-                        'Y-m-d',
-                        'm-d'
-                    ) )
-                    ->setFormatter( Format::datetime(
-                        'Y-m-d',
-                        'Y-m-d'
                     ) ),
                 Field::inst( 'start_time')
                     ->validator( Validate::dateFormat(
@@ -72,7 +64,7 @@ class TrainPlan extends Base
                         ValidateOptions::inst()
                             ->allowEmpty( false )
                     ) )
-                    ->getFormatter( Format::datetime( 'H:i:s', 'H:i ' ) )
+                    ->getFormatter( Format::datetime( 'H:i:s', 'H:i' ) )
                     ->setFormatter( Format::datetime( 'H:i', 'H:i:s' ) ),
                 Field::inst( 'end_time' )
                     ->validator( Validate::dateFormat(

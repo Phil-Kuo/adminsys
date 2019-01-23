@@ -26,7 +26,8 @@
         "topthink/think-oracle": "1.*",
         "topthink/think-migration": "1.*",
         "zouxiang0639/thinkcms-auth": "^1.1",
-        "datatables.net/editor-php": "^1.8"
+        "datatables.net/editor-php": "^1.8",
+        "phpoffice/phpword": "v0.16.*"
     },
     "autoload": {
         "psr-4": {
