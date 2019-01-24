@@ -66,14 +66,7 @@ class TrainPlan extends Base
                     ) )
                     ->getFormatter( Format::datetime( 'H:i:s', 'H:i' ) )
                     ->setFormatter( Format::datetime( 'H:i', 'H:i:s' ) ),
-                Field::inst( 'end_time' )
-                    ->validator( Validate::dateFormat(
-                        'H:i',
-                        ValidateOptions::inst()
-                            ->allowEmpty( false )
-                    ) )
-                    ->getFormatter( Format::datetime( 'H:i:s', 'H:i' ) )
-                    ->setFormatter( Format::datetime( 'H:i', 'H:i:s' ) ),
+                Field::inst( 'duration' ),
                 Field::inst( 'category' ),
                 Field::inst( 'content' ),
                 Field::inst( 'organization' ),

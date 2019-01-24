@@ -147,14 +147,8 @@
                         minutesIncrement: 5
                     }
                 }, {
-                    label: '结束时间:',
-                    name:'end_time',
-                    // def: function () { return new Date(); },
-                    type:  'datetime',
-                    format: 'HH:mm',
-                    opts: {
-                        minutesIncrement: 5
-                    }
+                    label: '课时:',
+                    name: 'duration',
                 }, {
                     label: '类别:',
                     name:'category',
@@ -261,7 +255,10 @@
                     },
                 },
                 {data: 'start_time'},
-                {data: 'end_time'},
+                {
+                    data: 'duration',
+                    orderable: false
+                },
                 {
                     data: 'category',
                     // 输出训练类别
