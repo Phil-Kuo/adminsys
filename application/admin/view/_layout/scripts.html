@@ -49,6 +49,7 @@
 {js  href="__PLUGINS__/datatables/extensions/Select/js/select.bootstrap4.js" /}
 <!-- RowGroup -->
 {js href="__PLUGINS__/datatables/extensions/Rowgroup/js/rowGroup.bootstrap4.js" /}
+{js href="__PLUGINS__/datatables/extensions/Rowgroup/js/dataTables.rowGroup.min.js" /}
 <script>
     // 初始化echarts实例
     var barChart = echarts.init(document.getElementById('bar-chart'));
@@ -257,7 +258,7 @@
                         return type === "display" || type === "filter" ?
                             dateSplit[1] +'-'+ dateSplit[2]:
                             data;
-                    }
+                    },
                 },
                 {data: 'start_time'},
                 {data: 'end_time'},
@@ -297,7 +298,13 @@
                     orderable: false
                 },
             ],
-            order: [1, 'asc'],
+            search:{
+                search: ''
+            },
+            order: [[1, 'asc']],
+            /*rowGroup: {
+                dataSrc: 1
+            },*/
             keys: {
                 columns: ':not(:first-child)',
                 keys:  [ "\t".charCodeAt(0) ],
