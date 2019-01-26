@@ -20,31 +20,32 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">选择日期</h3>
+                            <h3 class="card-title">{$datePicked ?? " " }</h3>
 
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <!-- Date and time range -->
-                            <form class="form-group" action="{:url('admin/DailyRecord/edit')}" method="post">
-                                <label>选择日期:</label>
+                            <table id="daily_record" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>日期</th>
+                                    <th>类别</th>
+                                    <th>课时</th>
+                                    <th>内容</th>
+                                    <th>应到人数</th>
+                                    <th>实到人数</th>
+                                    <th>地点</th>
+                                    <th>备注</th>
+                                </tr>
+                                </thead>
+                                <tbody>
 
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fa fa-calendar"></i>
-                                        </span>
-                                    </div>
-                                    <input type="text" class="form-control float-right" id="datepicker" name="datepicked">
-                                    <div class="input-group-append">
-                                        <button type="submit" class="btn btn-primary">Go!</button>
-                                    </div>
-                                </div>
-                                <!-- /.input group -->
-                            </form>
+                                </tbody>
+                            </table>
                         </div>
                         <!-- /.card-body -->
                     </div>

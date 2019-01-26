@@ -20,12 +20,10 @@ use
     DataTables\Editor\ValidateOptions;
 include( VENDOR_PATH."autoload.php" );
 
+use think\Request;
+
 class DailyRecord extends Base
 {
-    public function index(){
-        return view();
-    }
-
     protected $sql_details = array(
         "type" => "Mysql",     // Database type: "Mysql", "Postgres", "Sqlserver", "Sqlite" or "Oracle"
         "user" => "root",          // Database user name
@@ -36,15 +34,26 @@ class DailyRecord extends Base
         "dsn"  => "charset=utf8",          // PHP DSN extra information. Set as `charset=utf8mb4` if you are using MySQL
     );
 
+    public function index(){
+        return view();
+    }
+
+    public function edit(){
+        $datePicked = $_POST['datepicked'];
+//        dump($datePicked);
+        $this->assign('datePicked',$datePicked);
+        return view();
+    }
+
     /**
      * 处理数据
      * */
-    public function getData(){
+    public function getData($date){
         // Build Editor instance and process the data coming from _POST
 
         $db = new Database( $this->sql_details);
         Editor::inst( $db, 'train_plan' )
-            ->where('date','2019-01-19')
+            ->where('date',$date)
             ->fields(
                 Field::inst( 'date' )
                     ->validator( Validate::dateFormat(
