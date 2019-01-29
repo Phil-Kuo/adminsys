@@ -355,7 +355,7 @@
     var editor;
     $(document).ready(function() {
         editor = new $.fn.dataTable.Editor( {
-            ajax:'{:url("admin/DailyRecord/getData")}',
+            ajax:'{:url("admin/DailyRecord/getData",["date"=>$datePicked ?? " " ])}',
             table:'#daily_record',
             fields:[
                 {
@@ -479,7 +479,7 @@
                     editor: editor,
                     text: '新增'
                 },
-                {
+                /*{
                     extend: 'selected',
                     text:   '编辑',
                     action: function () {
@@ -492,7 +492,7 @@
                                 'Save'
                         } );
                     }
-                },
+                },*/
                 {
                     extend: "remove",
                     editor: editor,

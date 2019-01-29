@@ -11,7 +11,7 @@
  Target Server Version : 50723
  File Encoding         : 65001
 
- Date: 19/01/2019 09:03:30
+ Date: 29/01/2019 21:12:08
 */
 
 SET NAMES utf8mb4;
@@ -246,25 +246,34 @@ CREATE TABLE `train_plan`  (
   `pers_in_char` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '负责人',
   `location` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '地点',
   `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
+  `duration` float(7, 1) NULL DEFAULT NULL COMMENT '课时（单位：小时）',
+  `act_par` int(4) NULL DEFAULT NULL COMMENT '实际参与人数',
+  `train_perct` float(3, 1) NULL DEFAULT NULL COMMENT '参与率',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of train_plan
 -- ----------------------------
-INSERT INTO `train_plan` VALUES (1, '2', '2019-01-13', '10:00:01', '11:00:00', '管理系统项目开发', '集中', 28, '张三', '900#', NULL);
-INSERT INTO `train_plan` VALUES (2, '2', '2019-01-13', '10:00:02', '11:00:00', '办公自动化管理系统的开发', '集中', 29, '王五', '900#', NULL);
-INSERT INTO `train_plan` VALUES (3, '2', '2019-01-12', '00:00:01', '20:30:00', '整理光盘', '单独', 22, '张三', '900#', NULL);
-INSERT INTO `train_plan` VALUES (4, '1', '2019-01-18', '22:28:06', '23:28:11', '工作计划工作', '集中', 28, '赵柳', '900#', '');
-INSERT INTO `train_plan` VALUES (5, '2', '2019-01-15', '09:30:00', '10:00:00', '开发图书管理系统', '集中', 20, '张三', '900#', NULL);
-INSERT INTO `train_plan` VALUES (6, '1', '2019-01-16', '09:30:00', '10:30:00', '测试办公自动化', '单独', 29, '王五', '900#', '');
-INSERT INTO `train_plan` VALUES (7, '3', '2019-01-17', '17:30:00', '18:00:00', '办公自动化程序', '集中', 29, '李四', '900#', NULL);
-INSERT INTO `train_plan` VALUES (8, '2', '2019-01-18', '00:00:03', '10:00:03', '博客系统开发', '单独', 30, '张三', '900#', NULL);
-INSERT INTO `train_plan` VALUES (9, '1', '2019-01-19', '17:30:00', '18:00:00', '办公自动化、个人博客等程序开发', '集中', 20, '张三', '900#', NULL);
-INSERT INTO `train_plan` VALUES (10, '1', '2019-01-19', '10:30:00', '18:00:00', '办公自动化、个人博客等程序开发', '集中', 20, '张三', '900#', NULL);
-INSERT INTO `train_plan` VALUES (11, '2', '2019-01-19', '12:15:22', '18:00:00', '办公自动化、个人博客等程序开发', '集中', 20, '张三', '900#', NULL);
-INSERT INTO `train_plan` VALUES (13, '1', '2019-01-18', '07:30:00', '11:15:00', 'OA系统的开发', '', 12, '', '', '');
-INSERT INTO `train_plan` VALUES (14, '1', '2019-01-19', '08:05:00', '08:10:00', '个人博客的开发', '集中', 3, '王武', '905', '');
+INSERT INTO `train_plan` VALUES (1, '2', '2019-01-23', '22:10:00', '11:10:00', '管理系统项目开发', '集中', 23, '张三', '900#', '', 1.5, 20, NULL);
+INSERT INTO `train_plan` VALUES (2, '2', '2019-01-23', '22:00:00', '11:00:00', '办公开发', '集中', 29, '王五', '900#', '', 5.0, 24, NULL);
+INSERT INTO `train_plan` VALUES (3, '3', '2019-01-23', '22:00:00', '20:30:00', '整理光盘', '单独', 22, '张三', '900#', '', 6.0, 19, NULL);
+INSERT INTO `train_plan` VALUES (4, '1', '2019-01-18', '22:28:00', '23:28:11', '工作计划工作', '集中', 28, '赵柳', '900#', '', 3.0, 24, NULL);
+INSERT INTO `train_plan` VALUES (5, '2', '2019-01-23', '22:05:00', '10:00:00', '开发图书管理系统', '集中', 20, '张三', '900#', '', 2.0, 28, NULL);
+INSERT INTO `train_plan` VALUES (6, '1', '2019-01-23', '09:30:00', '10:30:00', '测试办公自动化', '单独', 29, '王五', '900#', '', 1.0, 21, NULL);
+INSERT INTO `train_plan` VALUES (7, '2', '2019-01-16', '16:40:00', '18:00:00', '办公自动化程序', '集中', 29, '李四', '900#', '', 2.0, 30, NULL);
+INSERT INTO `train_plan` VALUES (8, '2', '2019-01-18', '00:00:03', '10:00:03', '博客系统开发', '单独', 30, '张三', '900#', NULL, 3.0, 32, NULL);
+INSERT INTO `train_plan` VALUES (9, '1', '2019-01-19', '17:30:00', '18:00:00', '个人博客程序开发', '集中', 20, '张三', '900#', NULL, 1.5, 15, NULL);
+INSERT INTO `train_plan` VALUES (10, '1', '2019-01-19', '10:30:00', '18:00:00', '办公自动化程序开发', '集中', 20, '张三', '900#', NULL, 4.0, 26, NULL);
+INSERT INTO `train_plan` VALUES (11, '2', '2019-01-19', '12:15:22', '18:00:00', '办公自动化', '集中', 20, '张三', '900#', NULL, 3.0, 29, NULL);
+INSERT INTO `train_plan` VALUES (13, '2', '2019-01-18', '07:30:00', '11:15:00', 'OA系统的开发', '集中', 22, '王武', '900#', '', 2.0, 18, NULL);
+INSERT INTO `train_plan` VALUES (14, '1', '2019-01-19', '08:05:00', '08:10:00', '个人博客的开发', '集中', 33, '王武', '905', '', 2.0, 31, NULL);
+INSERT INTO `train_plan` VALUES (15, '1', '2019-01-23', '22:35:00', '22:50:00', '清点人数', '集中', 30, '周其', '900', '', 1.0, 31, NULL);
+INSERT INTO `train_plan` VALUES (16, '1', '2019-01-25', NULL, NULL, '计划训练制定', NULL, 30, NULL, '000', '', 3.5, 30, NULL);
+INSERT INTO `train_plan` VALUES (17, '1', '2019-01-19', NULL, NULL, '买菜', '20', 30, '张三', '900#', '', 3.0, 30, NULL);
+INSERT INTO `train_plan` VALUES (18, '1', '2019-01-25', NULL, NULL, '做饭', NULL, 30, NULL, '宿舍', '', 4.0, 30, NULL);
+INSERT INTO `train_plan` VALUES (19, '1', '2019-01-29', '18:00:00', NULL, '巴拉巴拉小魔仙', '单独', 30, '王柳', '906', '', 3.0, NULL, NULL);
+INSERT INTO `train_plan` VALUES (20, '1', '2019-01-29', NULL, NULL, '', NULL, 30, NULL, '', '', 3.0, 30, NULL);
 
 -- ----------------------------
 -- Table structure for user_role

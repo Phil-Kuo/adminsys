@@ -20,7 +20,29 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
+                <div class="col-md-6">
+                    <!-- Choose Date -->
+                    <form class="form-group" action="{:url('admin/DailyRecord/edit')}" method="post">
+                        <label>选择日期:</label>
+
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                            </div>
+                            <input type="text" class="form-control float-right" id="datepicker" name="datepicked">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary">Go!</button>
+                            </div>
+                        </div>
+                        <!-- /.input group -->
+                    </form>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-12">
+
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">{$datePicked ?? " " }</h3>
