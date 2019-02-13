@@ -2,89 +2,28 @@
 /**
  * Created by PhpStorm.
  * User: Daly Dai
- * Date: 2019/1/24
- * Time: 20:44
+ * Date: 2019/2/13
+ * Time: 19:53
  */
 
 namespace app\admin\controller;
 
-use
-    DataTables\Database,
-    DataTables\Editor,
-    DataTables\Editor\Field,
-    DataTables\Editor\Format,
-    DataTables\Editor\Mjoin,
-    DataTables\Editor\Options,
-    DataTables\Editor\Upload,
-    DataTables\Editor\Validate,
-    DataTables\Editor\ValidateOptions;
-
-use PhpOffice\PhpSpreadsheet\Spreadsheet,
-    PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-
-use PhpOffice\PhpWord\TemplateProcessor,
-    PhpOffice\PhpWord\PhpWord,
+use PhpOffice\PhpWord\PhpWord,
     PhpOffice\PhpWord\IOFactory;
 include( VENDOR_PATH."autoload.php" );
 
 use think\Request;
 use think\Db;
 
-class DailyRecord extends Base
+class Statistic extends Base
 {
-    protected $sql_details = array(
-        "type" => "Mysql",     // Database type: "Mysql", "Postgres", "Sqlserver", "Sqlite" or "Oracle"
-        "user" => "root",          // Database user name
-        "pass" => "bingo",          // Database password
-        "host" => "localhost", // Database host
-        "port" => "",          // Database connection port (can be left empty for default)
-        "db"   => "adminsys",          // Database name
-        "dsn"  => "charset=utf8",          // PHP DSN extra information. Set as `charset=utf8mb4` if you are using MySQL
-    );
-
     public function index(){
         return view();
     }
-
-    public function edit(){
-        $datePicked = $_POST['datepicked'];
-//        dump($datePicked);
-        $this->assign('datePicked',$datePicked);
-        return view();
-    }
-
-    /**
-     * 处理数据
-     * */
-    public function getData($date){
-        // Build Editor instance and process the data coming from _POST
-
-        $db = new Database( $this->sql_details);
-        Editor::inst( $db, 'train_plan' )
-            ->where('date',$date)
-            ->fields(
-                Field::inst( 'date' )
-                    ->validator( Validate::dateFormat(
-                        'Y-m-d',
-                        ValidateOptions::inst()
-                            ->allowEmpty( false )
-                    ) ),
-                Field::inst( 'duration' ),
-                Field::inst( 'category' ),
-                Field::inst( 'content' ),
-                Field::inst( 'expt_par' ),
-                Field::inst( 'act_par' ),
-                Field::inst( 'location' ),
-                Field::inst( 'remark' )
-            )
-            ->process( $_POST )
-            ->json();
-    }
-
     /**
      * 导出数据到Word文档
      * */
-    public function exportWord(){
+    public function exportFile($startTime, $endTime){
         $startTime = '2019-01-22';
         $endTime = '2019-01-29';
         if (false){
@@ -168,29 +107,30 @@ class DailyRecord extends Base
 
     }
 
-        /**
-         *
-         * @param  [type] $arr [二维数组]
-         * @param  [type] $key [键名]
-         * @return [type]      [新的二维数组]
-         */
-        protected function array_group_by($arr, $key)
+    /**
+     *
+     * @param  [type] $arr [二维数组]
+     * @param  [type] $key [键名]
+     * @return [type]      [新的二维数组]
+     */
+    protected function array_group_by($arr, $key)
+    {
+        $grouped = array();
+        foreach ($arr as $value)
         {
-            $grouped = array();
-            foreach ($arr as $value)
-            {
-                $grouped[$value[$key]][] = $value;
-            }
-            if (func_num_args() > 2)
-            {
-                $args = func_get_args();
-                foreach ($grouped as $key => $value)
-                {
-                    $parms = array_merge($value, array_slice($args, 2, func_num_args()));
-                    $grouped[$key] = call_user_func_array('array_group_by', $parms);
-                }
-            }
-            return $grouped;
+            $grouped[$value[$key]][] = $value;
         }
+        // 没看懂一下代码
+        if (func_num_args() > 2)
+        {
+            $args = func_get_args();
+            foreach ($grouped as $key => $value)
+            {
+                $parms = array_merge($value, array_slice($args, 2, func_num_args()));
+                $grouped[$key] = call_user_func_array('array_group_by', $parms);
+            }
+        }
+        return $grouped;
+    }
 
 }
