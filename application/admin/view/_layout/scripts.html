@@ -537,7 +537,7 @@
 <script>
     var locale = {
         "format": 'YYYY-MM-DD',
-        "separator": " -222 ",
+        "separator": " — ",
         "applyLabel": "确定",
         "cancelLabel": "取消",
         "fromLabel": "起始时间",
@@ -550,6 +550,19 @@
     //Date range picker
     $('#daterange').daterangepicker({
         'locale': locale,
+        "showWeekNumbers": true,
+        "maxSpan": {
+            "days": 31
+        },
+        autoApply:true,
+        ranges: {
+            '今天': [moment(), moment()],
+            '过去7天': [moment().subtract(6, 'days'), moment()],
+            '过去30天': [moment().subtract(29, 'days'), moment()],
+            '本月': [moment().startOf('month'), moment().endOf('month')],
+            '上月': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        "alwaysShowCalendars": true,
     });
 </script>
 <script>
