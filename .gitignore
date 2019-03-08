@@ -4,3 +4,4 @@
 composer.lock
 *.log
 thinkphp
+public/static/result

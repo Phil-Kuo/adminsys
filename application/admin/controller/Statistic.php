@@ -23,15 +23,20 @@ class Statistic extends Base
     /**
      * 导出数据到Word文档
      * */
-    public function exportFile($startTime, $endTime){
-        $startTime = '2019-01-22';
-        $endTime = '2019-01-29';
+    public function exportFile(){
+        $dateRange = explode('—', $_POST['daterange']);
+        $startTime = $dateRange[0];
+        $endTime = $dateRange[1];
+
+        // 判断传入的时间是否有效
         if (false){
 
         }else{// 根据时间段查询数据
             $data = Db::query('SELECT * FROM train_plan WHERE date BETWEEN ? AND ? ORDER BY date, start_time',[$startTime, $endTime]);
+            $result = Db::query('SELECT SUM(duration*act_par) AS total_time FROM train_plan WHERE date BETWEEN ? AND ? GROUP BY category',[$startTime, $endTime]);
             $groupData = $this->array_group_by($data, $key='date');
 //            dump($groupData);
+//            dump($result);
         }
 
         $phpWord = new PhpWord();
@@ -105,6 +110,9 @@ class Statistic extends Base
         $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
         $objWriter->save('static/result/'.$startTime.'至'.$endTime.' 训练日登记.docx');
 
+        // 判断是否导出成功
+
+        return view('result');
     }
 
     /**

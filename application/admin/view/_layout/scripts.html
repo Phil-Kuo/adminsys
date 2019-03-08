@@ -174,9 +174,6 @@
                 }, {
                     label: '地点：',
                     name:'location'
-                }, {
-                    label: '备注：',
-                    name:'remark'
                 }],
             formOptions: {
                 inline: {
@@ -254,7 +251,10 @@
                             data;
                     },
                 },
-                {data: 'start_time'},
+                {
+                    data: 'start_time',
+                    orderable: false
+                },
                 {
                     data: 'duration',
                     orderable: false
@@ -268,7 +268,8 @@
                             case '2': return '专业技术训练';
                             case '3': return '其他训练';
                         }
-                    }
+                    },
+                    orderable: false
                 },
                 {
                     data: 'content',
@@ -288,10 +289,6 @@
                 },
                 {
                     data: 'location',
-                    orderable: false
-                },
-                {
-                    data: 'remark',
                     orderable: false
                 },
             ],
@@ -511,7 +508,7 @@
     });
 </script>
 
-<!-- DaterPick -->
+<!-- 日登记选择时间 -->
 <script>
     $( function() {
         // 修改为中文显示
@@ -534,6 +531,8 @@
         });
     } );
 </script>
+
+<!-- 月统计选择时间 -->
 <script>
     var locale = {
         "format": 'YYYY-MM-DD',
