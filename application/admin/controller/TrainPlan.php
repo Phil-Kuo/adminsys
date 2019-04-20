@@ -31,6 +31,7 @@ use think\Request;
 
 class TrainPlan extends Base
 {
+    // 数据库连接参数设置
     protected $sql_details = array(
         "type" => "Mysql",     // Database type: "Mysql", "Postgres", "Sqlserver", "Sqlite" or "Oracle"
         "user" => "root",          // Database user name
@@ -55,7 +56,15 @@ class TrainPlan extends Base
         // Build Editor instance and process the data coming from _POST
 
         $db = new Database( $this->sql_details);
+
         Editor::inst( $db, 'train_plan' )
+
+            ->where(function ($q){//查询当前日期的本周计划
+                $q->where(function ($r){
+                  $r->where('date', 'DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) - 6 DAY)', '<=', false); //周日
+                  $r->and_where('date', 'DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) + 1 DAY)', '>=', false); //周一
+                });
+            })
             ->fields(
                 Field::inst( 'date' )
                     ->validator( Validate::dateFormat(
@@ -85,38 +94,31 @@ class TrainPlan extends Base
 
     public function exportData(){
         //取出数据
-        /*$dateRange = explode('—', $_POST['daterange']);
+        $dateRange = explode('—', $_POST['daterange_plan']);
         $startTime = $dateRange[0];
-        $endTime = $dateRange[1];*/
-        $startTime = '2019-1-13';
-        $endTime = '2019-1-26';
+        $endTime = $dateRange[1];
 
         // 判断传入的时间是否有效
-        if (false){
+        if (empty($dateRange)){
 
         }else{// 根据时间段查询数据
             $data = Db::query('SELECT * FROM train_plan WHERE date BETWEEN ? AND ? ORDER BY date, start_time',[$startTime, $endTime]);
-//            $groupData = $this->array_group_by($data, $key='date');
-//            dump($groupData);
-//            dump($result);
-//            dump($data);
         }
 
         $numOfRows = count($data);
 
         $templateProcessor = new TemplateProcessor('static/templates/template_train_plan.docx');
 
-        $templateProcessor->cloneRow('start', $numOfRows);
         $intToCategory = ["1"=>"共同训练","2"=>"专业技术训练","3"=>"其他训练"];
         $intToWeekday = ["0"=>"日","1"=>"一","2"=>"二","3"=>"三","4"=>"四","5"=>"五","6"=>"六"];
 
         $year = date('Y', strtotime($startTime));
         $week = date('W', strtotime($startTime));
 
+        $templateProcessor->cloneRow('start', $numOfRows);
         $templateProcessor->setValue('year', $year);
         $templateProcessor->setValue('week', $week);
         for ($i=1;$i<=$numOfRows;$i++){
-
             $templateProcessor->setValue('date#'.$i, date('n月j日', strtotime($data[$i-1]['date'])));
             $templateProcessor->setValue('weekday#'.$i, $intToWeekday[date('w', strtotime($data[$i-1]['date']))]);
             $templateProcessor->setValue('start#'.$i, date('H:i', strtotime($data[$i-1]['start_time'])));

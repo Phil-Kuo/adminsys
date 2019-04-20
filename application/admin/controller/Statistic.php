@@ -24,7 +24,7 @@ class Statistic extends Base
      * 导出数据到Word文档
      * */
     public function exportFile(){
-        $dateRange = explode('—', $_POST['daterange']);
+        $dateRange = explode('—', $_POST['daterange_stat']);
         $startTime = $dateRange[0];
         $endTime = $dateRange[1];
 

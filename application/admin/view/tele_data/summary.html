@@ -1,0 +1,129 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Home</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{:url('admin/Index/index')}">Home</a></li>
+                        <li class="breadcrumb-item active">Dashboard v2</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+
+            <!-- 配线资料 -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">检索</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <!-- form start -->
+                            <form role="form" action="{:url('admin/TeleData/summary')}" method="post">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <!-- 号码 -->
+                                        <div class="form-group">
+                                            <label for="tel_number">号码</label>
+                                            <input type="text" class="form-control" id="tel_number" name="tel_number" placeholder="Enter content" value="">
+                                        </div>
+
+                                        <!-- 建筑 -->
+                                        <div class="form-group">
+                                            <label for="building">建筑</label>
+                                            <input type="text" class="form-control" id="building" name="building" placeholder="Enter content" value="">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Search</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">组别1资料</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="technical-data" class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>电话号码</th>
+                                    <th>何栋建筑</th>
+                                    <th>机房或弱电间</th>
+                                    <th>配线架类型</th>
+                                    <th>跳入端口</th>
+                                    <th>跳出端口</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {volist name='telData' id='tel'}
+                                {switch name="$tel.pid"}
+                                {case value="0"}
+                                <tr>
+                                    <td>{$tel.tel_number}</td>
+                                    <td>{$tel.building}</td>
+                                    <td>{$tel.location}</td>
+                                    <td>{$tel.type}</td>
+                                    <td>{$tel.entrance}</td>
+                                    <td>{$tel.jump_to}</td>
+                                    <td><a href="{:url('edit',['id'=>$tel.id])}"><i class="fa fa-edit"></i></a><a href="{:url('del')}"><i class="fa fa-trash ml-3"></i></a></td>
+                                </tr>
+                                {/case}
+                                {default /}
+                                <tr>
+                                    <td>---></td>
+                                    <td>{$tel.building}</td>
+                                    <td>{$tel.location}</td>
+                                    <td>{$tel.type}</td>
+                                    <td>{$tel.entrance}</td>
+                                    <td>{$tel.jump_to}</td>
+                                    <td><a href="{:url('edit',['id'=>$tel.id])}"><i class="fa fa-edit"></i></a><a href="{:url('del')}"><i class="fa fa-trash ml-3"></i></a></td>
+                                </tr>
+                                {/switch}
+                                {/volist}
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>电话号码</th>
+                                    <th>何栋建筑</th>
+                                    <th>机房或弱电间</th>
+                                    <th>配线架类型</th>
+                                    <th>跳入端口</th>
+                                    <th>跳出端口</th>
+                                    <th>操作</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+{block name="custom_scripts"}
+{/block}
