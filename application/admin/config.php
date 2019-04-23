@@ -18,7 +18,7 @@ return [
     'template' => [
         // 模板路径
         'view_path'    => '../application/admin/view/',
-        'layout_on' => true,
+        'layout_on' => false,
         'layout_name' => 'layout',
     ],
 

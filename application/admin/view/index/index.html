@@ -1,3 +1,6 @@
+{extend name="layout" /}
+
+{block name="content"}
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -1518,3 +1521,61 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+{/block}
+{block name="custom_scripts"}
+<script>
+    // 初始化echarts实例
+    var barChart = echarts.init(document.getElementById('bar-chart'));
+    var option = {
+        tooltip : {
+            trigger: 'axis'
+        },
+        legend: {
+            data:['类型1','类型2'],
+            right: 5,
+            orient: 'vertical',
+        },
+        toolbox: {
+            show : false,
+            feature : {
+                dataView : {show: true, readOnly: false},
+                magicType : {show: true, type: ['line', 'bar']},
+                saveAsImage : {show: true}
+            }
+        },
+        calculable : true,
+        xAxis : [
+            {
+                type : 'category',
+                data : ['Total','清澜','龙楼','不在位']
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value',
+                name: '人数',
+                nameTextStyle:{fontSize: 16, fontWeight: 900,},
+                axisLabel:{show:false,fontSize: 12, fontFamily: 'Arial',},
+                axisTick: {show:false,},
+                axisLine: {show:false,},
+            }
+        ],
+        series : [
+            {
+                name:'类型1',
+                type:'bar',
+                data:[15, 2.0, 4.9, 7.0],
+
+            },
+            {
+                name:'类型2',
+                type:'bar',
+                data:[20,2.6, 5.9, 9.0],
+
+            }
+        ],
+        color:['#007bff', '#ced4da'],
+    };
+    barChart.setOption(option);
+</script>
+{/block}

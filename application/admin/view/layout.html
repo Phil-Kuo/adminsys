@@ -1,12 +1,21 @@
-{include file="./_layout/header" /}
+<!DOCTYPE html>
+<html>
+<head>
+    {include file="./_layout/header" /}
+
+    {block name="custom_css"}{/block}
+</head>
 <body class="hold-transition sidebar-mini sidebar-collapse">
 <div class="wrapper">
     {include file="./_layout/navbar" /}
     {include file="./_layout/sidebar" /}
-    {__CONTENT__}
+
+    {block name="content"}{/block}
+
     {include file="./_layout/footer" /}
 </div>
 {include file="./_layout/scripts" /}
+
 {block name="custom_scripts"}{/block}
 </body>
 </html>

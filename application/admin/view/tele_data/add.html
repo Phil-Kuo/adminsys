@@ -1,3 +1,6 @@
+{extend name="layout" /}
+
+{block name="content"}
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -5,7 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">新增页面</h1>
+                    <h1 class="m-0 text-dark">新增资料</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -27,72 +30,94 @@
                 <div class="col-md-12">
                     <!-- form start -->
                     <form role="form" action="{:url('admin/TeleData/add')}" method="post">
+
+                        <input type="hidden" name="id" value="">
+
                         <div class="row">
-                            <div class="col-md-6">
-                                <input type="hidden" name="id" value="">
+                            <div class="col-md-5">
                                 <!-- 号码 -->
                                 <div class="form-group">
                                     <label for="tel_number">号码</label>
                                     <input type="text" class="form-control" id="tel_number" name="tel_number" placeholder="Enter content" value="">
                                 </div>
+                            </div>
+                        </div>
 
+                        <div class="row">
+                            <div class="col-md-5">
                                 <!-- 上一跳建筑 -->
                                 <div class="form-group">
                                     <label>来自何建筑</label>
                                     <select class="form-control" name="pid">
+                                        <option value="">请选择--</option>
                                         <option value="0">无</option>
-                                        {volist name='telData' id='building'}
-                                        <option>{$building}</option>
+                                        {volist name='buildingData' id='building'}
+                                        <option  value="{$building.id}">{$building.arch_name}</option>
                                         {/volist}
                                     </select>
                                 </div>
+                            </div>
+                            <div class="col-md-5">
                                 <!-- 建筑 -->
                                 <div class="form-group">
                                     <label>建筑</label>
-                                    <select class="form-control" name="building">
-                                        {volist name='telData' id='building'}
-                                        <option>{$building}</option>
+                                    <select class="form-control" name="building_id" id="building">
+                                        <option value="">请选择--</option>
+                                        {volist name='buildingData' id='building'}
+                                        <option  value="{$building.id}">{$building.arch_name}</option>
                                         {/volist}
                                     </select>
                                 </div>
+                            </div>
+                        </div>
 
+                        <div class="row">
+                            <div class="col-md-5">
                                 <!-- 配线架位置 -->
                                 <div class="form-group">
                                     <label>配线架位置</label>
-                                    <select class="form-control" name="location">
-                                        <option>102机房</option>
-                                        <option>5楼东弱电间</option>
-                                        <option>5楼西弱电间</option>
+                                    <select class="form-control" name="location_id" id="location">
+                                        <option value="">请选择--</option>
+                                        {volist name='locations' id='location'}
+                                        <option value="{$location.id}">{$location.arch_name}</option>
+                                        {/volist}
                                     </select>
                                 </div>
-
+                            </div>
+                            <div class="col-md-5">
                                 <!-- 配线架类型 -->
                                 <div class="form-group">
                                     <label>配线架类型</label>
                                     <select class="form-control" name="type">
+                                        <option value="">请选择--</option>
                                         <option>110</option>
                                         <option>MDF</option>
                                         <option>音频配线架</option>
                                         <option>分线盒</option>
                                     </select>
                                 </div>
-
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
                                 <!-- 跳入位置 -->
                                 <div class="form-group">
                                     <label for="entrance">跳入位置</label>
                                     <input type="text" class="form-control" id="entrance" name="entrance" placeholder="Enter content" value="">
                                 </div>
+                            </div>
+
+                            <div class="col-md-5">
 
                                 <!-- 跳出位置 -->
                                 <div class="form-group">
                                     <label for="jump_to">跳出位置</label>
                                     <input type="text" class="form-control" id="jump_to" name="jump_to" placeholder="Enter content" value="">
                                 </div>
-
-                                <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </div>
 
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
             </div>
@@ -101,3 +126,39 @@
     </section>
     <!-- /.content -->
 </div>
+{/block}
+
+
+{block name="custom_scripts"}
+<script>
+    $(function () {
+        getDataForAjax();
+    })
+    $("#building").change(function () {
+        getDataForAjax();
+    });
+
+    function getDataForAjax() {
+        arch_id = $('#building').val()?$('#building').val():1;
+        $.ajax({
+            type:"get",
+            url:"{:url('admin/TeleData/getArchitecture')}",
+            dataType:'json',
+            data:{
+                id:arch_id,
+            },
+            success: function(data) {
+                // console.log(data);
+                data = eval(data);
+                $('#location').empty();
+                $("#location").html("<option value=''>请选择--</option>");
+                for(var i = 0;i < data.length;i++){
+                    $('#location').append("<option value=" + data[i]['id'] + ">"
+                        + data[i]['arch_name'] + "</option>");
+                }
+            }
+        });
+    }
+
+</script>
+{/block}

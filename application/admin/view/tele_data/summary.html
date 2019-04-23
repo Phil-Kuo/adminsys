@@ -1,3 +1,6 @@
+{extend name="layout" /}
+
+{block name="content"}
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -5,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Home</h1>
+                    <h1 class="m-0 text-dark">资料列表</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{:url('admin/Index/index')}">Home</a></li>
-                        <li class="breadcrumb-item active">Dashboard v2</li>
+                        <li class="breadcrumb-item"><a href="{:url('admin/Index/index')}">配线资料</a></li>
+                        <li class="breadcrumb-item active">组别1</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -24,7 +27,7 @@
 
             <!-- 配线资料 -->
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">检索</h3>
@@ -32,23 +35,21 @@
                         <!-- /.card-header -->
                         <div class="card-body">
                             <!-- form start -->
-                            <form role="form" action="{:url('admin/TeleData/summary')}" method="post">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <!-- 号码 -->
-                                        <div class="form-group">
-                                            <label for="tel_number">号码</label>
-                                            <input type="text" class="form-control" id="tel_number" name="tel_number" placeholder="Enter content" value="">
-                                        </div>
+                            <form class="form-inline" role="form" action="{:url('admin/TeleData/summary')}" method="post">
 
-                                        <!-- 建筑 -->
-                                        <div class="form-group">
-                                            <label for="building">建筑</label>
-                                            <input type="text" class="form-control" id="building" name="building" placeholder="Enter content" value="">
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">Search</button>
-                                    </div>
+                                <!-- 号码 -->
+                                <div class="form-group mr-3">
+                                    <label for="tel_number" class="">号码：</label>
+                                    <input type="text" class="form-control" id="tel_number" name="tel_number" placeholder="Enter content" value="">
                                 </div>
+
+                                <!-- 建筑 -->
+                                <div class="form-group mr-3">
+                                    <label for="building">建筑：</label>
+                                    <input type="text" class="form-control" id="building" name="building" placeholder="Enter content" value="">
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Search</button>
                             </form>
                         </div>
                     </div>
@@ -85,18 +86,18 @@
                                     <td>{$tel.type}</td>
                                     <td>{$tel.entrance}</td>
                                     <td>{$tel.jump_to}</td>
-                                    <td><a href="{:url('edit',['id'=>$tel.id])}"><i class="fa fa-edit"></i></a><a href="{:url('del')}"><i class="fa fa-trash ml-3"></i></a></td>
+                                    <td><a href="{:url('edit',['id'=>$tel.id])}"><i class="fa fa-edit"></i></a><a href="{:url('del',['id'=>$tel.id])}"><i class="fa fa-trash ml-3"></i></a></td>
                                 </tr>
                                 {/case}
                                 {default /}
                                 <tr>
-                                    <td>---></td>
+                                    <td>{$tel.tel_number}</td>
                                     <td>{$tel.building}</td>
                                     <td>{$tel.location}</td>
                                     <td>{$tel.type}</td>
                                     <td>{$tel.entrance}</td>
                                     <td>{$tel.jump_to}</td>
-                                    <td><a href="{:url('edit',['id'=>$tel.id])}"><i class="fa fa-edit"></i></a><a href="{:url('del')}"><i class="fa fa-trash ml-3"></i></a></td>
+                                    <td><a href="{:url('edit',['id'=>$tel.id])}"><i class="fa fa-edit"></i></a><a href="{:url('del',['id'=>$tel.id])}"><i class="fa fa-trash ml-3"></i></a></td>
                                 </tr>
                                 {/switch}
                                 {/volist}
@@ -117,6 +118,7 @@
                         <!-- /.card-body -->
                     </div>
                 </div>
+
             </div>
             <!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -124,6 +126,4 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-
-{block name="custom_scripts"}
 {/block}
