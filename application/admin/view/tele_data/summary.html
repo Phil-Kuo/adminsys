@@ -36,25 +36,38 @@
                         <div class="card-body">
                             <!-- form start -->
                             <form class="form-inline" role="form" action="{:url('admin/TeleData/summary')}" method="post">
-
                                 <!-- 号码 -->
                                 <div class="form-group mr-3">
                                     <label for="tel_number" class="">号码：</label>
-                                    <input type="text" class="form-control" id="tel_number" name="tel_number" placeholder="Enter content" value="">
+                                    <input type="text" class="form-control" id="tel_number" name="tel_number" placeholder="请输入待查询号码" value="">
                                 </div>
 
                                 <!-- 建筑 -->
                                 <div class="form-group mr-3">
                                     <label for="building">建筑：</label>
-                                    <input type="text" class="form-control" id="building" name="building" placeholder="Enter content" value="">
+                                    <input type="text" class="form-control" id="building" name="building" placeholder="请输入建筑楼号" value="">
                                 </div>
-
-                                <button type="submit" class="btn btn-primary">Search</button>
+                                <button type="submit" class="btn btn-primary">搜索</button>
                             </form>
                         </div>
                     </div>
                 </div>
+            </div>
 
+            <div class="row">
+                <div class="col-md-12" >
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title" id="tel_path">电话业务路径树图（500000）</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body" style="width: 100%;height:600px;"  id="tel_details">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="col-md-12">
 
                     <div class="card">
@@ -67,6 +80,7 @@
                                 <thead>
                                 <tr>
                                     <th>电话号码</th>
+                                    <th>层级</th>
                                     <th>何栋建筑</th>
                                     <th>机房或弱电间</th>
                                     <th>配线架类型</th>
@@ -77,10 +91,10 @@
                                 </thead>
                                 <tbody>
                                 {volist name='telData' id='tel'}
-                                {switch name="$tel.pid"}
-                                {case value="0"}
+
                                 <tr>
                                     <td>{$tel.tel_number}</td>
+                                    <td>{$tel.level ??  '--'}</td>
                                     <td>{$tel.building}</td>
                                     <td>{$tel.location}</td>
                                     <td>{$tel.type}</td>
@@ -88,23 +102,13 @@
                                     <td>{$tel.jump_to}</td>
                                     <td><a href="{:url('edit',['id'=>$tel.id])}"><i class="fa fa-edit"></i></a><a href="{:url('del',['id'=>$tel.id])}"><i class="fa fa-trash ml-3"></i></a></td>
                                 </tr>
-                                {/case}
-                                {default /}
-                                <tr>
-                                    <td>{$tel.tel_number}</td>
-                                    <td>{$tel.building}</td>
-                                    <td>{$tel.location}</td>
-                                    <td>{$tel.type}</td>
-                                    <td>{$tel.entrance}</td>
-                                    <td>{$tel.jump_to}</td>
-                                    <td><a href="{:url('edit',['id'=>$tel.id])}"><i class="fa fa-edit"></i></a><a href="{:url('del',['id'=>$tel.id])}"><i class="fa fa-trash ml-3"></i></a></td>
-                                </tr>
-                                {/switch}
+
                                 {/volist}
                                 </tbody>
                                 <tfoot>
                                 <tr>
                                     <th>电话号码</th>
+                                    <th>层级</th>
                                     <th>何栋建筑</th>
                                     <th>机房或弱电间</th>
                                     <th>配线架类型</th>
@@ -118,12 +122,135 @@
                         <!-- /.card-body -->
                     </div>
                 </div>
-
             </div>
-            <!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
+
+
+
+
+
+
+
+
+        </div>
+        <!-- /.row -->
+</div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+{/block}
+
+{block name="custom_scripts"}
+
+<!-- 配线资料表格汇总 -->
+<script>
+    $('#technical-data').DataTable({
+        "paging": true,
+        "lengthChange": true,
+        "searching": false,
+        "ordering": false,
+        "info": true,
+        "autoWidth": false
+    })
+</script>
+
+<!-- 查询电话号码的路径树图 -->
+<script type="text/javascript">
+    $(function () {
+        var dom = document.getElementById('tel_details');
+        var myChart = echarts.init(dom);
+        myChart.showLoading();
+
+        /**
+         * 获取电话的路径，以树图形式呈现
+         * @tel 电话号码
+         *
+         * */
+        function getTelPath(tel){
+            if (!tel){
+                alert('号码不可为空！');
+            }
+            $.ajax({
+                type:"get",
+                url:"{:url('admin/TeleData/searchTel')}",
+                dataType:'json',
+                data:{
+                    tel_number: tel //待替换的数值
+
+                },
+                success: function(data) {
+                    console.log(data);
+                    myChart.hideLoading();
+                    myChart.setOption(option = {
+                        series:[
+                            {
+                                type: 'tree',
+                                data: data,
+
+                                top: '5%',
+                                left: '10%',
+                                bottom: '2%',
+                                right: '30%',
+
+                                symbolSize: 20,
+
+                                label: {
+                                    position: ['-250%','-20%'],
+                                    verticalAlign: 'bottom',
+                                    align: 'left',
+                                    fontSize: 13,
+                                    lineHeight:56,
+                                    formatter:function(params){
+                                        return '建筑：'+params.data.building+'\n'+'机房：'+params.data.location+'\n'+params.data.type+'配线架\n入：'+params.data.entrance+'——>出：'+params.data.jump_to;
+                                    },
+                                    color:'#fff',
+                                    borderColor:'#999',
+                                    borderWidth:3,
+                                    backgroundColor:'#999',
+                                    padding:10,
+                                    borderRadius:5
+                                },
+                                leaves:{
+                                    label:{
+                                        position: ['-250%','-20%'],
+                                        verticalAlign: 'bottom',
+                                        align: 'left',
+                                        fontSize: 13,
+                                    }
+                                },
+                                expandAndCollapse: true,
+
+                                animationDuration: 550,
+                                animationDurationUpdate: 750
+                            },
+                        ],
+                    });
+                    var str = '电话业务路径树图（' + tel+'）';
+                    $("#tel_path").html(str);
+                },
+                // 尚未考虑查询时发生错误的情况
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert("请输入正确的号码！");
+                }
+            });
+        }
+
+        // 初次加载时默认加载500000的电话路径树图
+        var tel_num = 500000;
+        $(function () {
+            getTelPath(tel_num);
+        })
+
+        // 输入电话号码完成时触发
+        $('#tel_number').blur(
+            function(){
+                tel_num = $('#tel_number').val();
+                getTelPath(tel_num);
+            }
+        )
+    });
+
+
+
+</script>
 {/block}

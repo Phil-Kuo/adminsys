@@ -25,18 +25,29 @@ class TeleData extends Base
             $formData = input('post.');
         }
 
-        $res = $tel->getTree($formData);
-//        dump($res);die;
+        $telData = $tel->getTelData($formData);
 
-        static $telData =  array();
-        foreach ($res as $k=>$v){
-            $telData[$k] = $v->toArray();
-        }
-
+//        dump($telData);die;
         $this->assign('telData', $telData);
 
         return view();
     }
+
+    /**
+     * 异步获取某条电话号码所对应的所有记录并以json嵌套数组返回。
+     *
+     * */
+    public function searchTel(){
+        $tel_number = isset($_GET['tel_number'])?$_GET['tel_number']:"";
+
+        $condition = array('tel_number'=>$tel_number);
+
+        $tel = new TelModel();
+        $telData = $tel->getTelData($condition);
+
+        echo json_encode($telData);
+    }
+
 
     public function add(){
         $tel = new TelModel();

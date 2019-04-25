@@ -31,42 +31,82 @@ class TeleData extends Base
             }
         }
         return $info;
-    }   
+    }
 
     /**
-     *  获取记录结果的分级结构
+     *  获取查询条件对应的数据。
+     * @condition   数组(array)   查询条件（建筑楼、电话号码）
      * */
-    public function getTree($condition){
-        $result = $this->where(array_filter($condition))->select(); //data数组为空则查询全部
+    public function getTelData($condition){
+        $result = $this->where(array_filter($condition)) //data数组为空则查询全部
+                        ->order('id')
+                        ->select();
 
-        /**
-         *  SELECT tele_data.id, tele_data.tel_number, b.arch_name AS building_name, c.arch_name AS location_name
-        FROM tele_data
-        LEFT JOIN architecture_details c ON tele_data.location_id = c.id
-        LEFT JOIN architecture_details b ON tele_data.building_id = b.id;
-         */
-
-        if (array_key_exists('tel_number',$condition) && !$condition['tel_number'] && $condition['building']){//查询某栋建筑的资料
+        // 尚未解决buildingID与building对应问题。
+        if (array_key_exists('tel_number',$condition) && !$condition['tel_number'] && $condition['building']){
+            //当查询为某栋建筑名称（无电话号码）直接返回
             return $result;
+        }elseif (!$condition || array_key_exists('building',$condition)){
+            //当查询条件为空或building为空时递归排序后返回
+            return $this->sort($result);
         }
-        return $this->sort($result);
-
+        // 当查询条件为电话号码时，
+        // 将数组对象转换为二维数组
+        foreach ($result as $k=>$v){
+            $array[$k] = $v->toArray();
+        }
+        return $this->transToTree($array);
+        // 当查询条件二者均有时尚未考虑
     }
 
 
     /**
-     * 对记录进行递归得到排好序的结果*/
+     * 利用非递归方法将二维扁平数组转化为树形结构数组
+     * @array   二维数组（2-D array）
+     * return   嵌套数组，表现为树形结构
+     * */
+    protected function transToTree($array) {
+        $tree = array();
+        $map = array();
+        foreach ($array as $k=>$item){
+            $map[$item['id']] = $k; //初始化映射数组
+        }
+
+        $pointer = &$array;
+        foreach ($pointer as $item) {
+            if ($item['pid']!==0){
+                // 后续还需加一个判断，检查索引是否存在。
+                $pointer[$map[$item['pid']]]['children'][] = &$pointer[$map[$item['id']]];// &很重要的！！（foreach是复制传值）
+            }else{
+                $tree[] = &$pointer[$map[$item['id']]];
+            }
+        }
+        return $tree;
+    }
+
+
+    /**
+     * 利用递归方法得到排序好的记录
+     * @data    待排序数组对象
+     * @pid     parentID值
+     * @level   对象所处的层次
+     * return   排好序的数组对象，且新增'level'字段
+     */
+
     protected function sort($data, $pid=0, $level=0){
         static $sortArray = array();
+
         foreach($data as $k=>$v){
             if ($v['pid']==$pid){
                 $v['level']=$level;
                 $sortArray[] = $v;
-                $this->sort($data, $v['id'],$level+1);
+                $this->sort($data,$v['id'],$level+1);
             }
         }
         return $sortArray;
     }
+
+
 
 
 }
