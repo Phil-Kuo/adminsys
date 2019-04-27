@@ -15,7 +15,7 @@ class TeleData extends Base
 {
 
     /**
-     * 配线资料汇总
+     * 配线资料汇总，尚未解决buildingID与building对应问题。
      */
     public function summary(){
         $tel = new TelModel();
@@ -26,16 +26,14 @@ class TeleData extends Base
         }
 
         $telData = $tel->getTelData($formData);
-
-//        dump($telData);die;
         $this->assign('telData', $telData);
 
         return view();
     }
 
     /**
-     * 异步获取某条电话号码所对应的所有记录并以json嵌套数组返回。
-     *
+     * 异步获取某条电话号码所对应的所有记录用于路径树图
+     * 以json嵌套数组返回
      * */
     public function searchTel(){
         $tel_number = isset($_GET['tel_number'])?$_GET['tel_number']:"";
@@ -49,8 +47,12 @@ class TeleData extends Base
     }
 
 
+    /**
+     * 添加电话号码资料， 尚未考虑在同一建筑内拥有分号的情况！
+     * */
     public function add(){
         $tel = new TelModel();
+
         if (request()->isPost()){
             $data = input("post.");
 //            dump($data);die;
@@ -60,14 +62,13 @@ class TeleData extends Base
             $res = $tel->add($data);
 //            dump($res);die;
             if ($res['code']){
-                $this->success($res['msg']);
+                $this->success($res['msg'],url('summary'));
             }else{
-//                dump($res);
                 $this->error($res['msg']);
             }
         }
 
-//        获取建筑楼和机房的记录传送到前端页面
+        //  获取建筑楼和机房的记录传送到前端页面
         $arch = new ArchitectureDetails();
         $buildingData = $arch->where(['level'=>1])->select();
         $locationData = $arch->where(['level'=>2])->select();
@@ -79,51 +80,49 @@ class TeleData extends Base
     }
 
     /**
-     * 编辑单条资料
+     * 编辑单条记录,尚未实现配线架类型的自动选中
      */
     public function edit($id){
         $arch = new ArchitectureDetails();
         $tel = new TelModel();
 
+        if (intval($id) < 0 || $id==""){
+            return info(lang("Data ID excepetion"),0);
+        }
+
+        // 获取传入id值的数据详细记录
+        $telData = $tel->where('id', $id)->select();
+        if (!$telData){
+            $this->error('不存在该条记录，请重试！',url('summary'));
+        }
+        $buildingId = $telData[0]['building_id'];
+        $lastId = $telData[0]['pid'];
+
+        // 查询该id的对应的父记录对应的建筑楼并传到前端页面
+        $lastBldId = $tel->where('id', $lastId)->value('building_id');
+        $this->assign(['pid'=>$lastBldId,'telData'=>$telData]);
+
+        // 获取建筑楼和配线架位置的信息并传送到前端以实现二级联动选择框
+        $buildingData = $arch->where(['level'=>1])->select();
+        $locationData = $arch->where(['pid'=>$buildingId,'level'=>2])->select();
+        $this->assign(['buildings'=>$buildingData,'locations'=>$locationData]);
+
+        // 对提交的数据进行处理
         if(request()->isPost()){
             $submitData = input('post.');
-//            dump($submitData);die;
+//             dump($submitData);die;
             $affectd = $tel->isUpdate(true)->save($submitData);
-//            dump($affectd);die;
             if ($affectd){
                 $this->success('更新成功',url('summary'));
             }else{
                 $this->error('更新失败，请重试');
             }
-
         }
-        if (intval($id) < 0 || $id==""){
-            return info(lang("Data ID excepetion"),0);
-        }
-
-//        获取传入id值的数据详细记录
-        $res = $tel->where('id', $id)->select();
-//        dump($res);die;
-        $buildingId = $res[0]['building_id'];
-        $lastId = $res[0]['pid'];
-
-        // 查询该id的对应的父记录对应的建筑楼并传到前端页面
-        $lastBldId = $tel->where('id', $lastId)->value('building_id');
-        $this->assign('pid',$lastBldId);
-        $this->assign('res', $res);
-
-//        获取建筑楼和配线架位置的记录结果并传送到前端
-        $buildingData = $arch->where(['level'=>1])->select();
-        $locationData = $arch->where(['pid'=>$buildingId,'level'=>2])->select();
-
-        $this->assign('buildings',$buildingData);
-        $this->assign('locations',$locationData);
-
         return view();
     }
 
     /**
-     * 利用Ajax获取建筑对应的配线架所处位置
+     * 异步获取以实现建筑和配线架所处位置的二级联动选择
      */
     public function getArchitecture()
     {
@@ -133,11 +132,14 @@ class TeleData extends Base
         if (!$arch_id){
 //            exit(json_encode(array("flag" => false, "msg" => "查询类型错误")));报错
         }else{
-            $locationObj = $arch->where(['pid'=>$arch_id])->select();
+            $location = $arch->where(['pid'=>$arch_id])->select();
+            return json_encode($location);
         }
-        return json_encode($locationObj);
     }
 
+    /**
+     * 根据传入的ID值删除记录，尚未实现联动删除！
+     * */
     public function del($id){
         if (intval($id) < 0 || $id==""){
             return info(lang("Data ID excepetion"),0);

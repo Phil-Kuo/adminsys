@@ -31,7 +31,7 @@
                     <!-- form start -->
                     <form class="form" role="form" action="{:url('admin/TeleData/edit')}" method="post">
 
-                        {volist name='res' id='chosen'}
+                        {volist name='telData' id='chosen'}
                         <input type="hidden" name="id" value="{$chosen.id}">
 
                         <div class="row">
@@ -105,6 +105,19 @@
                                 <div class="form-group">
                                     <label>配线架类型：</label>
                                     <select class="form-control" name="type" id="type">
+                                        {switch name="chosen.type"}
+                                        {case value="110"}
+                                        <option selected>110</option>
+                                        {/case}
+                                        {case value="MDF"}
+                                        <option selected>MDF</option>
+                                        {/case}
+                                        {case value="音频配线架"}
+                                        <option selected>音频配线架</option>
+                                        {/case}{case value="分线盒"}
+                                        <option selected>分线盒</option>
+                                        {/case}
+                                        {/switch}
                                         <option >请选择--</option>
                                         <option >110</option>
                                         <option >MDF</option>
@@ -135,7 +148,7 @@
                         </div>
                         {/volist}
 
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">确认更新</button>
                     </form>
                 </div>
             </div>
@@ -161,7 +174,7 @@
             url:"{:url('admin/TeleData/getArchitecture')}",
             dataType:'json',
             data:{
-                id:arch_id,
+                id: arch_id,
             },
             success: function(data) {
                 // console.log(data);
@@ -178,7 +191,4 @@
 
 </script>
 
-<script>
-    data = {$pid};
-</script>
 {/block}

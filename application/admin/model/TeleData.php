@@ -13,6 +13,7 @@ class TeleData extends Base
 {
     /**
      * 提交电话资料到数据库
+     * @data 数组
      */
     public function add($data){
         $res = $this->where('tel_number', $data['tel_number'])->value('id');//查询该号码是否已存在pid=0的记录
@@ -20,6 +21,7 @@ class TeleData extends Base
         if ($data['pid']=='0' && $res){
             $info = info(lang('信息有误，请重试！'), 0);
         }else{
+            // 尚未考虑在同一建筑内拥有分号的情况！
             $lastId = $this->where(['building_id'=>$data['pid'], 'tel_number'=>$data['tel_number']])->value('id');
             $data['pid'] = $lastId ? $lastId:0;
             $id = $this->allowField(true)->save( $data );
@@ -56,9 +58,8 @@ class TeleData extends Base
             $array[$k] = $v->toArray();
         }
         return $this->transToTree($array);
-        // 当查询条件二者均有时尚未考虑
+        // 当查询条件二者均存在时尚未考虑
     }
-
 
     /**
      * 利用非递归方法将二维扁平数组转化为树形结构数组
@@ -92,7 +93,6 @@ class TeleData extends Base
      * @level   对象所处的层次
      * return   排好序的数组对象，且新增'level'字段
      */
-
     protected function sort($data, $pid=0, $level=0){
         static $sortArray = array();
 
@@ -105,8 +105,5 @@ class TeleData extends Base
         }
         return $sortArray;
     }
-
-
-
 
 }

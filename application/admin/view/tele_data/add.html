@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">新增资料</h1>
+                    <h1 class="m-0 text-dark">新增记录</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -31,14 +31,12 @@
                     <!-- form start -->
                     <form role="form" action="{:url('admin/TeleData/add')}" method="post">
 
-                        <input type="hidden" name="id" value="">
-
                         <div class="row">
                             <div class="col-md-5">
                                 <!-- 号码 -->
                                 <div class="form-group">
                                     <label for="tel_number">号码</label>
-                                    <input type="text" class="form-control" id="tel_number" name="tel_number" placeholder="Enter content" value="">
+                                    <input type="text" class="form-control" id="tel_number" name="tel_number" placeholder="请输入号码" value="">
                                 </div>
                             </div>
                         </div>
@@ -102,8 +100,8 @@
                             <div class="col-md-5">
                                 <!-- 跳入位置 -->
                                 <div class="form-group">
-                                    <label for="entrance">跳入位置</label>
-                                    <input type="text" class="form-control" id="entrance" name="entrance" placeholder="Enter content" value="">
+                                    <label for="entrance">跳入位置（外线位置或对数）</label>
+                                    <input type="text" class="form-control" id="entrance" name="entrance" placeholder="请输入" value="">
                                 </div>
                             </div>
 
@@ -111,13 +109,13 @@
 
                                 <!-- 跳出位置 -->
                                 <div class="form-group">
-                                    <label for="jump_to">跳出位置</label>
-                                    <input type="text" class="form-control" id="jump_to" name="jump_to" placeholder="Enter content" value="">
+                                    <label for="jump_to">跳出位置（内线位置或面板位置）</label>
+                                    <input type="text" class="form-control" id="jump_to" name="jump_to" placeholder="请输入" value="">
                                 </div>
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">确认无误，提交</button>
                     </form>
                 </div>
             </div>

@@ -169,6 +169,7 @@
         function getTelPath(tel){
             if (!tel){
                 alert('号码不可为空！');
+                return;
             }
             $.ajax({
                 type:"get",
