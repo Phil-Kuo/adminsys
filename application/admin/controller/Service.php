@@ -19,7 +19,7 @@ class Service extends Base
     }
 
     public function add(){
-        return $this->fetch('edit');
+        return view('Service/edit');
     }
 
     /**

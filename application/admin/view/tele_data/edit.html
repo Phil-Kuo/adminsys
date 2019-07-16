@@ -48,19 +48,15 @@
                             <div class="col-md-5">
                                 <!-- 上一跳建筑 -->
                                 <div class="form-group">
-                                    <label>来自何建筑：</label>
-                                    <select class="form-control" name="pid">
+                                    <label>上一跳位置</label>
+                                    <select class="form-control select2" data-placeholder="select" name="pid" >
                                         <option value="">请选择--</option>
-                                        {if condition="$pid eq ''"}
-                                        <option selected value="0">无</option>
-                                        {else /}
                                         <option value="0">无</option>
-                                        {/if}
-                                        {volist name='buildings' id='building'}
-                                        {if condition="$pid eq $building.id"}
-                                        <option selected value="{$building.id}">{$building.arch_name}</option>
+                                        {volist name='totalData' id='detail'}
+                                        {if condition="$chosen.pid eq $detail.id"}
+                                        <option  value="{$detail.id}" selected>{$detail.building}# {$detail.location} 【{$detail.entrance}-{$detail.jump_to}】</option>
                                         {else /}
-                                        <option value="{$building.id}">{$building.arch_name}</option>
+                                        <option  value="{$detail.id}">{$detail.building}# {$detail.location} 【{$detail.entrance}-{$detail.jump_to}】（{$detail.tel_number}）</option>
                                         {/if}
                                         {/volist}
                                     </select>

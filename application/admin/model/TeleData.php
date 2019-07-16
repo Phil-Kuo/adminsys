@@ -7,7 +7,7 @@
  */
 
 namespace app\admin\model;
-
+use think\Db;
 
 class TeleData extends Base
 {
@@ -21,11 +21,7 @@ class TeleData extends Base
         if ($data['pid']=='0' && $res){
             $info = info(lang('信息有误，请重试！'), 0);
         }else{
-            // 尚未考虑在同一建筑内拥有分号的情况！
-            $lastId = $this->where(['building_id'=>$data['pid'], 'tel_number'=>$data['tel_number']])->value('id');
-            $data['pid'] = $lastId ? $lastId:0;
             $id = $this->allowField(true)->save( $data );
-
             if( false === $id) {
                 $info = info(lang('添加失败，请重试！'), 0);
             } else {
@@ -34,15 +30,34 @@ class TeleData extends Base
         }
         return $info;
     }
+    /**
+     * 建筑楼关联模型
+     * */
+    public function buildings(){
+        return $this->hasOne('ArchitectureDetails','id','building_id');
+    }
+
+    /**
+     * 机房或弱电间关联模型
+     * */
+    public function locations(){
+        return $this->hasOne('ArchitectureDetails','id','location_id');
+    }
 
     /**
      *  获取查询条件对应的数据。
      * @condition   数组(array)   查询条件（建筑楼、电话号码）
      * */
     public function getTelData($condition){
-        $result = $this->where(array_filter($condition)) //data数组为空则查询全部
-                        ->order('id')
-                        ->select();
+//        $result = $this->where(array_filter($condition)) //data数组为空则查询全部
+//                        ->order('id')
+//                        ->select();
+        $result = Db::view(['tele_data'=>'t'])
+            ->view(['architecture_details'=>'b'],['arch_name'=>'building'],'t.building_id=b.id')
+            ->view(['architecture_details'=>'l'],['arch_name'=>'location'],'t.location_id=l.id')
+            ->where(array_filter($condition))
+            ->select();
+//        dump($result);die;
 
         // 尚未解决buildingID与building对应问题。
         if (array_key_exists('tel_number',$condition) && !$condition['tel_number'] && $condition['building']){
@@ -54,10 +69,10 @@ class TeleData extends Base
         }
         // 当查询条件为电话号码时，
         // 将数组对象转换为二维数组
-        foreach ($result as $k=>$v){
-            $array[$k] = $v->toArray();
-        }
-        return $this->transToTree($array);
+//        foreach ($result as $k=>$v){
+//            $array[$k] = $v->toArray();
+//        }
+        return $this->transToTree($result);
         // 当查询条件二者均存在时尚未考虑
     }
 

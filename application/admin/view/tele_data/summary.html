@@ -25,7 +25,8 @@
     <section class="content">
         <div class="container-fluid">
 
-            <!-- 配线资料 -->
+
+            <!-- 检索卡片 -->
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -54,6 +55,7 @@
                 </div>
             </div>
 
+            <!-- 电话业务路径图 -->
             <div class="row">
                 <div class="col-md-12" >
                     <div class="card">
@@ -67,6 +69,36 @@
                 </div>
             </div>
 
+            <!-- 检索卡片 -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">批量导入资料</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <form class="col-md-6" id="upload" action="{:url('upload')}" method="post" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="excel_file" name="excel_file">
+                                            <label class="custom-file-label" for="excel_file">选择文件</label>
+                                        </div>
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-success">上传</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 配线资料列表 -->
             <div class="row">
                 <div class="col-md-12">
 

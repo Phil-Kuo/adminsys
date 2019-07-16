@@ -73,4 +73,6 @@ class Base extends Controller
             $this->error(lang('This action must be rule'));
         }
     }
+
+
 }

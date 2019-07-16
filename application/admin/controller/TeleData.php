@@ -10,6 +10,7 @@ namespace app\admin\controller;
 
 use app\admin\model\TeleData as TelModel;
 use app\admin\model\ArchitectureDetails;
+use think\Db;
 
 class TeleData extends Base
 {
@@ -76,6 +77,14 @@ class TeleData extends Base
         $this->assign('buildingData',$buildingData);
         $this->assign('locations',$locationData);
 
+        // 获取已有配线资料传送到前端，实现二表联结查询
+        $telData = TelModel::with('buildings,locations')->select();
+        foreach ($telData as $k=>$v){
+            $v->building = $v->buildings->arch_name;
+            $v->location = $v->locations->arch_name;
+        }
+        $this->assign('telData', $telData);
+
         return view();
     }
 
@@ -86,21 +95,23 @@ class TeleData extends Base
         $arch = new ArchitectureDetails();
         $tel = new TelModel();
 
-        if (intval($id) < 0 || $id==""){
+        if (empty($id)|| intval($id) < 0){
             return info(lang("Data ID excepetion"),0);
         }
-
         // 获取传入id值的数据详细记录
         $telData = $tel->where('id', $id)->select();
         if (!$telData){
             $this->error('不存在该条记录，请重试！',url('summary'));
         }
         $buildingId = $telData[0]['building_id'];
-        $lastId = $telData[0]['pid'];
 
-        // 查询该id的对应的父记录对应的建筑楼并传到前端页面
-        $lastBldId = $tel->where('id', $lastId)->value('building_id');
-        $this->assign(['pid'=>$lastBldId,'telData'=>$telData]);
+        // 获取已有配线资料传送到前端，实现二表联结查询
+        $totalData = TelModel::with('buildings,locations')->select();
+        foreach ($totalData as $k=>$v){
+            $v->building = $v->buildings->arch_name;
+            $v->location = $v->locations->arch_name;
+        }
+        $this->assign(['totalData'=> $totalData,'telData'=>$telData]);
 
         // 获取建筑楼和配线架位置的信息并传送到前端以实现二级联动选择框
         $buildingData = $arch->where(['level'=>1])->select();
@@ -152,4 +163,76 @@ class TeleData extends Base
             $this->error('删除失败！');
         }
     }
+
+    /**
+     * 上传Excel文件
+     */
+
+    public function upload() {
+        //设置附件上传文件大小200Kib
+
+        //设置附件上传类型
+
+        //设置附件上传目录在/Home/temp下
+
+        //保持上传文件名不变
+
+        //存在同名文件是否是覆盖
+
+        // 获取表单上传文件
+        $file = request()->file('excel_file');
+        if (empty($file)) {  //如果上传失败,提示错误信息
+            $this->error($_FILES['excel_file']['error']);
+        } else {  //上传成功
+            //获取上传文件信息
+            $info = $file->rule('uniqid')->move(ROOT_PATH.'public'.DS.'upload_excel');
+            //获取上传保存文件名
+            $fileName = $info->getFilename();
+//            dump($fileName);die;
+            //重定向,把$fileName文件名传给importExcel()方法
+            $this->redirect('importExcel', ['fileName'=>$fileName]);
+        }
+    }
+
+    public function importExcel($fileName){
+        $filePath = ROOT_PATH.'public'.DS.'upload_excel'.DS.$fileName;
+        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
+        $spreadsheet = $reader->load($filePath);
+        $currentSheet = $spreadsheet->getActiveSheet();
+        $highetsIndex = $currentSheet->getHighestRowAndColumn();
+
+        $arch = new ArchitectureDetails();
+        for ($currentRow = 2; $currentRow <= $highetsIndex['row'];$currentRow++){
+            $tel = new TelModel();
+            $record = array();
+            $record['tel_number'] = $currentSheet->getCell('A'.$currentRow)->getValue();
+
+            $record['building'] = $currentSheet->getCell('B'.$currentRow)->getValue();
+            $record['building_id'] = $arch->where('arch_name',$record['building'])->value('id');
+
+            $record['location'] = $currentSheet->getCell('C'.$currentRow)->getValue();
+            $record['location_id'] = $arch->where(['arch_name'=> $record['location'],'pid'=>$record['building_id']])->value('id');
+
+            $record['type'] = $currentSheet->getCell('D'.$currentRow)->getValue();
+            $record['entrance'] = $currentSheet->getCell('E'.$currentRow)->getValue();
+            $record['jump_to'] = $currentSheet->getCell('F'.$currentRow)->getValue();
+            $record['parent'] = $currentSheet->getCell('G'.$currentRow)->getValue();
+            $record['remark'] = $currentSheet->getCell('H'.$currentRow)->getValue();
+            if ($record['parent']!='0'){
+                $parent= explode('-',$record['parent']);
+//                dump($parent);
+                // 根据号码和上一跳建筑、机房弱电间查找其父id
+                $pid = Db::view(['tele_data'=>'t'])
+                    ->view(['architecture_details'=>'b'],['arch_name'=>'building'],'t.building_id=b.id')
+                    ->view(['architecture_details'=>'l'],['arch_name'=>'location'],'t.location_id=l.id')
+                    ->where(['tel_number'=>$record['tel_number'],'building'=>$parent[0],'location'=>$parent[1]])
+                    ->value('t.id');
+                $record['pid'] =$pid;
+            }else{
+                $record['pid'] = 0;
+            }
+            $tel->allowField(true)->save($record);
+        }
+    }
+
 }
