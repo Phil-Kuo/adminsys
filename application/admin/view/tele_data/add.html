@@ -1,4 +1,8 @@
 {extend name="layout" /}
+<!-- custom css -->
+{block name="custom_css"}
+{css href="__CSS__/teledata.css" /}
+{/block}
 
 {block name="content"}
 <!-- Content Wrapper. Contains page content -->
@@ -93,39 +97,79 @@
                                     </select>
                                 </div>
                             </div>
+                            
+                        </div>
+
+                        <div class="row">
                             <div class="col-md-5">
                                 <!-- 配线架类型 -->
                                 <div class="form-group">
-                                    <label>配线架类型</label>
-                                    <select class="form-control" name="type">
-                                        <option value="">请选择--</option>
-                                        <option>110</option>
-                                        <option>MDF</option>
-                                        <option>音频配线架</option>
-                                        <option>分线盒</option>
-                                    </select>
+                                    <label>
+                                        配线架类型
+                                    </label>
+                                    <div>
+                                        <label>                                    
+                                            <input type="radio" name="type" value="MDF"><span></span>
+                                            MDF
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="type" value="音频配线架"><span></span>
+                                            音频配线架
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="type" value="110"><span></span>
+                                            110
+                                        </label>
+                                    </div>                                    
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-5">
-                                <!-- 跳入位置 -->
+
+                        <div class="row conditional" data-cond-option="type" data-cond-value="MDF">
+                            <div class="col-md-5">                               
                                 <div class="form-group">
-                                    <label for="entrance">跳入位置（外线位置或对数）</label>
+                                    <label for="entrance">外线</label>
                                     <input type="text" class="form-control" id="entrance" name="entrance" placeholder="请输入" value="">
                                 </div>
                             </div>
 
                             <div class="col-md-5">
-
-                                <!-- 跳出位置 -->
                                 <div class="form-group">
-                                    <label for="jump_to">跳出位置（内线位置或面板位置）</label>
+                                    <label for="jump_to">内线</label>
                                     <input type="text" class="form-control" id="jump_to" name="jump_to" placeholder="请输入" value="">
                                 </div>
                             </div>
                         </div>
+                        <div class="row conditional" data-cond-option="type" data-cond-value="音频配线架">
+                                <div class="col-md-5">                               
+                                    <div class="form-group">
+                                        <label for="entrance">外线</label>
+                                        <input type="text" class="form-control" id="entrance" name="entrance" placeholder="请输入" value="">
+                                    </div>
+                                </div>
+    
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label for="jump_to">内线</label>
+                                        <input type="text" class="form-control" id="jump_to" name="jump_to" placeholder="请输入" value="">
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="row conditional" data-cond-option="type" data-cond-value="110">
+                            <div class="col-md-5">                               
+                                <div class="form-group">
+                                    <label for="entrance">110线对</label>
+                                    <input type="text" class="form-control" id="entrance" name="entrance" placeholder="请输入" value="">
+                                </div>
+                            </div>
 
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label for="jump_to">24口面板位置</label>
+                                    <input type="text" class="form-control" id="jump_to" name="jump_to" placeholder="请输入" value="">
+                                </div>
+                            </div>
+                        </div>
                         <button type="submit" class="btn btn-primary">确认无误，提交</button>
                     </form>
                 </div>
@@ -139,41 +183,5 @@
 
 
 {block name="custom_scripts"}
-<script>
-    <!-- 联动选择 -->
-    $(function () {
-        getDataForAjax();
-    })
-    $("#building").change(function () {
-        getDataForAjax();
-    });
-
-    function getDataForAjax() {
-        arch_id = $('#building').val()?$('#building').val():1;
-        $.ajax({
-            type:"get",
-            url:"{:url('admin/TeleData/getArchitecture')}",
-            dataType:'json',
-            data:{
-                id:arch_id,
-            },
-            success: function(data) {
-                // console.log(data);
-                data = eval(data);
-                $('#location').empty();
-                $("#location").html("<option value=''>请选择--</option>");
-                for(var i = 0;i < data.length;i++){
-                    $('#location').append("<option value=" + data[i]['id'] + ">"
-                        + data[i]['arch_name'] + "</option>");
-                }
-            }
-        });
-    }
-
-</script>
-
-<script>
-    //Initialize Select2 Elements
-    $('#pid').select2();
-</script>
+    {js href="__JS__/teledata.js" /}
 {/block}

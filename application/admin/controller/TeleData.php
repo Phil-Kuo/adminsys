@@ -56,7 +56,7 @@ class TeleData extends Base
 
         if (request()->isPost()){
             $data = input("post.");
-//            dump($data);die;
+        //    dump($data);die;
             if (!is_array($data)||empty($data)){
                 $this->error('提交失败，请重试！');
             }

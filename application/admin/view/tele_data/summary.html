@@ -24,80 +24,6 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-
-
-            <!-- 检索卡片 -->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">检索</h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                            <!-- form start -->
-                            <form class="form-inline" role="form" action="{:url('admin/TeleData/summary')}" method="post">
-                                <!-- 号码 -->
-                                <div class="form-group mr-3">
-                                    <label for="tel_number" class="">号码：</label>
-                                    <input type="text" class="form-control" id="tel_number" name="tel_number" placeholder="请输入待查询号码" value="">
-                                </div>
-
-                                <!-- 建筑 -->
-                                <div class="form-group mr-3">
-                                    <label for="building">建筑：</label>
-                                    <input type="text" class="form-control" id="building" name="building" placeholder="请输入建筑楼号" value="">
-                                </div>
-                                <button type="submit" class="btn btn-primary">搜索</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 电话业务路径图 -->
-            <div class="row">
-                <div class="col-md-12" >
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title" id="tel_path">电话业务路径树图（500000）</h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body" style="width: 100%;height:600px;"  id="tel_details">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 检索卡片 -->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">批量导入资料</h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                            <form class="col-md-6" id="upload" action="{:url('upload')}" method="post" enctype="multipart/form-data">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="excel_file" name="excel_file">
-                                            <label class="custom-file-label" for="excel_file">选择文件</label>
-                                        </div>
-                                        <div class="input-group-append">
-                                            <button type="submit" class="btn btn-success">上传</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- 配线资料列表 -->
             <div class="row">
                 <div class="col-md-12">
@@ -132,7 +58,23 @@
                                     <td>{$tel.type}</td>
                                     <td>{$tel.entrance}</td>
                                     <td>{$tel.jump_to}</td>
-                                    <td><a href="{:url('edit',['id'=>$tel.id])}"><i class="fa fa-edit"></i></a><a href="{:url('del',['id'=>$tel.id])}"><i class="fa fa-trash ml-3"></i></a></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a href="{:url('edit',['id'=>$tel.id])}">
+                                                <button class="btn btn-primary">
+                                                    <i class="fa fa-edit mr-1"></i>编辑
+                                                </button>
+                                            </a>
+                                        </div>
+                                        <div class="btn-group">
+                                            <a href="{:url('del',['id'=>$tel.id])}">
+                                                <button class="btn btn-danger">
+                                                    <i class="fa fa-trash mr-1"></i>删除
+                                                </button>
+                                            </a>
+                                        </div>
+                                       
+                                    </td>
                                 </tr>
 
                                 {/volist}
@@ -156,13 +98,34 @@
                 </div>
             </div>
 
+            <!-- 批量导入卡片 -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">批量导入资料</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <form class="col-md-6" id="upload" action="{:url('upload')}" method="post" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="excel_file" name="excel_file">
+                                            <label class="custom-file-label" for="excel_file">选择文件</label>
+                                        </div>
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-success">上传</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
 
 
-
-
-
-
-
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- /.row -->
 </div><!-- /.container-fluid -->
@@ -176,114 +139,42 @@
 
 <!-- 配线资料表格汇总 -->
 <script>
-    $('#technical-data').DataTable({
+    var table = $('#technical-data').DataTable({
         "paging": true,
-        "lengthChange": true,
-        "searching": false,
+        // "lengthChange": true,
+        // "searching": false,
         "ordering": false,
         "info": true,
-        "autoWidth": false
+        // "autoWidth": false,
+        // columnDefs: [
+        // {
+        //     className: "dt-right", targets: 1 },
+        // ],
+        dom: 'Bfrtip',
+        buttons: [ {
+            extend: 'excelHtml5',
+            text: '<i class="fa fa-download mr-1"></i>保存到本地',
+            title: '配线资料', //文件名称
+            sheetName: 'Exported data',
+            exportOptions: {
+                    columns: [ 0, 2, 3, 4, 5, 6]//导出表格中的特定列
+                }
+        } ],
+        language:{
+            search: "搜索：",
+            paginate: {
+            first:      "首页",
+            previous:   "上一页",
+            next:       "下一页",
+            last:       "末页"
+            },
+            info: "本页为第_START_ - _END_条记录，共计_TOTAL_条记录。",
+            infoFiltered: "（共搜索_MAX_条记录）",
+            infoEmpty: "未搜索到相关记录",
+            emptyTable: "暂无数据",
+            zeroRecords: "暂无相关记录"
+        }//按钮等的汉化
     })
 </script>
 
-<!-- 查询电话号码的路径树图 -->
-<script type="text/javascript">
-    $(function () {
-        var dom = document.getElementById('tel_details');
-        var myChart = echarts.init(dom);
-        myChart.showLoading();
-
-        /**
-         * 获取电话的路径，以树图形式呈现
-         * @tel 电话号码
-         *
-         * */
-        function getTelPath(tel){
-            if (!tel){
-                alert('号码不可为空！');
-                return;
-            }
-            $.ajax({
-                type:"get",
-                url:"{:url('admin/TeleData/searchTel')}",
-                dataType:'json',
-                data:{
-                    tel_number: tel //待替换的数值
-
-                },
-                success: function(data) {
-                    console.log(data);
-                    myChart.hideLoading();
-                    myChart.setOption(option = {
-                        series:[
-                            {
-                                type: 'tree',
-                                data: data,
-
-                                top: '5%',
-                                left: '10%',
-                                bottom: '2%',
-                                right: '30%',
-
-                                symbolSize: 20,
-
-                                label: {
-                                    position: ['-250%','-20%'],
-                                    verticalAlign: 'bottom',
-                                    align: 'left',
-                                    fontSize: 13,
-                                    lineHeight:56,
-                                    formatter:function(params){
-                                        return '建筑：'+params.data.building+'\n'+'机房：'+params.data.location+'\n'+params.data.type+'配线架\n入：'+params.data.entrance+'——>出：'+params.data.jump_to;
-                                    },
-                                    color:'#fff',
-                                    borderColor:'#999',
-                                    borderWidth:3,
-                                    backgroundColor:'#999',
-                                    padding:10,
-                                    borderRadius:5
-                                },
-                                leaves:{
-                                    label:{
-                                        position: ['-250%','-20%'],
-                                        verticalAlign: 'bottom',
-                                        align: 'left',
-                                        fontSize: 13,
-                                    }
-                                },
-                                expandAndCollapse: true,
-
-                                animationDuration: 550,
-                                animationDurationUpdate: 750
-                            },
-                        ],
-                    });
-                    var str = '电话业务路径树图（' + tel+'）';
-                    $("#tel_path").html(str);
-                },
-                // 尚未考虑查询时发生错误的情况
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    alert("请输入正确的号码！");
-                }
-            });
-        }
-
-        // 初次加载时默认加载500000的电话路径树图
-        var tel_num = 500000;
-        $(function () {
-            getTelPath(tel_num);
-        })
-
-        // 输入电话号码完成时触发
-        $('#tel_number').blur(
-            function(){
-                tel_num = $('#tel_number').val();
-                getTelPath(tel_num);
-            }
-        )
-    });
-
-
-
-</script>
 {/block}
