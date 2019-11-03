@@ -12,8 +12,8 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{:url('admin/Index/index')}">配线资料</a></li>
-                        <li class="breadcrumb-item active">组别1</li>
+                        <li class="breadcrumb-item"><a href="{:url('admin/Index/index')}">数据资料</a></li>
+                        <li class="breadcrumb-item active">一组</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -24,13 +24,49 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
+            <!-- 阅表说明 -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-info card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <h5><i class="fa fa-info"></i> 阅表说明</h5>
+                            </h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool btn-sm"
+                                        data-widget="collapse"
+                                        data-toggle="tooltip"
+                                        title="Collapse">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <ol>
+                                    <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, sequi dolorem assumenda hic nihil temporibus aliquam et similique aperiam error rerum, natus quos, expedita alias. Quod repellendus sint inventore ipsam.</li>
+                                    <li>Totam, sequi dolorem assumenda hic nihil temporibus aliquam et similique aperiam error rerum, natus quos, expedita alias. Quod repellendus sint inventore ipsam.</li>
+                                    <li>natus quos, expedita alias. Quod repellendus sint inventore ipsam.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+
+
             <!-- 配线资料列表 -->
             <div class="row">
                 <div class="col-md-12">
 
-                    <div class="card">
+                    <div class="card card-info card-outline">
                         <div class="card-header">
-                            <h3 class="card-title">组别1资料</h3>
+                            <h3 class="card-title"><i class="fa fa-fax"></i> 一组资料</h3>
+                            <div class="card-tools">
+                                <a href="{:url('admin/TeleData/add')}" class="btn btn-tool btn-lg">
+                                    <i class="fa fa-plus mr-2"></i>新增记录 
+                                </a>
+                            </div>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -39,11 +75,11 @@
                                 <tr>
                                     <th>电话号码</th>
                                     <th>层级</th>
-                                    <th>何栋建筑</th>
-                                    <th>机房或弱电间</th>
+                                    <th>建筑</th>
+                                    <th>机房（弱电间）</th>
                                     <th>配线架类型</th>
-                                    <th>跳入端口</th>
-                                    <th>跳出端口</th>
+                                    <th>入端</th>
+                                    <th>出端</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
@@ -60,20 +96,13 @@
                                     <td>{$tel.jump_to}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="{:url('edit',['id'=>$tel.id])}">
-                                                <button class="btn btn-primary">
-                                                    <i class="fa fa-edit mr-1"></i>编辑
-                                                </button>
+                                            <a href="{:url('edit',['id'=>$tel.id])}" target="_blank"><button class="btn btn-primary"><i class="fa fa-edit mr-1"></i>编辑</button>
                                             </a>
                                         </div>
                                         <div class="btn-group">
-                                            <a href="{:url('del',['id'=>$tel.id])}">
-                                                <button class="btn btn-danger">
-                                                    <i class="fa fa-trash mr-1"></i>删除
-                                                </button>
+                                            <a href="{:url('del',['id'=>$tel.id])}"><button class="btn btn-danger"><i class="fa fa-trash mr-1"></i>删除</button>
                                             </a>
-                                        </div>
-                                       
+                                        </div>                                       
                                     </td>
                                 </tr>
 
@@ -83,11 +112,11 @@
                                 <tr>
                                     <th>电话号码</th>
                                     <th>层级</th>
-                                    <th>何栋建筑</th>
-                                    <th>机房或弱电间</th>
+                                    <th>建筑</th>
+                                    <th>机房（弱电间）</th>
                                     <th>配线架类型</th>
-                                    <th>跳入端口</th>
-                                    <th>跳出端口</th>
+                                    <th>入端</th>
+                                    <th>出端</th>
                                     <th>操作</th>
                                 </tr>
                                 </tfoot>
@@ -103,23 +132,36 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">批量导入资料</h3>
+                            <h3 class="card-title"><i class="fa fa-upload"></i> 导入资料</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <form class="col-md-6" id="upload" action="{:url('upload')}" method="post" enctype="multipart/form-data">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="excel_file" name="excel_file">
-                                            <label class="custom-file-label" for="excel_file">选择文件</label>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <form id="upload" action="{:url('upload')}" method="post" enctype="multipart/form-data">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" id="excel_file" name="excel_file">
+                                                    <label class="custom-file-label" for="excel_file">选择文件</label>
+                                                </div>
+                                                <div class="input-group-append">
+                                                    <button type="submit" class="btn btn-success">上传</button>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="input-group-append">
-                                            <button type="submit" class="btn btn-success">上传</button>
-                                        </div>
-                                    </div>
+                                    </form>
                                 </div>
-                            </form>
+                                
+                                <div class="col-md-6">
+                                    <h5><i class="fa fa-info"></i> 上传说明</h5>
+                                    <ol>
+                                        <li>上传文件须为Excel，且有固定模板格式。</li>
+                                        <li>Totam, eriam error rerum, natus quos, expedita alias. Quod repellendus sint inventore ipsam.</li>                                    </ol>
+                                </div>
+                            </div>
+                            
+                            
 
 
                         </div>
@@ -141,7 +183,7 @@
 <script>
     var table = $('#technical-data').DataTable({
         "paging": true,
-        // "lengthChange": true,
+        // "lengthChange": true, 
         // "searching": false,
         "ordering": false,
         "info": true,
@@ -154,8 +196,8 @@
         buttons: [ {
             extend: 'excelHtml5',
             text: '<i class="fa fa-download mr-1"></i>保存到本地',
-            title: '配线资料', //文件名称
-            sheetName: 'Exported data',
+            title: '一组各建筑数据资料表{:date('Ymd')}', //文件名称
+            sheetName: '{:date('Ymd')}',
             exportOptions: {
                     columns: [ 0, 2, 3, 4, 5, 6]//导出表格中的特定列
                 }

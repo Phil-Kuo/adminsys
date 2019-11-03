@@ -37,9 +37,9 @@ class TeleData extends Base
      * 以json嵌套数组返回
      * */
     public function searchTel(){
-        $tel_number = isset($_GET['tel_number'])?$_GET['tel_number']:"";
+        $telNumber = isset($_GET['tel_number'])?$_GET['tel_number']:"";
 
-        $condition = array('tel_number'=>$tel_number);
+        $condition = array('tel_number'=>$telNumber);
 
         $tel = new TelModel();
         $telData = $tel->getTelData($condition);
@@ -89,7 +89,7 @@ class TeleData extends Base
     }
 
     /**
-     * 编辑单条记录,尚未实现配线架类型的自动选中
+     * 编辑单条记录
      */
     public function edit($id){
         $arch = new ArchitectureDetails();
@@ -138,12 +138,12 @@ class TeleData extends Base
     public function getArchitecture()
     {
         $arch = new ArchitectureDetails();
-        $arch_id = isset($_GET['id'])?$_GET['id']:"";
+        $archId = isset($_GET['id'])?$_GET['id']:"";
 
-        if (!$arch_id){
+        if (!$archId){
 //            exit(json_encode(array("flag" => false, "msg" => "查询类型错误")));报错
         }else{
-            $location = $arch->where(['pid'=>$arch_id])->select();
+            $location = $arch->where(['pid'=>$archId])->select();
             return json_encode($location);
         }
     }
@@ -153,11 +153,11 @@ class TeleData extends Base
      * */
     public function del($id){
         if (intval($id) < 0 || $id==""){
-            return info(lang("Data ID excepetion"),0);
+            return info(lang("不存在该记录，请重试！"),0);
         }
         $tel = new TelModel();
-        $affect = $tel->where('id',$id)->delete();
-        if ($affect > 0) {
+        $affectNum = $tel->where('id',$id)->delete();
+        if ($affectNum > 0) {
             $this->success('删除成功！');
         }else{
             $this->error('删除失败！');
@@ -169,16 +169,6 @@ class TeleData extends Base
      */
 
     public function upload() {
-        //设置附件上传文件大小200Kib
-
-        //设置附件上传类型
-
-        //设置附件上传目录在/Home/temp下
-
-        //保持上传文件名不变
-
-        //存在同名文件是否是覆盖
-
         // 获取表单上传文件
         $file = request()->file('excel_file');
         if (empty($file)) {  //如果上传失败,提示错误信息
@@ -202,7 +192,7 @@ class TeleData extends Base
         $highetsIndex = $currentSheet->getHighestRowAndColumn();
 
         $arch = new ArchitectureDetails();
-        for ($currentRow = 2; $currentRow <= $highetsIndex['row'];$currentRow++){
+        for ($currentRow = 2; $currentRow <= $highetsIndex['row']; $currentRow++){
             $tel = new TelModel();
             $record = array();
             $record['tel_number'] = $currentSheet->getCell('A'.$currentRow)->getValue();

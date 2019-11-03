@@ -1,33 +1,4 @@
 
-// 联动选择
-$(function () {
-    getDataForAjax();
-})
-$("#building").change(function () {
-    getDataForAjax();
-});
-
-function getDataForAjax() {
-    arch_id = $('#building').val()?$('#building').val():1;
-    $.ajax({
-        type:"get",
-        url:"{:url('admin/TeleData/getArchitecture')}",
-        dataType:'json',
-        data:{
-            id:arch_id,
-        },
-        success: function(data) {
-            // console.log(data);
-            data = eval(data);
-            $('#location').empty();
-            $("#location").html("<option value=''>请选择--</option>");
-            for(var i = 0;i < data.length;i++){
-                $('#location').append("<option value=" + data[i]['id'] + ">"
-                    + data[i]['arch_name'] + "</option>");
-            }
-        }
-    });
-}
 
 // 根据不同条件呈现不同的输入框
 (function($){

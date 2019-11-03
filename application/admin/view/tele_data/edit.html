@@ -1,4 +1,8 @@
 {extend name="layout" /}
+<!-- custom css -->
+{block name="custom_css"}
+{css href="__CSS__/teledata.css" /}
+{/block}
 
 {block name="content"}
 <!-- Content Wrapper. Contains page content -->
@@ -8,12 +12,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">编辑</h1>
+                    <h1 class="m-0 text-dark">一组</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">配线资料</a></li>
-                        <li class="breadcrumb-item active">组别1</li>
+                        <li class="breadcrumb-item"><a href="#">数据资料</a></li>
+                        <li class="breadcrumb-item active">一组</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -27,126 +31,186 @@
         <div class="container-fluid">
             <!-- users edit -->
             <div class="row">
-                <div class="col-md-12">
-                    <!-- form start -->
-                    <form class="form" role="form" action="{:url('admin/TeleData/edit')}" method="post">
-
-                        {volist name='telData' id='chosen'}
-                        <input type="hidden" name="id" value="{$chosen.id}">
-
-                        <div class="row">
-                            <div class="col-md-5">
-                                <!-- 号码 -->
-                                <div class="form-group">
-                                    <label for="tel_number">号码：</label>
-                                    <input type="text" class="form-control" id="tel_number" name="tel_number" placeholder="Enter content" value="{$chosen.tel_number}">
-                                </div>
-                            </div>
+                <div class="col-md-6">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">编辑</h3>
                         </div>
+                        <div class="card-body">
+                            <!-- form start -->
+                            <form class="form" role="form" action="{:url('admin/TeleData/edit')}" method="post">
 
-                        <div class="row">
-                            <div class="col-md-5">
-                                <!-- 上一跳建筑 -->
-                                <div class="form-group">
-                                    <label>上一跳位置</label>
-                                    <select class="form-control select2" data-placeholder="select" name="pid" >
-                                        <option value="">请选择--</option>
-                                        <option value="0">无</option>
-                                        {volist name='totalData' id='detail'}
-                                        {if condition="$chosen.pid eq $detail.id"}
-                                        <option  value="{$detail.id}" selected>{$detail.building}# {$detail.location} 【{$detail.entrance}-{$detail.jump_to}】</option>
-                                        {else /}
-                                        <option  value="{$detail.id}">{$detail.building}# {$detail.location} 【{$detail.entrance}-{$detail.jump_to}】（{$detail.tel_number}）</option>
-                                        {/if}
-                                        {/volist}
-                                    </select>
+                                {volist name='telData' id='chosen'}
+                                <input type="hidden" name="id" value="{$chosen.id}">
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <!-- 号码 -->
+                                        <div class="form-group">
+                                            <label for="tel_number">电话号码</label>
+                                            <input type="text" class="form-control" id="tel_number" name="tel_number" placeholder="Enter content" value="{$chosen.tel_number}">
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-5">
-                                <!-- 建筑 -->
-                                <div class="form-group">
-                                    <label>建筑：</label>
-                                    <select class="form-control" name="building_id" id="building">
-                                        <option >请选择--</option>
-                                        {volist name='buildings' id='building'}
-                                        {if condition="$chosen.building_id eq $building.id"}
-                                        <option selected value="{$building.id}">{$building.arch_name}</option>
-                                        {else /}<option value="{$building.id}">{$building.arch_name}</option>
-                                        {/if}
-                                        {/volist}
-                                    </select>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <!-- 上一跳建筑 -->
+                                        <!-- <div class="form-group">
+                                            <label>上一跳位置</label>
+                                            <select class="form-control select2" data-placeholder="select" name="pid" >
+                                                <option value="">请选择--</option>
+                                                <option value="0">无</option>
+                                                {volist name='totalData' id='detail'}
+                                                {if condition="$chosen.pid eq $detail.id"}
+                                                <option  value="{$detail.id}" selected>{$detail.building}# {$detail.location} 【{$detail.entrance}-{$detail.jump_to}】</option>
+                                                {else /}
+                                                <option  value="{$detail.id}">{$detail.building}# {$detail.location} 【{$detail.entrance}-{$detail.jump_to}】（{$detail.tel_number}）</option>
+                                                {/if}
+                                                {/volist}
+                                            </select>
+                                        </div> -->
+                                    </div>
+                                    <div class="col-md-12">
+                                        <!-- 建筑 -->
+                                        <div class="form-group">
+                                            <label>建筑：</label>
+                                            <select class="form-control" name="building_id" id="building">
+                                                <option >请选择--</option>
+                                                {volist name='buildings' id='building'}
+                                                {if condition="$chosen.building_id eq $building.id"}
+                                                <option selected value="{$building.id}">{$building.arch_name}</option>
+                                                {else /}<option value="{$building.id}">{$building.arch_name}</option>
+                                                {/if}
+                                                {/volist}
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
 
-                        <div class="row">
-                            <div class="col-md-5">
-                                <!-- 配线架位置 -->
-                                <div class="form-group">
-                                    <label>配线架位置：</label>
-                                    <select class="form-control" name="location_id" id="location">
-                                        <option value="">请选择--</option>
-                                        {volist name='locations' id='location'}
-                                        {if condition="$chosen.location_id eq $location.id"}
-                                        <option selected value="{$location.id}">{$location.arch_name}</option>
-                                        {else /}<option value="{$location.id}">{$location.arch_name}</option>
-                                        {/if}
-                                        {/volist}
-                                    </select>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <!-- 配线架位置 -->
+                                        <div class="form-group">
+                                            <label>配线架位置</label>
+                                            <select class="form-control" name="location_id" id="location">
+                                                <option value="">请选择--</option>
+                                                {volist name='locations' id='location'}
+                                                {if condition="$chosen.location_id eq $location.id"}
+                                                <option selected value="{$location.id}">{$location.arch_name}</option>
+                                                {else /}<option value="{$location.id}">{$location.arch_name}</option>
+                                                {/if}
+                                                {/volist}
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="col-md-5">
-                                <!-- 配线架类型 -->
-                                <div class="form-group">
-                                    <label>配线架类型：</label>
-                                    <select class="form-control" name="type" id="type">
-                                        {switch name="chosen.type"}
-                                        {case value="110"}
-                                        <option selected>110</option>
-                                        {/case}
-                                        {case value="MDF"}
-                                        <option selected>MDF</option>
-                                        {/case}
-                                        {case value="音频配线架"}
-                                        <option selected>音频配线架</option>
-                                        {/case}{case value="分线盒"}
-                                        <option selected>分线盒</option>
-                                        {/case}
-                                        {/switch}
-                                        <option >请选择--</option>
-                                        <option >110</option>
-                                        <option >MDF</option>
-                                        <option >音频配线架</option>
-                                        <option >分线盒</option>
-                                    </select>
+                                <div class="row">
+                                    <!-- 配线架类型 -->
+                                    <div class="col-md-12">
+                                        
+                                        <div class="form-group">
+                                            <label>配线架类型</label>
+                                            <div>                                                                                                     
+                                                <label>
+                                                    {if condition="$chosen.type eq 'MDF'"}                                                                                            
+                                                    <input type="radio" name="type" value="MDF" checked><span></span>    
+                                                    {else /}<input type="radio" name="type" value="MDF"><span></span>
+                                                    {/if}                                                    
+                                                    MDF                                                                                                              
+                                                </label>
+                                                <label>
+                                                    {if condition="$chosen.type eq '音频配线架'"}                                                                                            
+                                                    <input type="radio" name="type" value="音频配线架" checked><span></span>    
+                                                    {else /}<input type="radio" name="type" value="音频配线架"><span></span>
+                                                    {/if}
+                                        
+                                                    音频配线架
+                                                </label>
+                                                <label>
+                                                    {if condition="$chosen.type eq '110'"}                                                                                            
+                                                    <input type="radio" name="type" value="110" checked><span></span>    
+                                                    {else /}<input type="radio" name="type" value="110"><span></span>
+                                                    {/if}
+                                                    110
+                                                </label>
+                                            </div>                                    
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                                
 
-                        <div class="row">
-                            <div class="col-md-5">
-                                <!-- 跳入位置 -->
-                                <div class="form-group">
-                                    <label for="entrance">跳入位置：</label>
-                                    <input type="text" class="form-control" id="entrance" name="entrance" placeholder="Enter content" value="{$chosen.entrance}">
-                                </div>
-                            </div>
+                                <div class="row conditional" data-cond-option="type" data-cond-value="MDF">
+                                        <div class="col-md-5">                               
+                                            <div class="form-group">
+                                                <label for="entrance">外线</label>
+                                                <input type="text" class="form-control" id="entrance" name="entrance" placeholder="请输入" value="{$chosen.entrance}">
+                                            </div>
+                                        </div>
+    
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label for="jump_to">内线</label>
+                                                <input type="text" class="form-control" id="jump_to" name="jump_to" placeholder="请输入" value="{$chosen.jump_to}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row conditional" data-cond-option="type" data-cond-value="音频配线架">
+                                            <div class="col-md-5">                               
+                                                <div class="form-group">
+                                                    <label for="entrance">外线</label>
+                                                    <input type="text" class="form-control" id="entrance" name="entrance" placeholder="请输入" value="{$chosen.entrance}">
+                                                </div>
+                                            </div>
+                
+                                            <div class="col-md-5">
+                                                <div class="form-group">
+                                                    <label for="jump_to">内线</label>
+                                                    <input type="text" class="form-control" id="jump_to" name="jump_to" placeholder="请输入" value="{$chosen.jump_to}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <div class="row conditional" data-cond-option="type" data-cond-value="110">
+                                        <div class="col-md-4">                               
+                                            <div class="form-group">
+                                                <label for="entrance">110线对</label>
+                                                <input type="text" class="form-control" id="entrance" name="entrance" placeholder="请输入" value="{$chosen.entrance}">
+                                            </div>
+                                        </div>
+    
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="jump_to">24口面板位置</label>
+                                                <input type="text" class="form-control" id="jump_to" name="jump_to" placeholder="请输入" value="{$chosen.jump_to}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="detailTag">24口面板标签</label>
+                                                <input type="text" class="form-control" id="detailTag" name="detailTag" placeholder="请输入" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                {/volist}
 
-                            <div class="col-md-5">
-                                <!-- 跳出位置 -->
-                                <div class="form-group">
-                                    <label for="jump_to">跳出位置：</label>
-                                    <input type="text" class="form-control" id="jump_to" name="jump_to" placeholder="Enter content" value="{$chosen.jump_to}">
-                                </div>
-                            </div>
-
-                        </div>
-                        {/volist}
-
-                        <button type="submit" class="btn btn-primary">确认更新</button>
-                    </form>
+                                <button type="submit" class="btn btn-success">确认更新</button>
+                            </form>
+                        </div>  
+                    </div>                          
                 </div>
+                <!-- 填表说明说明 -->
+                <div class="col-md-6">
+                        <div class="callout callout-info">
+                            <h5><i class="fa fa-info"></i> 填表说明:</h5>
+                            <ol>
+                                <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, sequi dolorem assumenda hic nihil temporibus aliquam et similique aperiam error rerum, natus quos, expedita alias. Quod repellendus sint inventore ipsam.</li>
+                                <li>Totam, sequi dolorem assumenda hic nihil temporibus aliquam et similique aperiam error rerum, natus quos, expedita alias. Quod repellendus sint inventore ipsam.</li>
+                                <li>natus quos, expedita alias. Quod repellendus sint inventore ipsam.</li>
+                            </ol>
+                        </div>
+                    </div>
             </div>
 
         </div><!-- /.container-fluid -->
@@ -156,9 +220,9 @@
 {/block}
 
 {block name="custom_scripts"}
-<script>
 
-    <!-- 实现建筑物和配线架位置的联动选择-->
+<!-- 实现建筑与机房（弱电间）之间联动选择 -->
+<script>
     $("#building").change(function () {
         getDataForAjax();
     });
@@ -186,5 +250,7 @@
     }
 
 </script>
+
+    {js href="__JS__/teledata.js" /}
 
 {/block}
