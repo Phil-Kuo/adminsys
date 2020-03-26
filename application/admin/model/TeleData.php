@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Daly Dai
- * Date: 2019/4/13
- * Time: 23:17
- */
 
 namespace app\admin\model;
 use think\Db;
@@ -45,7 +39,7 @@ class TeleData extends Base
     }
 
     /**
-     *  获取查询条件对应的数据。
+     *  后台获取查询条件对应的数据。
      * @condition   数组(array)   查询条件（建筑楼、电话号码）
      * */
     public function getTelData($condition){

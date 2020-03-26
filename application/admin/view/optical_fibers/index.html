@@ -1,0 +1,182 @@
+{extend name="layout" /}
+
+{block name="content"}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">资料列表</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{:url('admin/Index/index')}">数据资料</a></li>
+                        <li class="breadcrumb-item active">光缆管理</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- 光缆管理 -->
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="card card-success card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fa fa-bank"></i> 光缆基础资料表</h3>
+                            <div class="card-tools">
+                                <a href="{:url('add')}" target="_blank" class="btn btn-tool btn-lg">
+                                    <i class="fa fa-plus mr-2"></i>新增记录
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <table id="cables-data" class="table table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2">名称</th>
+                                        <th rowspan="2">长度</th>
+                                        <th rowspan="2">型号</th>
+                                        <th rowspan="2">束管数量</th>
+                                        <th rowspan="2">纤芯数量</th>
+
+                                        <th colspan="2">光缆A端</th>
+                                        <th colspan="2">光缆B端</th>
+
+                                        <th rowspan="2">光缆操作</th>
+                                        <th rowspan="2">上架操作</th>
+                                    </tr>
+                                    <tr>
+                                        <th>机房位置</th>
+                                        <th>设备类型</th>
+
+                                        <th>机房位置</th>
+                                        <th>设备类型</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    {volist name="cables" id="c"}
+                                    <tr>
+                                        <td>{$c.name}</td>
+                                        <td>{$c.length}</td>
+                                        <td>{$c.model_no}</td>
+                                        <td>{$c.tube_num}</td>
+                                        <td>{$c.fiber_num}</td>
+
+                                        <td>{$c.start_location}</td>
+                                        <td></td>
+
+                                        <td>{$c.end_location}</td>
+                                        <td></td>
+
+                                        <td>
+                                            <div class="btn-group">
+                                                <a href="{:url('edit', ['id'=>$c.id])}" target="_blank"><button class="btn btn-primary"><i class="fa fa-edit mr-1"></i>编辑</button>
+                                                </a>
+                                            </div>
+                                            <div class="btn-group">
+                                                <a href="{:url('delete ', ['id'=>$c.id])}"><button class="btn btn-danger"><i class="fa fa-trash mr-1"></i>删除</button>
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a href="" target="_blank"><button class="btn btn-primary"><i class="fa fa-edit mr-1"></i>修改上架</button>
+                                                </a>
+                                            </div>
+                                            <div class="btn-group">
+                                                <a href=""><button class="btn btn-danger"><i class="fa fa-trash mr-1"></i>释放端口</button>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {/volist}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+            </div>
+            <!-- 阅表说明 -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card card-info card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <h5><i class="fa fa-info"></i> 阅表说明</h5>
+                            </h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool btn-sm" data-widget="collapse"
+                                    data-toggle="tooltip" title="Collapse">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <ol>
+                                    <li>
+                                        光缆管理分为光缆基础资料管理和光缆上架管理。
+                                    </li>
+                                    <li>
+                                        光缆基础资料包括光缆编号、光缆名称、光缆长度、纤芯数量、束管数量以及光缆两端连接的机房。
+                                    </li>
+                                    <li>
+                                        上架管理是指光缆纤芯连接到两端设备的端口管理，包括上架、释放端口2种方式。
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+</div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+{/block}
+
+{block name="custom_scripts"}
+
+<!-- 配线资料表格汇总 -->
+<script>
+    
+    var cablesTable = $('#cables-data').DataTable({
+        "paging": true,
+        // "lengthChange": true, 
+        // "searching": false,
+        "ordering": false,
+        "info": true,
+        "autoWidth": true,
+        language: {
+            search: "搜索：",
+            paginate: {
+                first: "首页",
+                previous: "上一页",
+                next: "下一页",
+                last: "末页"
+            },
+            info: "本页为第_START_ - _END_条记录，共计_TOTAL_条记录。",
+            infoFiltered: "（共搜索_MAX_条记录）",
+            infoEmpty: "未搜索到相关记录",
+            emptyTable: "暂无数据",
+            zeroRecords: "暂无相关记录"
+        }//按钮等的汉化
+    });
+</script>
+
+{/block}

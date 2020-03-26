@@ -1,0 +1,144 @@
+{extend name="layout" /}
+<!-- custom css -->
+{block name="custom_css"}
+
+{/block}
+
+{block name="content"}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">二组</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">数据资料</a></li>
+                        <li class="breadcrumb-item active">二组</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- content -->
+    <section class="content">
+        <!-- container-fluid -->
+        <div class="container-fluid">
+            
+            <div class="row">
+                <!-- 填表说明说明 -->
+                <div class="col-md-6">
+                    <div class="callout callout-info">
+                        <h5><i class="fa fa-info"></i> 光缆基本信息</h5>
+                        <ol>
+                            <li>光缆段编号：</li>
+                            <li>光缆名称：</li>
+                            <li>长度：</li>
+                            <li>束管数量：</li>
+                            <li>纤芯数量：</li>
+                            <li>光缆A端位置：</li>
+                            <li>光缆B端位置</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- 表单内容 -->
+                <div class="col-md-6">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fa fa-info"></i> 更改光纤上架端口</h3>
+                        </div>
+                        <div class="card-body">
+                            <!-- form start -->
+                            <form role="form" action="{:url('admin/OpticalData/addJumper')}" method="post">
+                                <strong>光纤的基本信息</strong>
+                                
+                                <div class="row">                                    
+                                    <div class="col-md-4">
+                                        <!-- ODF配线架编号 -->
+                                        <div class="form-group">
+                                            <label>光缆段</label>
+                                            <input type="text" class="form-control" value="三会村到后面村" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                            <!-- 光缆端 -->
+                                            <div class="form-group">
+                                                <label>光缆A/B端</label>
+                                                <input type="text" class="form-control" value="B端" disabled>
+                                            </div>
+                                        </div> 
+                                    <div class="col-md-2">
+                                        <!-- 束管编号 -->
+                                        <div class="form-group">
+                                            <label>束管颜色</label>
+                                            <input type="text" class="form-control" value="" disabled>
+                                        </div>
+                                    </div>    
+                                    <div class="col-md-2">
+                                        <!-- 纤芯编号 -->
+                                        <div class="form-group">
+                                            <label>纤芯颜色</label>
+                                            <input type="text" class="form-control" value="" disabled>
+                                        </div>
+                                    </div>   
+                                    <div class="col-md-2">
+                                        <!-- 状态 -->
+                                        <div class="form-group">
+                                                <label>状态</label>
+                                                <input type="text" class="form-control" value="" placeholder="是否可用">
+                                            </div>
+                                    </div>                                
+                                </div>
+                                <hr />
+                                <strong>ODF配线架端口</strong>
+                                                      
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <!-- 单元箱编号 -->
+                                        <div class="form-group">
+                                            <label>单元箱编号</label>
+                                            <select class="form-control" name="box_id" id="">
+                                                <option value="">请选择--</option>                                            
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <!-- 熔接盘编号 -->
+                                        <div class="form-group">
+                                            <label>熔接盘编号</label>
+                                            <select class="form-control" name="plate_id" id="">
+                                                <option value="">请选择--</option>                                            
+                                            </select>
+                                        </div>
+                                    </div>    
+                                    <div class="col-md-4">
+                                        <!-- 端口 -->
+                                        <div class="form-group">
+                                            <label>端口</label>
+                                            <select class="form-control" name="port_id" id="">
+                                                <option value="">请选择--</option>                                            
+                                            </select>
+                                        </div>
+                                    </div>                                   
+                                </div>
+                                <button type="submit" class="btn btn-success">确认无误，提交！</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+{/block}

@@ -1,0 +1,211 @@
+{extend name="layout" /}
+<!-- custom css -->
+{block name="custom_css"}
+
+{/block}
+
+{block name="content"}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">二组</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">数据资料</a></li>
+                        <li class="breadcrumb-item active">二组</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- content -->
+    <section class="content">
+        <!-- container-fluid -->
+        <div class="container-fluid">
+
+            <div class="row">
+                <!-- 填表说明说明 -->
+                <div class="col-md-6">
+                    <div class="callout callout-info">
+                        <h5><i class="fa fa-info"></i> 光缆基础资料</h5>
+                        <ol>
+                            <li>光缆段编号：</li>
+                            <li>光缆名称：</li>
+                            <li>长度：</li>
+                            <li>束管数量：</li>
+                            <li>纤芯数量：</li>
+                            <li>光缆A端位置：</li>
+                            <li>光缆B端位置</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- 表单内容 -->
+                <div class="col-md-12">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fa fa-info"></i> 编辑光纤上架信息</h3>
+                        </div>
+                        <div class="card-body">
+                            <!-- form start -->
+                            <form role="form" action="{:url('edit')}" method="post">
+                                <h4>光纤的基本信息</h4>
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <!-- 束管编号 -->
+                                        <div class="form-group">
+                                            <label>束管颜色</label>
+                                            <input type="text" class="form-control" value="" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <!-- 纤芯编号 -->
+                                        <div class="form-group">
+                                            <label>纤芯颜色</label>
+                                            <input type="text" class="form-control" value="" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <!-- 状态 -->
+                                        <div class="form-group">
+                                            <label for="fiber_status">状态</label>
+                                            <input type="text" class="form-control" name="fiber_status"
+                                                name="fiber_status" value="" placeholder="是否可用">
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr />
+                                <h4>ODF配线架端口信息</h4>
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <!-- 区分起末端 -->
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 col-form-label">光纤端: </label>
+                                            <div class="col-sm-5">
+                                                <input type="text" class="form-control" value="起始" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <!-- 光口类型 -->
+                                        <div class="form-group row">
+                                            <label class="col-sm-6 col-form-label">光口类型: </label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" value="LC/PC">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <!-- 交换设备名称 -->
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">设备名称: </label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control" value="机柜1">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <!-- 交换设备类型 -->
+                                        <div class="form-group row">
+                                            <label class="col-sm-6 col-form-label">设备类型: </label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" value="ODF">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">端口位置: </label>
+                                            <div class="col-sm-7 input-group">
+                                                <input type="text" aria-label="分线箱" name="box_no" id="box_no"
+                                                    class="form-control">
+                                                <input type="text" aria-label="熔纤盘" name="plate_no" id="plate_no"
+                                                    class="form-control">
+                                                <input type="text" aria-label="端口" name="port_id" id="port_id"
+                                                    class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <!-- 区分起末端 -->
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 col-form-label">光纤端: </label>
+                                            <div class="col-sm-5">
+                                                <input type="text" class="form-control" value="结束" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <!-- 光口类型 -->
+                                        <div class="form-group row">
+                                            <label class="col-sm-6 col-form-label">光口类型: </label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" value="LC/PC">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <!-- 交换设备名称 -->
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">设备名称: </label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control" value="机柜2">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <!-- 交换设备类型 -->
+                                        <div class="form-group row">
+                                            <label class="col-sm-6 col-form-label">设备类型: </label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" value="ODF">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">端口位置: </label>
+                                            <div class="col-sm-7 input-group">
+                                                <input type="text" aria-label="分线箱" name="box_no" id="box_no"
+                                                    class="form-control">
+                                                <input type="text" aria-label="熔纤盘" name="plate_no" id="plate_no"
+                                                    class="form-control">
+                                                <input type="text" aria-label="端口" name="port_id" id="port_id"
+                                                    class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <button type="submit" class="btn btn-success">确认无误，提交！</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+{/block}

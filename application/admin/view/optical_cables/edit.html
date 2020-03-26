@@ -1,0 +1,146 @@
+{extend name="layout" /}
+<!-- custom css -->
+{block name="custom_css"}
+
+{/block}
+
+{block name="content"}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">二组</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">数据资料</a></li>
+                        <li class="breadcrumb-item active">二组</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- content -->
+    <section class="content">
+        <!-- container-fluid -->
+        <div class="container-fluid">
+
+            <div class="row">
+                <!-- 填表说明说明 -->
+                <div class="col-md-6">
+                    <div class="callout callout-info">
+                        <h5><i class="fa fa-info"></i> 光缆基本信息</h5>
+                        <ol>
+                            <li>光缆段编号：</li>
+                            <li>光缆名称：</li>
+                            <li>长度：</li>
+                            <li>束管数量：</li>
+                            <li>纤芯数量：</li>
+                            <li>光缆A端位置：</li>
+                            <li>光缆B端位置</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- 表单内容 -->
+                <div class="col-md-6">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fa fa-info"></i> 编辑光缆</h3>
+                        </div>
+                        <div class="card-body">
+                            <!-- form start -->
+                            <form class="" role="form" action="{:url('edit')}" method="post">
+                                {volist name="cable" id='c'}
+                                <input type="hidden" name="id" value="{$c.id}">
+                                <div class="row">
+
+                                    <div class="col-md-4">
+                                        <!-- 光缆段名称 -->
+                                        <div class="form-group">
+                                            <label for="name">光缆段名称</label>
+                                            <input type="text" class="form-control" placeholder="输入名称" id="name" name="name" value="{$c.name}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <!-- 型号 -->
+                                        <div class="form-group">
+                                            <label for="model_no">型号</label>
+                                            <input type="text" class="form-control" id="model_no" name="model_no" value="{$c.model_no}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <!-- 束管数目 -->
+                                        <div class="form-group">
+                                            <label for="tube_num">束管数目</label>
+                                            <input type="text" class="form-control"  id="tube_num" name="tube_num" value="{$c.tube_num}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <!-- 纤芯数目 -->
+                                        <div class="form-group">
+                                            <label for="fiber_num">纤芯数目</label>
+                                            <input type="text" class="form-control" id="fiber_num" name="fiber_num" value="{$c.fiber_num}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="length">长度</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="length" name="length" value="{$c.length}">
+                                            <span class="input-group-addon">km</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <!-- 光缆起始端 -->
+                                        <div class="form-group">
+                                            <label for="start_location">起始位置</label>
+                                            <input type="text" class="form-control" id="start_location" name="start_location" value="{$c.start_location}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <!-- 起始端设备 -->
+                                        <div class="form-group">
+                                            <label>起始端设备</label>
+                                            <input type="text" class="form-control" value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+
+                                        <div class="form-group">
+                                            <label for="end_location">终点位置</label>
+                                            <input type="text" class="form-control" id="end_location" name="end_location" value="{$c.end_location}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+
+                                        <div class="form-group">
+                                            <label>终点端设备</label>
+                                            <input type="text" class="form-control" value="">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                {/volist}
+
+                                <button type="submit" class="btn btn-success">确认无误，提交！</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+{/block}

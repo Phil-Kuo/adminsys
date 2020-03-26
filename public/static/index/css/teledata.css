@@ -1,0 +1,41 @@
+label {
+    vertical-align: middle;
+    position: relative;
+}
+
+label + label {
+    margin-left: 5em;
+}
+
+
+input + span{
+	position: absolute;
+	left: 0;
+    top: 4px;
+	width: 15px;
+	height: 15px;
+    border: 2px solid #0062cc;
+}
+
+input[type=radio] + span {
+    border-radius: 50%;
+}
+
+input[type=radio]:checked + span {
+    background: #0062cc;
+    background: -moz-radial-gradient(center, ellipse cover, rgba(106, 151, 181) 44%, rgba(255,255,255,1) 45%, rgba(255,255,255,1) 46%, rgba(255,255,255,1) 55%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(44%, rgba(106,181,169,1)), color-stop(45%, rgba(255,255,255,1)), color-stop(46%, rgba(255,255,255,1)), color-stop(55%, rgba(255,255,255,1)));
+    background: -webkit-radial-gradient(center, ellipse cover, rgb(106, 151, 181) 44%, rgba(255,255,255,1) 45%, rgba(255,255,255,1) 46%, rgba(255,255,255,1) 55%);
+    background: -o-radial-gradient(center, ellipse cover, rgba(106, 151, 181) 44%, rgba(255,255,255,1) 45%, rgba(255,255,255,1) 46%, rgba(255,255,255,1) 55%);
+    background: -ms-radial-gradient(center, ellipse cover, rgba(106, 151, 181) 44%, rgba(255,255,255,1) 45%, rgba(255,255,255,1) 46%, rgba(255,255,255,1) 55%);
+    background: radial-gradient(ellipse at center, rgba(106, 151, 181) 44%, rgba(255,255,255,1) 45%, rgba(255,255,255,1) 46%, rgba(255,255,255,1) 55%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6ab5a9', endColorstr='#ffffff', GradientType=1 );
+  }
+
+input[type=radio] {
+	/*hide the radio button*/
+	filter:alpha(opacity=0);
+	-moz-opacity:0;
+	-khtml-opacity: 0;
+	opacity: 0;
+}

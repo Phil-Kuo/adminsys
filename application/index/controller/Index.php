@@ -1,10 +1,41 @@
 <?php
 namespace app\index\controller;
 
-class Index
+use think\Controller;
+use think\Request;
+use app\admin\model\TeleData as TelModel;
+use app\admin\model\ArchitectureDetails;
+use think\Db;
+
+class Index extends Controller
 {
     public function index()
     {
-        return '<style type="text/css">*{ padding: 0; margin: 0; } .think_default_text{ padding: 4px 48px;} a{color:#2E5CD5;cursor: pointer;text-decoration: none} a:hover{text-decoration:underline; } body{ background: #fff; font-family: "Century Gothic","Microsoft yahei"; color: #333;font-size:18px} h1{ font-size: 100px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.6em; font-size: 42px }</style><div style="padding: 24px 48px;"> <h1>:)</h1><p> ThinkPHP V5<br/><span style="font-size:30px">十年磨一剑 - 为API开发设计的高性能框架</span></p><span style="font-size:22px;">[ V5.0 版本由 <a href="http://www.qiniu.com" target="qiniu">七牛云</a> 独家赞助发布 ]</span></div><script type="text/javascript" src="https://tajs.qq.com/stats?sId=9347272" charset="UTF-8"></script><script type="text/javascript" src="https://e.topthink.com/Public/static/client.js"></script><think id="ad_bd568ce7058a1091"></think>';
+        $tel = new TelModel(); 
+        $arch = new ArchitectureDetails();
+        // 获取所有建筑
+        $buildings = $arch->where('pid','0')->select();
+        $condition = array();
+        foreach($buildings as $k => $v){
+            array_push($condition, $v['id']);
+        }
+        // dump($condition );die;
+        $result = array();
+        foreach($condition as $m=>$n){
+            $telData = TelModel::with('buildings,locations')->where('building_id', $n)->select();
+            foreach($telData as $k=>$v){
+                $v->building = $v->buildings->arch_name;
+                $v->location = $v->locations->arch_name;                
+            }
+            if($telData){// 如果查询结果不为空
+                // array_push($result, $telData);
+                array_push($result, $telData);
+            }
+            
+        }
+        // dump($result);die;
+
+        $this->assign('result', $result);
+        return view();
     }
 }

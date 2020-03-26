@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Daly Dai
- * Date: 2019/4/13
- * Time: 18:21
- */
 
 namespace app\admin\controller;
 
