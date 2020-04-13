@@ -59,27 +59,30 @@
                             <form role="form" action="{:url('edit')}" method="post">
                                 <h4>光纤的基本信息</h4>
 
+                                {volist name="fiber" id="f"}
                                 <div class="row">
                                     <div class="col-md-2">
                                         <!-- 束管编号 -->
                                         <div class="form-group">
-                                            <label>束管颜色</label>
-                                            <input type="text" class="form-control" value="" disabled>
+                                            <label for="tube_no">束管颜色</label>
+                                            <input type="text" class="form-control" id="tube_no" name="tube_no"
+                                                value="{$f.tube_no}" disabled>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <!-- 纤芯编号 -->
                                         <div class="form-group">
-                                            <label>纤芯颜色</label>
-                                            <input type="text" class="form-control" value="" disabled>
+                                            <label for="fiber_no">纤芯颜色</label>
+                                            <input type="text" class="form-control" id="fiber_no" name="fiber_no"
+                                                value="{$f.fiber_no}" disabled>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <!-- 状态 -->
                                         <div class="form-group">
                                             <label for="fiber_status">状态</label>
-                                            <input type="text" class="form-control" name="fiber_status"
-                                                name="fiber_status" value="" placeholder="是否可用">
+                                            <input type="text" class="form-control" id="fiber_status"
+                                                name="fiber_status" value="{$f.fiber_status}" placeholder="是否可用">
                                         </div>
                                     </div>
                                 </div>
@@ -100,18 +103,18 @@
                                     <div class="col-md-2">
                                         <!-- 光口类型 -->
                                         <div class="form-group row">
-                                            <label class="col-sm-6 col-form-label">光口类型: </label>
+                                            <label class="col-sm-6 col-form-label" for="start_joint_type">光口类型: </label>
                                             <div class="col-sm-4">
-                                                <input type="text" class="form-control" value="LC/PC">
+                                                <input type="text" class="form-control" id="start_joint_type" name="start_joint_type" value="{$f.start_joint_type}">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <!-- 交换设备名称 -->
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">设备名称: </label>
+                                            <label class="col-sm-3 col-form-label" for="start_equip_id">设备名称: </label>
                                             <div class="col-sm-7">
-                                                <input type="text" class="form-control" value="机柜1">
+                                                <input type="text" class="form-control" id="start_equip_id" name="start_equip_id" value="{$f.start_equip_id}">
                                             </div>
                                         </div>
                                     </div>
@@ -120,7 +123,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-6 col-form-label">设备类型: </label>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control" value="ODF">
+                                                <input type="text" class="form-control" value="">
                                             </div>
                                         </div>
                                     </div>
@@ -129,12 +132,12 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">端口位置: </label>
                                             <div class="col-sm-7 input-group">
-                                                <input type="text" aria-label="分线箱" name="box_no" id="box_no"
-                                                    class="form-control">
-                                                <input type="text" aria-label="熔纤盘" name="plate_no" id="plate_no"
-                                                    class="form-control">
-                                                <input type="text" aria-label="端口" name="port_id" id="port_id"
-                                                    class="form-control">
+                                                <input type="text" aria-label="分线箱" name="start_box_no" id="start_box_no"
+                                                    class="form-control" value="{$f.start_box_no}">
+                                                <input type="text" aria-label="熔纤盘" name="start_plate_no" id="start_plate_no"
+                                                    class="form-control" value="{$f.start_plate_no}">
+                                                <input type="text" aria-label="端口" name="start_plate_no" id="start_plate_no"
+                                                    class="form-control" value="{$f.start_port_no}">
                                             </div>
                                         </div>
                                     </div>
@@ -157,7 +160,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-6 col-form-label">光口类型: </label>
                                             <div class="col-sm-4">
-                                                <input type="text" class="form-control" value="LC/PC">
+                                                <input type="text" class="form-control" value="{$f.end_joint_type}">
                                             </div>
                                         </div>
                                     </div>
@@ -166,7 +169,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">设备名称: </label>
                                             <div class="col-sm-7">
-                                                <input type="text" class="form-control" value="机柜2">
+                                                <input type="text" class="form-control" value="{$f.end_equip_id}">
                                             </div>
                                         </div>
                                     </div>
@@ -175,7 +178,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-6 col-form-label">设备类型: </label>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control" value="ODF">
+                                                <input type="text" class="form-control" value="">
                                             </div>
                                         </div>
                                     </div>
@@ -185,16 +188,17 @@
                                             <label class="col-sm-3 col-form-label">端口位置: </label>
                                             <div class="col-sm-7 input-group">
                                                 <input type="text" aria-label="分线箱" name="box_no" id="box_no"
-                                                    class="form-control">
+                                                    class="form-control" value="{$f.end_box_no}">
                                                 <input type="text" aria-label="熔纤盘" name="plate_no" id="plate_no"
-                                                    class="form-control">
+                                                    class="form-control" value="{$f.end_plate_no}">
                                                 <input type="text" aria-label="端口" name="port_id" id="port_id"
-                                                    class="form-control">
+                                                    class="form-control" value="{$f.end_port_no}">
                                             </div>
                                         </div>
                                     </div>
 
                                 </div>
+                                {/volist}
                                 <button type="submit" class="btn btn-success">确认无误，提交！</button>
                             </form>
                         </div>

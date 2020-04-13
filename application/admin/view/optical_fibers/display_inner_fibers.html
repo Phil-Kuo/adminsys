@@ -13,7 +13,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{:url('admin/Index/index')}">数据资料</a></li>
-                        <li class="breadcrumb-item active">光缆管理</li>
+                        <li class="breadcrumb-item active">二组</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -24,80 +24,73 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <!-- 光缆管理 -->
+
+            <!-- 跳纤表 -->
             <div class="row">
                 <div class="col-md-12">
 
                     <div class="card card-success card-outline">
                         <div class="card-header">
-                            <h3 class="card-title"><i class="fa fa-bank"></i> 光缆基础资料表</h3>
+                            <h3 class="card-title"><i class="fa fa-bicycle"></i> XXX光缆光纤连接信息管理</h3>
                             <div class="card-tools">
-                                <a href="{:url('add')}" target="_blank" class="btn btn-tool btn-lg">
+                                <a href="#" class="btn btn-tool btn-lg">
                                     <i class="fa fa-plus mr-2"></i>新增记录
                                 </a>
                             </div>
                         </div>
 
                         <div class="card-body">
-                            <table id="cables-data" class="table table-bordered" style="width:100%">
+                            <table id="fibers-data" class="table table-bordered" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th rowspan="2">名称</th>
-                                        <th rowspan="2">长度</th>
-                                        <th rowspan="2">型号</th>
-                                        <th rowspan="2">束管数量</th>
-                                        <th rowspan="2">纤芯数量</th>
+                                        <th rowspan="2">序号</th>
+                                        <th colspan="3">光纤标识</th>
+                                        <th colspan="4">起点</th>
+                                        <th colspan="4">终点</th>
 
-                                        <th colspan="2">光缆A端</th>
-                                        <th colspan="2">光缆B端</th>
-
-                                        <th rowspan="2">光缆操作</th>
-                                        <th rowspan="2">上架操作</th>
+                                        <th rowspan="2">操作</th>
                                     </tr>
                                     <tr>
-                                        <th>机房位置</th>
-                                        <th>设备类型</th>
+                                        <th>束管颜色</th>
+                                        <th>纤芯颜色</th>
+                                        <th>承载业务</th>
 
-                                        <th>机房位置</th>
+                                        <th>光口类型</th>
+                                        <th>设备名称</th>
                                         <th>设备类型</th>
+                                        <th>端口位置</th>
+
+                                        <th>光口类型</th>
+                                        <th>设备名称</th>
+                                        <th>设备类型</th>
+                                        <th>端口位置</th>
 
                                     </tr>
                                 </thead>
                                 <tbody>
-
-                                    {volist name="cables" id="c"}
+                                    {volist name='fiber' id='f'}
                                     <tr>
-                                        <td>{$c.name}</td>
-                                        <td>{$c.length}</td>
-                                        <td>{$c.model_no}</td>
-                                        <td>{$c.tube_num}</td>
-                                        <td>{$c.fiber_num}</td>
+                                        <td>{$key+1}</td>
+                                        <td>{$f.tube_no}</td>
+                                        <td>{$f.fiber_no}</td>
+                                        <td>{$f.business}</td>
 
-                                        <td>{$c.start_location}</td>
+                                        <td>{$f.start_joint_type}</td>
+                                        <td>{$f.start_equip_id}</td>
                                         <td></td>
+                                        <td>{$f.start_box_no}-{$f.start_plate_no}-{$f.start_port_no}</td>
 
-                                        <td>{$c.end_location}</td>
+                                        <td>{$f.end_joint_type}</td>
+                                        <td>{$f.end_equip_id}</td>
                                         <td></td>
+                                        <td>{$f.end_box_no}-{$f.end_plate_no}-{$f.end_port_no}</td>
 
                                         <td>
                                             <div class="btn-group">
-                                                <a href="{:url('edit', ['id'=>$c.id])}" target="_blank"><button class="btn btn-primary"><i class="fa fa-edit mr-1"></i>编辑</button>
+                                                <a href="{:url('admin/opticalFibers/edit', ['fiberID'=>$f.fiber_id])}" target="_blank"><button class="btn btn-primary"><i
+                                                            class="fa fa-edit mr-1"></i>纤芯连接管理</button>
                                                 </a>
-                                            </div>
-                                            <div class="btn-group">
-                                                <a href="{:url('delete ', ['id'=>$c.id])}"><button class="btn btn-danger"><i class="fa fa-trash mr-1"></i>删除</button>
-                                                </a>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="btn-group">
-                                                <a href="" target="_blank"><button class="btn btn-primary"><i class="fa fa-edit mr-1"></i>修改上架</button>
-                                                </a>
-                                            </div>
-                                            <div class="btn-group">
-                                                <a href=""><button class="btn btn-danger"><i class="fa fa-trash mr-1"></i>释放端口</button>
-                                                </a>
-                                            </div>
+                                            </div>                                            
                                         </td>
                                     </tr>
                                     {/volist}
@@ -127,13 +120,10 @@
                             <div class="mb-3">
                                 <ol>
                                     <li>
-                                        光缆管理分为光缆基础资料管理和光缆上架管理。
+                                        
                                     </li>
                                     <li>
-                                        光缆基础资料包括光缆编号、光缆名称、光缆长度、纤芯数量、束管数量以及光缆两端连接的机房。
-                                    </li>
-                                    <li>
-                                        上架管理是指光缆纤芯连接到两端设备的端口管理，包括上架、释放端口2种方式。
+                                        端口位置根据如下的编号规则确定：#Box-#Plate-#Port，其中#Box、#Plate、#Port分别代表单元箱编号、熔纤盘编号、端口编号。
                                     </li>
                                 </ol>
                             </div>
@@ -154,29 +144,26 @@
 
 <!-- 配线资料表格汇总 -->
 <script>
-    
-    var cablesTable = $('#cables-data').DataTable({
-        "paging": true,
+    var fibersTable = $('#fibers-data').DataTable({
+        "scrollY": "595px",
+        "scrollCollapse": true,
+        "paging": false,
+        // "paging": true,
         // "lengthChange": true, 
         // "searching": false,
         "ordering": false,
-        "info": true,
+        "info": false,
         "autoWidth": true,
         language: {
             search: "搜索：",
-            paginate: {
-                first: "首页",
-                previous: "上一页",
-                next: "下一页",
-                last: "末页"
-            },
-            info: "本页为第_START_ - _END_条记录，共计_TOTAL_条记录。",
             infoFiltered: "（共搜索_MAX_条记录）",
             infoEmpty: "未搜索到相关记录",
             emptyTable: "暂无数据",
             zeroRecords: "暂无相关记录"
         }//按钮等的汉化
     });
+
+
 </script>
 
 {/block}

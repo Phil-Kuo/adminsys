@@ -71,9 +71,9 @@
                 </li>
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fa fa-file-archive-o"></i>
+                        <i class="nav-icon fa fa-fax"></i>
                         <p>
-                            数据资料
+                            一组
                             <i class="fa fa-angle-left right"></i>
                         </p>
                     </a>
@@ -81,19 +81,37 @@
                         <li class="nav-item">
                             <a href="{:url('admin/TeleData/summary')}" class="nav-link">
                                 <i class="fa fa-fax nav-icon"></i>
-                                <p>组别1</p>
+                                <p>概览</p>
                             </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{:url('admin/OpticalData/index')}" class="nav-link">
-                                <i class="fa fa-video-camera nav-icon"></i>
-                                <p>组别2</p>
-                            </a>
-                        </li>
+                        </li>                        
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="fa fa-microphone nav-icon"></i>
-                                <p>组别3</p>
+                                <p>管理</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-video-camera"></i>
+                        <p>
+                            二组
+                            <i class="fa fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{:url('admin/OpticalCables/Index')}" class="nav-link">
+                                <i class="fa fa-fax nav-icon"></i>
+                                <p>光缆管理</p>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a href="{:url('admin/OpticalJumpFibers/')}" class="nav-link">
+                                <i class="fa fa-microphone nav-icon"></i>
+                                <p>跳纤管理</p>
                             </a>
                         </li>
                     </ul>

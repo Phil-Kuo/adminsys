@@ -1,0 +1,168 @@
+{extend name="layout" /}
+<!-- custom css -->
+{block name="custom_css"}
+
+{/block}
+
+{block name="content"}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">二组</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">数据资料</a></li>
+                        <li class="breadcrumb-item active">二组</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- content -->
+    <section class="content">
+        <!-- container-fluid -->
+        <div class="container-fluid">
+            <!-- users edit -->
+            <div class="row">
+                <!-- 表单内容 -->
+                <div class="col-md-6">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">新增跳纤</h3>
+                        </div>
+                        <div class="card-body">
+                            <!-- form start -->
+                            <form role="form" action="{:url('add')}" method="post">
+                                
+                                <div class="row">
+                                    
+                                    <div class="col-md-6">
+                                        <!-- 机房或弱电间名称 在后续需要实际需要进行修改-->
+                                        <div class="form-group">
+                                            <label for="location">机房（弱电间）</label>
+                                            <select type="text" class="form-control" name="location" id="location">
+                                                <option value="郊尾镇">郊尾镇</option>
+                                                <option value="后邻村">后邻村</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <div class="form-group">
+                                            <label>承载业务</label>
+                                            <input type="text" class="form-control" name="business" id="business"
+                                                value="">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <hr />
+                                <h4 for="">进线：</h4>
+
+                                <div class="row">
+
+                                    <div class="col-md-2">
+                                        <!-- 交换设备名称 -->
+                                        <div class="form-group">
+                                            <label class="col-form-label" for="in_equip_name">设备名称: </label>
+                                            <input type="text" class="form-control" id="in_equip_name"
+                                                name="in_equip_name" value="">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-3">
+                                        
+                                        <div class="form-group">
+                                            <label class="col-form-label">端口位置：</label>
+                                            <div class="input-group">
+                                                <input type="text" aria-label="分线箱" name="in_box_no" id="in_box_no"
+                                                    class="form-control" value="">
+                                                <input type="text" aria-label="熔纤盘" name="in_plate_no" id="in_plate_no"
+                                                    class="form-control" value="">
+                                                <input type="text" aria-label="端口" name="in_port_no" id="in_port_no"
+                                                    class="form-control" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <!-- 光口类型 -->
+                                        <div class="form-group">
+                                            <label class="col-form-label" for="in_port_type">光口类型: </label>
+                                            <input type="text" class="form-control" id="in_port_type"
+                                                name="in_port_type" value="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr />
+                                <h4 for="">出线：</h4>
+
+                                <div class="row">
+
+                                    <div class="col-md-2">
+
+                                        <!-- 交换设备名称 -->
+                                        <div class="form-group">
+                                            <label class="col-form-label" for="out_equip_name">设备名称: </label>
+                                            <input type="text" class="form-control" id="out_equip_name"
+                                                name="out_equip_name" value="">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-3">
+                                        <input type="hidden" name="out_port_id" value=""> <!-- 出端口ID -->
+
+                                        <div class="form-group">
+                                            <label class="col-form-label">端口位置：</label>
+                                            <div class="input-group">
+                                                <input type="text" aria-label="分线箱" name="out_box_no" id="out_box_no"
+                                                    class="form-control" value="">
+                                                <input type="text" aria-label="熔纤盘" name="out_plate_no"
+                                                    id="out_plate_no" class="form-control" value="">
+                                                <input type="text" aria-label="端口" name="out_port_no" id="out_port_no"
+                                                    class="form-control" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <!-- 光口类型 -->
+                                        <div class="form-group">
+                                            <label class="col-form-label" for="out_port_type">光口类型: </label>
+                                            <input type="text" class="form-control" id="out_port_type"
+                                                name="out_port_type" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                                <button type="submit" class="btn btn-success">确认无误，提交！</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 填表说明说明 -->
+            <div class="col-md-6">
+                <div class="callout callout-info">
+                    <h5><i class="fa fa-info"></i> 填表说明:</h5>
+                    <ol>
+
+                        <li>
+                            端口位置的编号规则为：A-B-C（#Box-#Plate-#Port），其中#Box、#Plate、#Port分别代表单元箱编号、熔纤盘编号、端口编号。
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+</div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+</div>
+{/block}
