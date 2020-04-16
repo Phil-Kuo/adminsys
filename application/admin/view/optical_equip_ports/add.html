@@ -1,0 +1,121 @@
+{extend name="layout" /}
+<!-- custom css -->
+{block name="custom_css"}
+
+{/block}
+
+{block name="content"}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">二组</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">数据资料</a></li>
+                        <li class="breadcrumb-item active">二组</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- content -->
+    <section class="content">
+        <!-- container-fluid -->
+        <div class="container-fluid">
+
+            <div class="row">
+                <!-- 填表说明说明 -->
+                <div class="col-md-6">
+                    <div class="callout callout-info">
+                        <h5><i class="fa fa-info"></i> 基本信息</h5>
+                        <ol>
+
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- 表单内容 -->
+                <div class="col-md-6">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fa fa-info"></i> 添加端口</h3>
+                        </div>
+                        <div class="card-body">
+                            <!-- form start -->
+                            <form class="" role="form" action="{:url('add')}" method="post">
+
+                                <div class="row">                  
+                                   
+
+                                    <div class="col-md-2">
+
+                                        <div class="form-group">
+                                            <label for="box_no">分线箱编号</label>
+                                            <input type="text" class="form-control" id="box_no" name="box_no"
+                                                placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+
+                                        <div class="form-group">
+                                            <label for="plate_no">熔纤盒编号</label>
+                                            <input type="text" class="form-control" id="plate_no" name="plate_no"
+                                                value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+
+                                        <div class="form-group">
+                                            <label for="port_no">端口编号</label>
+                                            <input type="text" class="form-control" id="port_no" name="port_no"
+                                                value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+
+                                        <div class="form-group">
+                                            <label for="port_type">端口类型</label>
+                                            <input type="text" class="form-control" id="port_type" name="port_type"
+                                                value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+
+                                        <div class="form-group">
+                                            <label for="port_status">端口状态</label>
+                                            <input type="text" class="form-control" id="port_status" name="port_status"
+                                                value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+
+                                        <div class="form-group">
+                                            <label for="business">业务</label>
+                                            <input type="text" class="form-control" id="business" name="business"
+                                                placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                                <button type="submit" class="btn btn-success">确认无误，提交！</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+{/block}

@@ -1,0 +1,166 @@
+{extend name="layout" /}
+
+{block name="content"}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">资料列表</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{:url('admin/Index/index')}">数据资料</a></li>
+                        <li class="breadcrumb-item active">二组</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- 检索卡片 -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">检索卡片</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <!-- form start -->
+                            <form class="form-inline" role="form" action="{:url('index')}" method="post">
+                                <!-- 建筑 -->
+                                <div class="form-group mr-3">
+                                    <label for="location">机房：</label>
+                                    <input type="text" class="form-control" id="location" name="location"
+                                        placeholder="如：505#101" value="">
+                                </div>
+                                <button type="submit" class="btn btn-primary">搜索</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 跳纤表 -->
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="card card-success card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title" id=""><i class="fa fa-bicycle"></i>
+                                XX机房设备情况表</h3>
+                            <div class="card-tools">
+                                <a href="{:url('add')}" target="_blank" class="btn btn-tool btn-lg">
+                                    <i class="fa fa-plus mr-2"></i>新增记录
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <table id="equips" class="table table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>机房</th>
+                                        <th>设备名称或机柜编号</th>
+                                        <th>设备类型</th>
+                                        <th>分线箱数目</th>
+                                        <th>操作</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    {volist name="equips" id="e"}
+                                    <tr>
+                                        <td>{$key}</td>
+                                        <td>{$e.location}</td>
+                                        <td>{$e.name}</td>
+                                        <td>{$e.type}</td>
+                                        <td>{$e.boxes_quantity}</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a href="{:url('edit', ['id'=>$e.id])}" target="_blank"><button
+                                                        class="btn btn-primary"><i
+                                                            class="fa fa-edit mr-1"></i>编辑</button>
+                                                </a>
+                                            </div>
+                                            <div class="btn-group">
+                                                <a href="{:url('delete', ['id'=>$e.id])}"><button
+                                                        class="btn btn-danger"><i
+                                                            class="fa fa-trash mr-1"></i>删除</button>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {/volist}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+            </div>
+            <!-- 阅表说明 -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card card-info card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <h5><i class="fa fa-info"></i> 阅表说明</h5>
+                            </h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool btn-sm" data-widget="collapse"
+                                    data-toggle="tooltip" title="Collapse">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <ol>
+
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+</div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+{/block}
+
+{block name="custom_scripts"}
+
+<!-- 跳纤汇总表 -->
+<script>
+    var equipPortsTable = $('#equips').DataTable({
+        "paging": true,
+        // "paging": true,
+        // "lengthChange": true, 
+        // "searching": false,
+        "ordering": false,
+        "info": false,
+        "autoWidth": true,
+        language: {
+            search: "搜索：",
+            infoFiltered: "（共搜索_MAX_条记录）",
+            infoEmpty: "未搜索到相关记录",
+            emptyTable: "暂无数据",
+            zeroRecords: "暂无相关记录"
+        }//按钮等的汉化
+    });  
+</script>
+
+{/block}

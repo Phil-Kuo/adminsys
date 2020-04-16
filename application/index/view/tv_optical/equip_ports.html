@@ -1,0 +1,194 @@
+{extend name="layout" /}
+
+{block name="content"}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">资料列表</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="">数据资料</a></li>
+                        <li class="breadcrumb-item active">二组</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- 检索卡片 -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">检索卡片</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <!-- form start -->
+                            <form class="form-inline" role="form" action="{:url('equipPorts')}" method="post">
+                                <!-- 建筑 -->
+                                <div class="form-group mr-3">
+                                    <label for="room">机房：</label>
+                                    <input type="text" class="form-control" id="room" name="room"
+                                        placeholder="如：505#101" value="">
+                                </div>
+                                <div class="form-group mr-3">
+                                    <label for="equip">设备：</label>
+                                    <input type="text" class="form-control" id="equip" name="equip" placeholder="如："
+                                        value="">
+                                </div>
+                                <button type="submit" class="btn btn-primary">搜索</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 跳纤表 -->
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="card card-success card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title" id=""><i class="fa fa-bicycle"></i>
+                                
+                                {$condition.location}机房{$condition.name}光缆配线架（ODF）端口连接情况表</h3>
+                           
+                        </div>
+
+                        <div class="card-body">
+                            <table id="equip-ports" class="table table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2">序号</th>
+                                        <th rowspan="2">端口位置</th>
+                                        <th rowspan="2">端口类型</th>
+                                        <th rowspan="2">端口状态</th>
+                                        <th rowspan="2">连接纤芯情况</th>
+                                        <th colspan="2">对端端口情况</th>
+                                        <th colspan="2">跳纤对端连接情况</th>
+                                        <th rowspan="2">承载业务</th>
+                                    </tr>
+                                    <tr>
+                                        <th>设备位置</th>
+                                        <th>端口位置</th>
+
+                                        <th>设备位置</th>
+                                        <th>端口位置</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {volist name="result" id="r"}
+                                    <tr>
+                                        <td>{$key+1}</td>
+                                        <td>{$r.box_no} - {$r.plate_no} - {$r.port_no}</td>
+                                        <td>{switch name="$r.port_type"}
+                                            {case value="0"} LC/SC {/case}
+                                            {case value="1"} FC/UPC {/case}
+                                            {/switch}
+                                        </td>  
+                                        <td>{switch name="$r.port_status"}
+                                            {case value="0"} 未占用 {/case}
+                                            {case value="1"} 被占用 {/case}
+                                            {/switch}
+                                        </td>  
+                                        <td>光缆{$r.cable_id}， 束管{$r.tube_no}， 纤芯{$r.fiber_no}</td>
+                                        <td>{$r.location}-{$r.name}</td>
+                                        <td>{$r.op_box_no}-{$r.op_plate_no}-{$r.op_port_no}</td>
+                                        {if condition="$r.opposite_port1 == $r.port_id"}
+                                        <td>
+                                            {$r.location2}-{$r.name2}
+                                        </td>
+                                        <td>
+                                            {$r.box_no2}-{$r.plate_no2}-{$r.port_no2}
+                                        </td>
+                                        {elseif condition="$r.opposite_port2 == $r.port_id" /}
+                                        <td>
+                                            {$r.location1}-{$r.name1}
+                                        </td>
+                                        <td>
+                                            {$r.box_no1}-{$r.plate_no1}-{$r.port_no1}
+                                        </td>
+                                        {else /}
+                                        <td></td>
+                                        <td></td>
+                                        <!-- 尚未考虑为空值的情况 -->
+                                        {/if}
+                                        <td>{$r.business}</td>
+                                    </tr>
+                                    {/volist}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+            </div>
+            <!-- 阅表说明 -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card card-info card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <h5><i class="fa fa-info"></i> 阅表说明</h5>
+                            </h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool btn-sm" data-widget="collapse"
+                                    data-toggle="tooltip" title="Collapse">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <ol>
+                                    <li>端口状态主要有5种：端口无纤芯连接、端口有纤芯连接但无跳纤连接（即端口未占用）、端口有跳纤连接（自然有纤芯连接）</li>
+                                    <li>对端端口情况主要是同一光缆的另一端的端口情况。</li>
+                                    <li>跳纤对端连接情况主要是记录机房内的跳接情况。</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+</div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+{/block}
+
+{block name="custom_scripts"}
+
+<!-- 跳纤汇总表 -->
+<script>
+    var equipPortsTable = $('#equip-ports').DataTable({
+        "paging": true,
+        // "paging": true,
+        // "lengthChange": true, 
+        // "searching": false,
+        "ordering": false,
+        "info": false,
+        "autoWidth": true,
+        language: {
+            search: "搜索：",
+            infoFiltered: "（共搜索_MAX_条记录）",
+            infoEmpty: "未搜索到相关记录",
+            emptyTable: "暂无数据",
+            zeroRecords: "暂无相关记录"
+        }//按钮等的汉化
+    });  
+</script>
+
+{/block}

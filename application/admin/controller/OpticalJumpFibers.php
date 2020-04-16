@@ -2,9 +2,6 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\OpticalCablesProfiles as cablesProfiles;
-use app\admin\model\OpticalCableEndpoint as endpoint;
-use app\admin\model\OpticalFibers as fibers;
 use app\admin\model\OpticalJumpingFiberDetails as jumpFiberDetails;
 use app\admin\model\OpticalEquipProfiles as equipProfiles;
 use app\admin\model\OpticalEquipPorts as equipPorts;
@@ -86,6 +83,9 @@ class OpticalJumpFibers extends Base
         return view();
     }
 
+    /* 
+    ** 编辑跳纤页面
+    */
     public function edit($jumperID)
     {
 
@@ -97,12 +97,11 @@ class OpticalJumpFibers extends Base
         $jumpFiber = $jumpFiberDetails->showSpecificJumper($jumperID);
         $this->assign('jumpFiber', $jumpFiber);
 
-        $this->saveData();
         return view();
     }
 
     /* 
-    ** 编辑跳纤的提交
+    ** 编辑跳纤的提交功能实现
     */
     public function saveData()
     {
