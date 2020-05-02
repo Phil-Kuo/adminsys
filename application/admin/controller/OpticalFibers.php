@@ -2,14 +2,12 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\OpticalCablesProfiles as CablesProfiles;
-use app\admin\model\OpticalCableEndpoint as Endpoint;
+use app\admin\model\OpticalCablesProfiles as cablesProfiles;
 use app\admin\model\OpticalFibers as Fibers;
-use think\Db;
 
 class OpticalFibers extends Base
 {
-        /* 
+    /* 
     ** 光缆内纤芯连接管理
     ** $cableID   光缆ID
     */
@@ -20,10 +18,15 @@ class OpticalFibers extends Base
         }
         // dump($cableID);die;
 
+        $cable = new cablesProfiles();
+        $record = $cable->where('id', '=', $cableID)->select();
+        // dump($cable);die;
         // 查询光缆的基本信息和纤芯的基本信息、上架信息
         $fibers = new Fibers();
         $fiber = $fibers->showFibers($cableID);
         // dump($fiber);die; $fiber 是一个二维数组
+
+        $this->assign('cable', $record);
         $this->assign('fiber', $fiber);
         return view();
     }

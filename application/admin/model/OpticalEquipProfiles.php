@@ -11,7 +11,6 @@ class OpticalEquipProfiles extends Base
        $record = $this->get($condition);
        if ($record) {
            return $record->id;
-       }
-       
+       }       
    }
 }

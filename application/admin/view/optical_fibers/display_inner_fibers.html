@@ -31,7 +31,7 @@
 
                     <div class="card card-success card-outline">
                         <div class="card-header">
-                            <h3 class="card-title"><i class="fa fa-bicycle"></i> XXX光缆光纤连接信息管理</h3>
+                            <h3 class="card-title"><i class="fa fa-bicycle"></i> {volist name="cable" id="c"}{$c.name}{/volist}光缆纤芯管理</h3>
                             <div class="card-tools">
                                 <a href="#" class="btn btn-tool btn-lg">
                                     <i class="fa fa-plus mr-2"></i>新增记录
@@ -55,15 +55,15 @@
                                         <th>纤芯颜色</th>
                                         <th>承载业务</th>
 
-                                        <th>光口类型</th>
                                         <th>设备名称</th>
                                         <th>设备类型</th>
                                         <th>端口位置</th>
+                                        <th>光口类型</th>
 
-                                        <th>光口类型</th>
                                         <th>设备名称</th>
                                         <th>设备类型</th>
                                         <th>端口位置</th>
+                                        <th>光口类型</th>
 
                                     </tr>
                                 </thead>
@@ -75,15 +75,15 @@
                                         <td>{$f.fiber_no}</td>
                                         <td>{$f.business}</td>
 
-                                        <td>{$f.start_joint_type}</td>
-                                        <td>{$f.start_equip_id}</td>
-                                        <td></td>
+                                        <td>{$f.start_equip_location} {$f.start_equip_name}</td>
+                                        <td>{$f.start_equip_type}</td>
                                         <td>{$f.start_box_no}-{$f.start_plate_no}-{$f.start_port_no}</td>
+                                        <td>{$f.start_joint_type}</td>
 
-                                        <td>{$f.end_joint_type}</td>
-                                        <td>{$f.end_equip_id}</td>
-                                        <td></td>
+                                        <td>{$f.end_equip_location} {$f.end_equip_name}</td>
+                                        <td>{$f.end_equip_type}</td>
                                         <td>{$f.end_box_no}-{$f.end_plate_no}-{$f.end_port_no}</td>
+                                        <td>{$f.end_joint_type}</td>
 
                                         <td>
                                             <div class="btn-group">

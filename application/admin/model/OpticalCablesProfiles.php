@@ -25,5 +25,32 @@ class OpticalCablesProfiles extends Base
         }
         return $info;
     }
-    
+
+
+    /* 
+    ** 获取光缆信息
+    */
+    public function getAllCables()
+    {
+        // 查询光缆的基本信息
+        $cables = Db::query('SELECT
+                                c.*,
+                                d.start_location,
+                                d.end_location 
+                            FROM
+                                optical_cables_profiles AS c
+                                JOIN (
+                                SELECT
+                                    e1.cable_id AS id,
+                                    e1.location AS start_location,
+                                    e2.location AS end_location 
+                                FROM
+                                    optical_cable_endpoint e1,
+                                    optical_cable_endpoint e2 
+                                WHERE
+                                    e1.cable_id = e2.cable_id 
+                                AND e1.endpoint_type = ? 
+                                AND e2.endpoint_type =?) AS d ON c.id = d.id',[0, 1]); 
+        return $cables;   
+    }
 }

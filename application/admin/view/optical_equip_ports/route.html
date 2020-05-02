@@ -1,0 +1,148 @@
+{extend name="layout" /}
+<!-- custom css -->
+{block name="custom_css"}
+
+{/block}
+
+{block name="content"}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">二组</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">数据资料</a></li>
+                        <li class="breadcrumb-item active">二组</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- content -->
+    <section class="content">
+        <!-- container-fluid -->
+        <div class="container-fluid">
+
+            <div class="row">
+                <!-- 填表说明说明 -->
+                <div class="col-md-6">
+                    <div class="callout callout-info">
+                        <h5><i class="fa fa-info"></i> 基本信息</h5>
+                        <ol>
+
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- 表单内容 -->
+                <div class="col-md-6">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fa fa-info"></i> 查询路由</h3>
+                        </div>
+                        <div class="card-body">
+                            <!-- form start -->
+                            <form class="" role="form" action="{:url('route')}" method="post">
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <!-- 机房或弱电间名称 在后续需要实际需要进行修改-->
+                                        <div class="form-group">
+                                            <label for="location">机房（弱电间）</label>
+                                            <select type="text" class="form-control" name="location" id="location">
+                                                <option value="郊尾镇">郊尾镇</option>
+                                                <option value="后邻村">后邻村</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <!-- 交换设备名称 -->
+                                        <div class="form-group">
+                                            <label class="col-form-label" for="equip_name">设备名称: </label>
+                                            <input type="text" class="form-control" id="equip_name" name="equip_name"
+                                                value="">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+
+                                        <div class="form-group">
+                                            <label class="col-form-label">端口位置：</label>
+                                            <div class="input-group">
+                                                <input type="text" aria-label="分线箱" name="box_no" id="box_no"
+                                                    class="form-control" value="">
+                                                <input type="text" aria-label="熔纤盘" name="plate_no" id="plate_no"
+                                                    class="form-control" value="">
+                                                <input type="text" aria-label="端口" name="port_no" id="port_no"
+                                                    class="form-control" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-success">确认无误，提交！</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- 路由表 -->
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="card card-success card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title" id=""><i class="fa fa-bicycle"></i>
+                                某端口后续的路由表</h3>
+                        </div>
+
+                        <div class="card-body">
+                            <table id="route" class="table table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>机房</th>
+                                        <th>设备名称</th>
+                                        <th>端口位置</th>
+                                        <th>端口类型</th>
+                                        <th>端口状态</th>
+                                        <th>业务</th>
+                                        <th>操作</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    {volist name="ports" id="p"}
+                                    <tr>
+                                        <td>{$key+1}</td>
+                                        <td>{$p.location}</td>
+                                        <td>{$p.equip_name}</td>
+                                        <td>{$p.box_no} - {$p.plate_no} - {$p.port_no}</td>
+                                        <td>{$p.port_type}</td>
+                                        <td>{$p.port_status}</td>
+                                        <td>{$p.business}</td>
+                                        <td>
+                                            
+                                        </td>
+                                    </tr>
+                                    {/volist}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+{/block}

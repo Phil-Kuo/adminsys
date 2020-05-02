@@ -123,4 +123,27 @@ class OpticalEquipPorts extends Base
         LEFT JOIN optical_equip_profiles AS e2 ON e2.id = p2.equip_id', [$equipID]);
         return $record;
     }
+
+    public function getPortDetailsByIDs($portIDs)
+    {
+        $record = Db::query('SELECT
+                                e.location,
+                                e.`name` AS equip_name,
+                                e.boxes_quantity,
+                                e.type,
+                                p.id AS port_id,
+                                p.box_no,
+                                p.plate_no,
+                                p.port_no,
+                                p.business,
+                                p.port_type,
+                                p.port_status
+                            FROM
+                                `optical_equip_profiles` as e JOIN (
+                                SELECT *
+                                FROM optical_equip_ports as ep
+                                WHERE	ep.id IN  ('.implode(',', $portIDs).') )as p
+                                ON e.id = p.equip_id');
+        return $record;
+    }
 }
